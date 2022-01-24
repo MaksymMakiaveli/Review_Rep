@@ -1,0 +1,98 @@
+// Default options
+$maxWidth: 1920;
+$font-family: 'Inter', sans-serif;
+$defaultPC-font-size: 16px;
+$defaultMob-font-size: 12px;
+$default-font-weight: 400;
+$default-font-color: #000;
+/*
+  Button default options
+ */
+$button-width: 151px;
+$button-height: 40px;
+$transition: all 0.5s ease;
+
+// Font-size
+$h1-fz: 96px;
+$h2-fz: 60px;
+$h3-fz: 48px;
+$h4-fz: 34px;
+$h5-fz: 28px;
+$subtitle-fz-1: 16px;
+$subtitle-fz-2: 14px;
+$body-fz-1: 16px;
+$body-fz-2: 14px;
+$button-fz: 16px;
+$caption-fz: 12px;
+$overline-fz: 10px;
+$label-fz: 12px;
+$menu-title-default-fz: 16px;
+$menu-title-active-fz: 16px;
+$menu-subtitle-default-fz: 15px;
+$menu-subtitle-active-fz: 15px;
+$form-placeholder-fz: 16px;
+$form-title-fz: 12px;
+$form-description-fz: 12px;
+$table-cell-fz: 16px;
+
+// COLORS
+/*
+ Main
+ */
+$main-blue-color: #032f5c;
+$main-default-color: #264f7a;
+$main-gray-background: #f6f6f6;
+$main-white: #ffffff;
+/*
+ Typography
+ */
+$typography-default-color: #f7f7f7;
+$typography-active-color: #ffffff;
+$typography-primary-color: #374957;
+$typography-headlines-color: #032f5c;
+$typography-disable-color: #60788b;
+/*
+  Form
+ */
+$form-default: #697288;
+$form-fill: #374957;
+$form-focus: #032f5c;
+$form-error: #d10000;
+$form-disabled: #bdbdbd;
+$form-background-mint: #edf6ff;
+$form-background-white: #ffffff;
+$form-required-star: #d10000;
+$form-placeholder: #60788b;
+/*
+  Buttons
+ */
+// Primary
+$button-primary-default: #032f5c;
+$button-primary-active: #001c37;
+$button-primary-text: #ffffff;
+$button-primary-hover: #00458a;
+$button-primary-disabled: #d2d2d2;
+$button-primary-pressed: #97d5ff;
+// Secondary
+$button-secondary-default: #e3effd;
+$button-secondary-active: #bdd4ed;
+$button-secondary-text: #032f5c;
+$button-secondary-hover: #4798e9;
+$button-secondary-disabled: #d2d2d2;
+$button-secondary-pressed: #74aaea;
+// Outline
+$button-outline-default: #032f5c;
+$button-outline-active: #4798e9;
+$button-outline-text: #032f5c;
+$button-outline-hover: #00458a;
+$button-outline-disabled: #d2d2d2;
+$button-outline-pressed: #97d5ff;
+$button-outline-fill: transparent;
+// Table
+$cell-odd-background: #edf6ff;
+$cell-even-background: #fff;
+$cell-color: #374957;
+$header-table-background: #fff;
+$header-table-color: #60788b;
+// Checkbox
+$checkbox-main-color: #032f5c;
