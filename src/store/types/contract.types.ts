@@ -1,6 +1,6 @@
 import { Company } from '@Types/company.types';
 import { BaseAction, Concat } from '@Types/index';
-import { GET_CONTRACTS_LIST, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
+import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
 import { TSelectValue } from '@Types/application.types';
 
 export type Contract = {
@@ -40,35 +40,38 @@ export type TCreateContract = {
   contractFile: string;
   description: string;
 };
-export type TFormCreateContract = Omit<
-  TCreateContract,
-  'partnerId' | 'currencyId'
-> & {
+export type TFormCreateContract = Omit<TCreateContract, 'partnerId' | 'currencyId'> & {
   partnerId: TSelectValue<number>;
   currencyId: TSelectValue<number>;
 };
 
 export interface ContractState {
   contracts: Contract[] | [];
+  currentContract: Contract | null;
   loadingContract: boolean;
 }
 
-export interface GetContractsList
-  extends BaseAction<typeof GET_CONTRACTS_LIST> {}
-export interface GetContractsListSuccess
-  extends BaseAction<Concat<typeof GET_CONTRACTS_LIST, typeof SUCCESS>> {
+export interface GetContractsList extends BaseAction<typeof GET_CONTRACTS_LIST> {}
+export interface GetContractsListSuccess extends BaseAction<Concat<typeof GET_CONTRACTS_LIST, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     resultObject: Contract[];
   };
 }
 
-export interface PostNewContract extends BaseAction<typeof POST_NEW_CONTRACT> {}
-export interface PostNewContractSuccess
-  extends BaseAction<Concat<typeof POST_NEW_CONTRACT, typeof SUCCESS>> {
+export interface GetOneContract extends BaseAction<typeof GET_ONE_CONTRACT> {}
+export interface GetOneContractSuccess extends BaseAction<Concat<typeof GET_ONE_CONTRACT, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
-    resultObject: Contract[];
+    resultObject: Contract;
+  };
+}
+
+export interface PostNewContract extends BaseAction<typeof POST_NEW_CONTRACT> {}
+export interface PostNewContractSuccess extends BaseAction<Concat<typeof POST_NEW_CONTRACT, typeof SUCCESS>> {
+  response: {
+    resultStatus: boolean;
+    resultObject: Contract;
   };
 }
 
@@ -76,4 +79,6 @@ export type ContractActions =
   | GetContractsList
   | GetContractsListSuccess
   | PostNewContract
-  | PostNewContractSuccess;
+  | PostNewContractSuccess
+  | GetOneContract
+  | GetOneContractSuccess;

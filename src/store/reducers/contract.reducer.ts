@@ -1,16 +1,14 @@
 import { ContractActions, ContractState } from '@Types/contract.types';
-import { GET_CONTRACTS_LIST, SUCCESS } from '../actionTypes';
+import { GET_CONTRACTS_LIST, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
 import { concatActions } from '@helpers/functions';
 
 const initialState: ContractState = {
   contracts: [],
+  currentContract: null,
   loadingContract: false,
 };
 
-export const ContractReducer = (
-  state = initialState,
-  action: ContractActions
-): ContractState => {
+export const ContractReducer = (state = initialState, action: ContractActions): ContractState => {
   switch (action.type) {
     case GET_CONTRACTS_LIST:
       return {
@@ -18,7 +16,7 @@ export const ContractReducer = (
         loadingContract: true,
       };
     case concatActions(GET_CONTRACTS_LIST, SUCCESS):
-      const newContract = action.response.resultObject.map((contract) => {
+      const newContractList = action.response.resultObject.map((contract) => {
         return {
           ...contract,
           startDate: contract.startDate.split('T')[0],
@@ -27,7 +25,18 @@ export const ContractReducer = (
       });
       return {
         ...state,
-        contracts: newContract,
+        contracts: newContractList,
+        loadingContract: false,
+      };
+    case POST_NEW_CONTRACT:
+      return {
+        ...state,
+        loadingContract: true,
+      };
+    case concatActions(POST_NEW_CONTRACT, SUCCESS):
+      return {
+        ...state,
+        contracts: [...state.contracts, action.response.resultObject],
         loadingContract: false,
       };
     default:

@@ -9,7 +9,7 @@ import { GetVendorList } from '@Actions/vendor.action';
 import { getCurrencyList } from '@Actions/currency.action';
 import { schemaContract } from '@schema/contract';
 import { useBackHistory } from '@hooks';
-// import { postNewContract } from '@Actions/contracts.action';
+import { postNewContract } from '@Actions/contracts.action';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -42,9 +42,9 @@ const CreateContract: React.FC<CreateContractProps> = () => {
       startDate: startDate,
       currencyId: contract.currencyId.value,
       partnerId: contract.partnerId.value,
+      contractFile: '',
     };
-    console.log(newContract);
-    // dispatch(postNewContract(newContract));
+    dispatch(postNewContract(newContract));
   };
 
   useEffect(() => {

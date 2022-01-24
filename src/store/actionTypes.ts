@@ -5,12 +5,12 @@ export const FAIL = '_FAIL';
 export const GET_TOKEN = 'GET_TOKEN';
 
 export const GET_COMPANY_LIST = 'GET_COMPANY_LIST';
-export const GET_ONE_COMPANY = 'GET_ONE_COMPANY';
-
 export const GET_CITIES_LIST = 'GET_CITIES_LIST';
 export const GET_COUNTRIES_LIST = 'GET_COUNTRIES_LIST';
 export const GET_CONTRACTS_LIST = 'GET_CONTRACTS_LIST';
 export const GET_CURRENCY_LIST = 'GET_CURRENCY_LIST';
+export const GET_ONE_COMPANY = 'GET_ONE_COMPANY';
+export const GET_ONE_CONTRACT = 'GET_ONE_CONTRACT';
 
 export const GET_VENDOR_LIST = 'GET_VENDOR_LIST';
 export const GET_ONE_VENDOR = 'GET_ONE_VENDOR';
