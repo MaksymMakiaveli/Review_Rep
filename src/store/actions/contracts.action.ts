@@ -9,7 +9,7 @@ export const getContractList = (): ContractActions => ({
   },
 });
 
-export const getOneCompany = (id: string | number): ContractActions => ({
+export const getOneContract = (id: string | number): ContractActions => ({
   type: GET_ONE_CONTRACT,
   api: {
     url: `/Contract/GetContracById/${id}`,

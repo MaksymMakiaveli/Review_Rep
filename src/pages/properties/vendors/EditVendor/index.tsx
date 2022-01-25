@@ -6,8 +6,8 @@ import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { HeaderEditAction, ModalDelete } from '@components';
 import { useToggle } from '@hooks';
-import Preview from '@pages/VendorPages/EditVendor/Preview';
-import Edit from '@pages/VendorPages/EditVendor/Edit';
+import Preview from '@pages/properties/vendors/EditVendor/Preview';
+import Edit from '@pages/properties/vendors/EditVendor/Edit';
 
 type VendorParams = {
   PartnerID: string;

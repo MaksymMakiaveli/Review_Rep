@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import VendorList from '@pages/VendorPages/VendorList';
-import CreateVendor from '@pages/VendorPages/CreateVendor';
+import VendorList from './VendorList';
+import CreateVendor from './CreateVendor';
 import EditVendor from './EditVendor';
 
 interface VendorsProps {}

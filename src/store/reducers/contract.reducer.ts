@@ -1,5 +1,5 @@
 import { ContractActions, ContractState } from '@Types/contract.types';
-import { GET_CONTRACTS_LIST, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
+import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
 import { concatActions } from '@helpers/functions';
 
 const initialState: ContractState = {
@@ -26,6 +26,17 @@ export const ContractReducer = (state = initialState, action: ContractActions): 
       return {
         ...state,
         contracts: newContractList,
+        loadingContract: false,
+      };
+    case GET_ONE_CONTRACT:
+      return {
+        ...state,
+        loadingContract: true,
+      };
+    case concatActions(GET_ONE_CONTRACT, SUCCESS):
+      return {
+        ...state,
+        currentContract: action.response.resultObject,
         loadingContract: false,
       };
     case POST_NEW_CONTRACT:

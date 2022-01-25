@@ -5,9 +5,9 @@ import { Route, Routes } from 'react-router-dom';
 import { Header, Sidebar } from '@components';
 import { Loader } from '@common';
 
-const Company = React.lazy(() => import('@pages/CompanyPages/Company'));
-const Contract = React.lazy(() => import('@pages/ContractPages/Contract'));
-const Vendors = React.lazy(() => import('@pages/VendorPages/Vendors'));
+const Company = React.lazy(() => import('@pages/properties/companies/Company'));
+const Contract = React.lazy(() => import('@pages/properties/contracts/Contract'));
+const Vendors = React.lazy(() => import('@pages/properties/vendors/Vendors'));
 
 function App() {
   const dispatch = useDispatch();

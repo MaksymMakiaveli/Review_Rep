@@ -6,8 +6,8 @@ import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { HeaderEditAction, ModalDelete } from '@components';
 import { useToggle } from '@hooks';
-import Preview from '@pages/CompanyPages/EditCompany/Preview';
-import Edit from '@pages/CompanyPages/EditCompany/Edit';
+import Preview from '@pages/properties/companies/EditCompany/Preview';
+import Edit from '@pages/properties/companies/EditCompany/Edit';
 
 type CompanyParams = {
   CompanyID: string;
