@@ -51,11 +51,11 @@ const EditContract: React.FC<EditContractProps> = () => {
             onDeleteButton={setOpenModal}
           />
         )}
-        {modeEdit ? <PreviewContract currentContract={currentContract} /> : null}
+        {!modeEdit ? <PreviewContract currentContract={currentContract} /> : null}
         <ModalDelete
           title="Contract"
           body="the contract"
-          name={currentContract.name}
+          name={`№${currentContract.no}`}
           open={openModal}
           setOpen={setOpenModal}
           onDelete={deleteContract}

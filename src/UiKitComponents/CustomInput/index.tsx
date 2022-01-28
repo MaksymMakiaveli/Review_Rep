@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import './CustomInput.scss';
 import cl from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import InputContainer from '../InputContainer';
+import InputHelperBox from '../InputHelperBox';
 
 interface CustomInputProps {
   label: string;
@@ -15,6 +15,7 @@ interface CustomInputProps {
   disabled?: boolean;
   defaultValue?: string | number;
 }
+const PureInputHelperBox = React.memo(InputHelperBox);
 
 const CustomInput = React.forwardRef<
   HTMLInputElement,
@@ -37,7 +38,7 @@ const CustomInput = React.forwardRef<
   const errorInput = errorText ? 'custom-input__error' : '';
 
   return (
-    <InputContainer
+    <PureInputHelperBox
       label={label}
       id={id}
       required={required}
@@ -54,7 +55,7 @@ const CustomInput = React.forwardRef<
         defaultValue={defaultValue}
         {...rest}
       />
-    </InputContainer>
+    </PureInputHelperBox>
   );
 });
 

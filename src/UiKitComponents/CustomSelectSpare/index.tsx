@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cl from 'classnames';
 import Select from 'react-select';
 import { Control, Controller, FieldPath } from 'react-hook-form';
-import InputContainer from '../InputContainer';
+import InputContainer from '../InputHelperBox';
 import './CustomSelect.scss';
 
 interface SelectOptions {

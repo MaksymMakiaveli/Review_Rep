@@ -34,7 +34,7 @@ const dataKeyContractList: DataKeyType[] = [
     sortable: true,
   },
   {
-    key: 'currencyId',
+    key: 'currencyName',
     label: 'Currency',
     align: 'left',
     flexGrow: 1,
@@ -51,13 +51,9 @@ const dataKeyContractList: DataKeyType[] = [
 const getContractState = (state: RootState) => state.ContractReducer;
 
 const ListContracts: React.FC<ListContractsProps> = () => {
-  const { contracts, loadingContract } = useSelector<RootState, ContractState>(
-    getContractState
-  );
+  const { contracts, loadingContract } = useSelector<RootState, ContractState>(getContractState);
   const dispatch = useDispatch();
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>(
-    []
-  );
+  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
   useEffect(() => {
     if (!contracts.length) {
       dispatch(getContractList());

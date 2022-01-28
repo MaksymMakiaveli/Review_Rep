@@ -12,7 +12,7 @@ export const getContractList = (): ContractActions => ({
 export const getOneContract = (id: string | number): ContractActions => ({
   type: GET_ONE_CONTRACT,
   api: {
-    url: `/Contract/GetContracById/${id}`,
+    url: `/Contract/GetContractById/${id}`,
     method: 'GET',
   },
 });

@@ -80,9 +80,13 @@ const Edit: React.FC<EditProps> = (props) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HeaderSaveAction title={currentVendor.name} errors={errors} onCancelButton={backToPreview} />
+        <HeaderSaveAction
+          title={currentVendor.name}
+          errors={errors}
+          onCancelButton={backToPreview}
+        />
         <div className="form_box">
-          <InputContainer title="Summary">
+          <InputContainer title="Summary" columns={2}>
             <CustomInput
               errorText={errors.name?.message}
               id="VendorName"

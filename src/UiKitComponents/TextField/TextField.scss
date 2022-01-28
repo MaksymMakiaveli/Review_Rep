@@ -1,0 +1,18 @@
+@import '../../styles/variables';
+
+.custom_textarea {
+  max-width: 355px;
+  height: 144px;
+  width: 100%;
+  padding: 16px;
+  resize: none;
+  background: $form-background-mint;
+}
+
+.textarea_length {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: $form-fill;
+  font-size: 10px;
+}

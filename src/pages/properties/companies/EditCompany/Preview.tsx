@@ -11,17 +11,10 @@ const Preview: React.FC<PreviewProps> = (props) => {
   const { currentCompany } = props;
   return (
     <div className="form_box">
-      <InputContainer title="Summary">
+      <InputContainer title="Summary" columns={2}>
         <PreviewField label="Company Name" description={currentCompany.name} />
-        <PreviewField
-          label="Tax Office"
-          description={currentCompany.taxOffice}
-        />
-        <PreviewField
-          label="Company Code"
-          description={currentCompany.companyCode}
-        />
-
+        <PreviewField label="Tax Office" description={currentCompany.taxOffice} />
+        <PreviewField label="Company Code" description={currentCompany.companyCode} />
         <PreviewField label="TXN" description={currentCompany.taxNumber} />
       </InputContainer>
       <Divider margin="40px 0 20px 0" />
@@ -32,14 +25,8 @@ const Preview: React.FC<PreviewProps> = (props) => {
           <PreviewField label="Address" description={currentCompany.address} />
         </InputContainer>
         <InputContainer title="Contacts">
-          <PreviewField
-            label="Email"
-            description={currentCompany.contactName}
-          />
-          <PreviewField
-            label="Phone number"
-            description={currentCompany.phone}
-          />
+          <PreviewField label="Email" description={currentCompany.contactName} />
+          <PreviewField label="Phone number" description={currentCompany.phone} />
         </InputContainer>
       </div>
     </div>

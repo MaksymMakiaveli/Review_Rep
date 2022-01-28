@@ -2,6 +2,7 @@ import { Company } from '@Types/company.types';
 import { BaseAction, Concat } from '@Types/index';
 import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
 import { TSelectValue } from '@Types/application.types';
+import { Vendor } from '@Types/vendor.types';
 
 export type Contract = {
   contractCode: string;
@@ -23,9 +24,10 @@ export type Contract = {
   isActive: boolean;
   isValid: boolean;
   currencyId: number;
+  currencyName: string;
   company: Company[];
+  partner: Vendor;
   //TODO: как узнаем тип изменить any
-  partner: any;
   nonCurrAssetContracts: any;
 };
 export type TCreateContract = {
@@ -52,7 +54,8 @@ export interface ContractState {
 }
 
 export interface GetContractsList extends BaseAction<typeof GET_CONTRACTS_LIST> {}
-export interface GetContractsListSuccess extends BaseAction<Concat<typeof GET_CONTRACTS_LIST, typeof SUCCESS>> {
+export interface GetContractsListSuccess
+  extends BaseAction<Concat<typeof GET_CONTRACTS_LIST, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     resultObject: Contract[];
@@ -60,7 +63,8 @@ export interface GetContractsListSuccess extends BaseAction<Concat<typeof GET_CO
 }
 
 export interface GetOneContract extends BaseAction<typeof GET_ONE_CONTRACT> {}
-export interface GetOneContractSuccess extends BaseAction<Concat<typeof GET_ONE_CONTRACT, typeof SUCCESS>> {
+export interface GetOneContractSuccess
+  extends BaseAction<Concat<typeof GET_ONE_CONTRACT, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     resultObject: Contract;
@@ -68,7 +72,8 @@ export interface GetOneContractSuccess extends BaseAction<Concat<typeof GET_ONE_
 }
 
 export interface PostNewContract extends BaseAction<typeof POST_NEW_CONTRACT> {}
-export interface PostNewContractSuccess extends BaseAction<Concat<typeof POST_NEW_CONTRACT, typeof SUCCESS>> {
+export interface PostNewContractSuccess
+  extends BaseAction<Concat<typeof POST_NEW_CONTRACT, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     resultObject: Contract;

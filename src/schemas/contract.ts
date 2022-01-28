@@ -13,16 +13,10 @@ export const schemaContract = yup.object({
   startDate: yup
     .string()
     .required('This field is required')
-    .matches(
-      /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
-      'Date must be format 0000-00-00'
-    ),
+    .matches(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, 'Date must be format 0000-00-00'),
   endDate: yup
     .string()
     .required('This field is required')
-    .matches(
-      /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
-      'Date must be format 0000-00-00'
-    ),
-  // description: yup.string(),
+    .matches(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, 'Date must be format 0000-00-00'),
+  description: yup.string().max(150, 'Max length 150 characters'),
 });

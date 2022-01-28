@@ -75,7 +75,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <HeaderSaveAction title="New Vendor" errors={errors} onCancelButton={backHistory} />
           <div className="form_box">
-            <InputContainer title="Summary">
+            <InputContainer title="Summary" columns={2}>
               <CustomInput
                 errorText={errors.name?.message}
                 id="VendorName"

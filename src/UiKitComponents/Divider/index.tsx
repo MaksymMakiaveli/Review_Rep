@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import classes from './Divider.module.scss';
 
 interface DividerProps {
-  margin: string;
+  margin?: string;
 }
 
 const Divider: React.FC<DividerProps> = (props) => {

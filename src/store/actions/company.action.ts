@@ -18,7 +18,7 @@ export const GetCompanyList = (): CompanyActions => ({
 export const GetOneCompany = (id: string | number): CompanyActions => ({
   type: GET_ONE_COMPANY,
   api: {
-    url: `/Company/GetFirmByCompanyId/${id}`,
+    url: `/Company/GetCompanyById/${id}`,
     method: 'GET',
   },
 });

@@ -60,7 +60,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <HeaderSaveAction title="New Company" errors={errors} onCancelButton={backHistory} />
           <div className="form_box">
-            <InputContainer title="Summary">
+            <InputContainer columns={2} title="Summary">
               <CustomInput
                 errorText={errors.name?.message}
                 id="CompanyName"

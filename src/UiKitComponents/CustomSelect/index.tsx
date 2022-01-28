@@ -1,25 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import cl from 'classnames';
 import Select from 'react-select';
-import { Controller, FieldValues, UseControllerProps } from 'react-hook-form';
-import InputContainer, { InputContainerProps } from '../InputContainer';
-import './CustomSelect.scss';
+import { Controller } from 'react-hook-form';
+import InputContainer from '../InputHelperBox';
 import { TSelectValue } from '@Types/application.types';
-import { UseFormSetValue } from 'react-hook-form/dist/types/form';
+import { CustomSelectProps } from './SelectType';
+import cl from 'classnames';
+import './CustomSelect.scss';
 
-interface CustomSelectProps<FieldType extends FieldValues = FieldValues>
-  extends UseControllerProps<FieldType>,
-    InputContainerProps {
-  options: any[];
-  optionValue: string;
-  optionLabel: string;
-  placeholder?: string;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  getSelectValue?: (value: TSelectValue<number>) => void;
-  setValue?: UseFormSetValue<FieldType>;
-}
 const PureReactSelect = React.memo(Select);
+const PureInputContainer = React.memo(InputContainer);
 
 const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
   const {
@@ -58,19 +47,25 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
     }
   }, [valueSelect]);
   useEffect(() => {
-    if (setValue) {
-      setValue(name, defaultValue || getOptions[0]);
+    if (setValue && defaultValue) {
+      setValue(name, defaultValue);
     }
   }, [setValue, defaultValue]);
 
   return (
-    <InputContainer label={label} id={id} errorText={errorText} required={required} disabled={isDisabled}>
+    <PureInputContainer
+      label={label}
+      id={id}
+      errorText={errorText}
+      required={required}
+      disabled={isDisabled}
+    >
       <Controller
         name={name}
         {...rest}
         render={({ field: { onChange, ref } }) => (
           <PureReactSelect
-            defaultValue={defaultValue || getOptions[0]}
+            defaultValue={defaultValue}
             ref={ref}
             placeholder={placeholder}
             className={cl('react-select-container', selectError, selectActive)}
@@ -85,7 +80,7 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
           />
         )}
       />
-    </InputContainer>
+    </PureInputContainer>
   );
 };
 
