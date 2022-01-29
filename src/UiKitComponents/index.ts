@@ -10,6 +10,7 @@ import FileInput from './FileInput';
 import CustomSelect from './CustomSelect';
 import InputHelperBox from './InputHelperBox';
 import TextField from './TextField';
+import PreviewFile from './PreviewFile';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   FileInput,
   InputHelperBox,
   TextField,
+  PreviewFile,
 };

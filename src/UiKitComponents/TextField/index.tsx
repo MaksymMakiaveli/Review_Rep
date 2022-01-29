@@ -5,18 +5,7 @@ import InputHelperBox from '../InputHelperBox';
 import './TextField.scss';
 
 const TextField = <TextFieldType,>(props: TextFieldProps<TextFieldType>) => {
-  const {
-    label,
-    id,
-    errorText,
-    disabled,
-    name,
-    statusActive,
-    placeholder,
-    required,
-    maxLength,
-    ...rest
-  } = props;
+  const { label, id, errorText, disabled, name, placeholder, required, maxLength, ...rest } = props;
 
   const [valueLength, setValueLength] = useState<number>(0);
 
@@ -26,7 +15,6 @@ const TextField = <TextFieldType,>(props: TextFieldProps<TextFieldType>) => {
     setValueLength(length);
   };
 
-  console.log(statusActive);
   return (
     <InputHelperBox
       label={label}

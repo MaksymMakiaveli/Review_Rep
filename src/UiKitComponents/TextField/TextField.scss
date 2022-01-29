@@ -7,6 +7,29 @@
   padding: 16px;
   resize: none;
   background: $form-background-mint;
+  color: $typography-primary-color;
+  border: 1px solid $form-background-mint;
+  border-radius: 4px;
+  transition: $transition;
+  &::placeholder {
+    color: $form-placeholder;
+  }
+  &:focus {
+    border-color: $form-focus;
+    color: $form-focus;
+    background: $form-background-white;
+    &::placeholder {
+      color: $form-focus;
+    }
+  }
+  &:disabled {
+    background: transparent;
+    border-color: $form-disabled;
+    color: $form-disabled;
+    &::placeholder {
+      color: $form-disabled;
+    }
+  }
 }
 
 .textarea_length {

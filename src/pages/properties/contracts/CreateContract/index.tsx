@@ -1,6 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classes from '../Contract.module.scss';
-import { FileInput, CustomInput, CustomSelect, Divider, TextField } from '@UiKitComponents';
+import {
+  FileInput,
+  CustomInput,
+  CustomSelect,
+  Divider,
+  TextField,
+  PreviewFile,
+} from '@UiKitComponents';
 import { TFormCreateContract } from '@Types/contract.types';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { RootState } from '@RootStateType';
@@ -32,6 +39,8 @@ const CreateContract: React.FC<CreateContractProps> = () => {
   } = useForm<TFormCreateContract>({
     resolver: yupResolver(schemaContract),
   });
+  const [files, setFiles] = useState<File[]>();
+  console.log(files);
 
   const memoizedControl = useMemo(() => control, []);
 
@@ -157,10 +166,14 @@ const CreateContract: React.FC<CreateContractProps> = () => {
               </InputContainer>
             </div>
             <Divider margin="53px 0 32px 0" />
-            <div className={classes.form_box_help}>
+            <div className={classes.form_box_document}>
               <InputContainer title="Documents" />
-              <FileInput name="contractFile" control={control} />
-              <input type="file" multiple />
+              <FileInput getFiles={setFiles} name="contractFile" control={control} />
+            </div>
+            <div className={classes.form_box_files}>
+              {files
+                ? files.map((file) => <PreviewFile nameFile={file.name} key={file.name} />)
+                : null}
             </div>
           </div>
         </form>

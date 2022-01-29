@@ -2,22 +2,30 @@
 
 .custom_file_input {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 22px;
-  width: 355px;
-  border: 2px dashed $main-default-color;
-  border-radius: 4px;
-  text-align: center;
   label {
-    color: $main-blue-color;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 31px;
+    border-radius: 4px;
+    background: $main-blue-color;
+    color: $main-white;
     font-weight: bold;
     font-size: 14px;
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 19px;
+      margin: 0 10px 0 0;
+      background-image: url('../../assets/icons/Upload.svg');
+    }
   }
   input {
     position: absolute;
-    z-index: -1;
+    z-index: 0;
     opacity: 0;
   }
 }

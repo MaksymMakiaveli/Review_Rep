@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store from './store';
 import 'rsuite/dist/rsuite.min.css';
-import 'antd/dist/antd.css';
 import './styles/global.scss';
 
 ReactDOM.render(

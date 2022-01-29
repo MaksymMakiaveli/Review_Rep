@@ -5,6 +5,17 @@
   grid-template-columns: 355px 355px;
   justify-content: space-between;
 }
+.form_box_document {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form_box_files {
+  margin-top: 32px;
+  div:not(:first-child) {
+    margin-top: 10px;
+  }
+}
 .group_input {
   display: flex;
   justify-content: space-between;
