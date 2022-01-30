@@ -6,17 +6,18 @@ import { RootState } from '@RootStateType';
 import { getOneContract } from '@Actions/contracts.action';
 import { Loader } from '@common';
 import { HeaderEditAction, ModalDelete } from '@components';
-import PreviewContract from '@pages/properties/contracts/EditContract/Preview';
+import PreviewContract from './Preview';
+import Edit from './Edit';
 
 type ContractParams = {
   ContractID: string;
 };
 
-interface EditContractProps {}
+interface ContractProps {}
 
 const getContractState = (state: RootState) => state.ContractReducer;
 
-const EditContract: React.FC<EditContractProps> = () => {
+const EditContract: React.FC<ContractProps> = () => {
   const params = useParams<ContractParams>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,6 +42,12 @@ const EditContract: React.FC<EditContractProps> = () => {
     return <Loader />;
   }
 
+  const updateCurrentContract = {
+    ...currentContract,
+    endDate: currentContract.endDate.split('T')[0],
+    startDate: currentContract.startDate.split('T')[0],
+  };
+
   return (
     <div>
       <div className="padding_wrapper_page">
@@ -51,7 +58,11 @@ const EditContract: React.FC<EditContractProps> = () => {
             onDeleteButton={setOpenModal}
           />
         )}
-        {!modeEdit ? <PreviewContract currentContract={currentContract} /> : null}
+        {modeEdit ? (
+          <Edit currentContract={updateCurrentContract} backToPreview={setModeEdit} />
+        ) : (
+          <PreviewContract currentContract={updateCurrentContract} />
+        )}
         <ModalDelete
           title="Contract"
           body="the contract"
