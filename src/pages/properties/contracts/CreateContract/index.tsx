@@ -19,6 +19,7 @@ import { useBackHistory } from '@hooks';
 // import { postNewContract } from '@Actions/contracts.action';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import {Loader} from "@common";
 
 interface CreateContractProps {}
 
@@ -40,21 +41,24 @@ const CreateContract: React.FC<CreateContractProps> = () => {
     resolver: yupResolver(schemaContract),
   });
   const [files, setFiles] = useState<File[]>();
-  console.log(files);
-
   const memoizedControl = useMemo(() => control, []);
 
+
+
   const onSubmit = (contract: TFormCreateContract) => {
+
     const endDate = new Date(contract.endDate).toISOString();
     const startDate = new Date(contract.startDate).toISOString();
+
+
     const newContract = {
       ...contract,
       endDate: endDate,
       startDate: startDate,
       currencyId: contract.currencyId.value,
       partnerId: contract.partnerId.value,
-      contractFile: '',
     };
+
     console.log(newContract);
     // dispatch(postNewContract(newContract));
   };
@@ -67,6 +71,13 @@ const CreateContract: React.FC<CreateContractProps> = () => {
       dispatch(getCurrencyList());
     }
   }, []);
+
+
+
+ if(loadingVendor || loadingCurrency) {
+   return <Loader/>
+ }
+
 
   return (
     <div>
@@ -113,28 +124,33 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     label=""
                     id="currency"
                     name="currencyId"
-                    control={control}
+                    control={memoizedControl}
                     options={currencyList}
                     optionValue="currencyId"
                     optionLabel="symbol"
-                    isDisabled={loadingCurrency}
+                    setValue={setValue}
+                    defaultValue={{
+                      value: currencyList[0]?.currencyId,
+                      label: currencyList[0]?.symbol
+                    }}
                   />
                 </div>
               </InputContainer>
               <InputContainer>
                 <CustomSelect
+                  errorText={errors.partnerId?.value?.message}
                   label="Vendor"
                   id="partnerId"
                   name="partnerId"
-                  control={control}
+                  control={memoizedControl}
                   placeholder="Chose partner"
                   options={vendorList}
                   optionValue="partnerId"
                   optionLabel="name"
                   required
+                  setValue={setValue}
                   isLoading={loadingVendor}
                   isDisabled={loadingVendor}
-                  setValue={setValue}
                 />
                 <div className={classes.group_input}>
                   <CustomInput

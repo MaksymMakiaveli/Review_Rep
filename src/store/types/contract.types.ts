@@ -42,9 +42,10 @@ export type TCreateContract = {
   contractFile: string;
   description: string;
 };
-export type TFormCreateContract = Omit<TCreateContract, 'partnerId' | 'currencyId'> & {
+export type TFormCreateContract = Omit<TCreateContract, 'partnerId' | 'currencyId' | 'contractFile'> & {
   partnerId: TSelectValue<number>;
   currencyId: TSelectValue<number>;
+  contractFile: File[];
 };
 
 export interface ContractState {

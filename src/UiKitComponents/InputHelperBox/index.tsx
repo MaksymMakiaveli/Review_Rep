@@ -12,7 +12,7 @@ const InputHelperBox = (props: InputHelperBoxProps) => {
 
   return (
     <div className={cl('custom-input-container', Error)}>
-      <p className="custom-input-container__errorText">{!disabled && errorText}</p>
+      {errorText ? <p className="custom-input-container__errorText">{errorText}</p> : null}
       {children}
       <label htmlFor={id} className={cl('custom-input-container__label', Disabled)}>
         {label}

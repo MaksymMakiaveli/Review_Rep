@@ -31,26 +31,35 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
   } = props;
   const [valueSelect, setValueSelect] = useState<TSelectValue<number>>();
 
+
   const selectError = errorText ? 'react-select-container__error' : '';
   const selectActive = statusActive ? 'react-select-container__active' : '';
 
-  const getOptions: any[] = useMemo(() => {
+
+  const getOptions: TSelectValue<number>[] = useMemo(() => {
     return options.map((option) => ({
       value: option[optionValue],
       label: option[optionLabel],
     }));
   }, [options]);
 
+
+
   useEffect(() => {
     if (getSelectValue && valueSelect) {
       getSelectValue(valueSelect);
     }
   }, [valueSelect]);
+
   useEffect(() => {
     if (setValue && defaultValue) {
+
       setValue(name, defaultValue);
+
     }
   }, [setValue, defaultValue]);
+
+
 
   return (
     <PureInputContainer
