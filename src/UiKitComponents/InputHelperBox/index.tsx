@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import cl from 'classnames';
 import './InputContainer.scss';
 import { InputHelperBoxProps } from './InputHelperBoxType';
@@ -21,4 +21,4 @@ const InputHelperBox = (props: InputHelperBoxProps) => {
     </div>
   );
 };
-export default InputHelperBox;
+export default memo(InputHelperBox);

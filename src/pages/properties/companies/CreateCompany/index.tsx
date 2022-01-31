@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@RootStateType';
-import { Divider, CustomInput, CustomSelect } from '@UiKitComponents';
+import { Divider, TextField, Select } from '@UiKitComponents';
 import { TFormCreateCompany } from '@Types/company.types';
 import { postNewCompany } from '@Actions/company.action';
 import { Loader } from '@common';
@@ -61,7 +61,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
           <HeaderSaveAction title="New Company" errors={errors} onCancelButton={backHistory} />
           <div className="form_box">
             <InputContainer columns={2} title="Summary">
-              <CustomInput
+              <TextField
                 errorText={errors.name?.message}
                 id="CompanyName"
                 placeholder="Company name"
@@ -69,14 +69,14 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                 required
                 {...register('name')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.taxOffice?.message}
                 id="TaxOffice"
                 placeholder="Tax Office"
                 label="Tax Office"
                 {...register('taxOffice')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.companyCode?.message}
                 id="CompanyCode"
                 placeholder="Company code"
@@ -85,7 +85,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                 {...register('companyCode')}
               />
 
-              <CustomInput
+              <TextField
                 errorText={errors.taxNumber?.message}
                 id="TXN"
                 placeholder="TXN"
@@ -97,7 +97,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
             <Divider margin="50px 0 30px 0" />
             <div className="markup_helper-box">
               <InputContainer title="Location">
-                <CustomSelect
+                <Select
                   errorText={errors.countryId?.value?.message}
                   label="Country"
                   id="Country"
@@ -112,7 +112,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                   getSelectValue={getCountryValue}
                   required
                 />
-                <CustomSelect
+                <Select
                   errorText={errors.cityId?.value?.message}
                   label="City"
                   id="City"
@@ -127,7 +127,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                   required
                 />
 
-                <CustomInput
+                <TextField
                   errorText={errors.address?.message}
                   id="Address"
                   placeholder="Add address"
@@ -137,7 +137,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                 />
               </InputContainer>
               <InputContainer title="Contacts">
-                <CustomInput
+                <TextField
                   errorText={errors.contactName?.message}
                   id="Email"
                   placeholder="Email"
@@ -145,7 +145,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                   required
                   {...register('contactName')}
                 />
-                <CustomInput
+                <TextField
                   errorText={errors.phone?.message}
                   id="PhoneNumber"
                   placeholder="Phone number"

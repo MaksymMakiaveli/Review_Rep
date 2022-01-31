@@ -1,13 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import classes from '../Contract.module.scss';
-import {
-  FileInput,
-  CustomInput,
-  CustomSelect,
-  Divider,
-  TextField,
-  PreviewFile,
-} from '@UiKitComponents';
+import { FileInput, TextField, Select, Divider, TextArea, PreviewFile } from '@UiKitComponents';
 import { TFormCreateContract } from '@Types/contract.types';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { RootState } from '@RootStateType';
@@ -19,7 +12,7 @@ import { useBackHistory } from '@hooks';
 // import { postNewContract } from '@Actions/contracts.action';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {Loader} from "@common";
+import { Loader } from '@common';
 
 interface CreateContractProps {}
 
@@ -35,7 +28,6 @@ const CreateContract: React.FC<CreateContractProps> = () => {
     register,
     control,
     formState: { errors },
-    setValue,
     handleSubmit,
   } = useForm<TFormCreateContract>({
     resolver: yupResolver(schemaContract),
@@ -43,13 +35,9 @@ const CreateContract: React.FC<CreateContractProps> = () => {
   const [files, setFiles] = useState<File[]>();
   const memoizedControl = useMemo(() => control, []);
 
-
-
   const onSubmit = (contract: TFormCreateContract) => {
-
     const endDate = new Date(contract.endDate).toISOString();
     const startDate = new Date(contract.startDate).toISOString();
-
 
     const newContract = {
       ...contract,
@@ -72,12 +60,9 @@ const CreateContract: React.FC<CreateContractProps> = () => {
     }
   }, []);
 
-
-
- if(loadingVendor || loadingCurrency) {
-   return <Loader/>
- }
-
+  if (loadingVendor || loadingCurrency) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -87,7 +72,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
           <div className="form_box">
             <div className={classes.form_box_help}>
               <InputContainer title="Summary">
-                <CustomInput
+                <TextField
                   errorText={errors.contractCode?.message}
                   label="Contract Code"
                   id="contractCode"
@@ -95,7 +80,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                   required
                   {...register('contractCode')}
                 />
-                <CustomInput
+                <TextField
                   errorText={errors.no?.message}
                   label="Contract No"
                   id="no"
@@ -103,7 +88,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                   required
                   {...register('no')}
                 />
-                <CustomInput
+                <TextField
                   errorText={errors.name?.message}
                   label="Contract Name"
                   id="name"
@@ -112,7 +97,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                   {...register('name')}
                 />
                 <div className={classes.group_input_price}>
-                  <CustomInput
+                  <TextField
                     errorText={errors.price?.message}
                     label="Agreement Price"
                     id="price"
@@ -120,7 +105,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     required
                     {...register('price')}
                   />
-                  <CustomSelect
+                  <Select
                     label=""
                     id="currency"
                     name="currencyId"
@@ -128,16 +113,15 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     options={currencyList}
                     optionValue="currencyId"
                     optionLabel="symbol"
-                    setValue={setValue}
                     defaultValue={{
                       value: currencyList[0]?.currencyId,
-                      label: currencyList[0]?.symbol
+                      label: currencyList[0]?.symbol,
                     }}
                   />
                 </div>
               </InputContainer>
               <InputContainer>
-                <CustomSelect
+                <Select
                   errorText={errors.partnerId?.value?.message}
                   label="Vendor"
                   id="partnerId"
@@ -148,12 +132,11 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                   optionValue="partnerId"
                   optionLabel="name"
                   required
-                  setValue={setValue}
                   isLoading={loadingVendor}
                   isDisabled={loadingVendor}
                 />
                 <div className={classes.group_input}>
-                  <CustomInput
+                  <TextField
                     errorText={errors.startDate?.message}
                     label="Contract Start Date"
                     id="startDate"
@@ -161,7 +144,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     required
                     {...register('startDate')}
                   />
-                  <CustomInput
+                  <TextField
                     errorText={errors.endDate?.message}
                     label="Contract End Date"
                     id="endDate"
@@ -170,14 +153,13 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     {...register('endDate')}
                   />
                 </div>
-                <TextField
+                <TextArea
                   errorText={errors.description?.message}
-                  maxLength={150}
                   label="Description"
                   id="description"
-                  name="description"
                   placeholder="Enter description here ..."
-                  control={memoizedControl}
+                  control={control}
+                  name="description"
                 />
               </InputContainer>
             </div>

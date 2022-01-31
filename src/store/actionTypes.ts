@@ -24,3 +24,4 @@ export const PUT_VENDOR = 'PUT_VENDOR';
 
 export const DELETE_COMPANY = 'DELETE_COMPANY';
 export const DELETE_VENDOR = 'DELETE_VENDOR';
+export const DELETE_CONTRACT = 'DELETE_CONTRACT';

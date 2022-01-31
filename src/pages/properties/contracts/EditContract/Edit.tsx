@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaContract } from '@schema/contract';
 import { HeaderSaveAction, InputContainer } from '@components';
 import classes from '../Contract.module.scss';
-import { CustomInput, CustomSelect, TextField } from '@UiKitComponents';
+import { TextField, Select, Divider, TextArea } from '@UiKitComponents';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '@common';
@@ -30,7 +30,6 @@ const Edit: React.FC<EditProps> = (props) => {
     formState: { errors },
     handleSubmit,
     control,
-    setValue,
   } = useForm<TFormCreateContract>({
     resolver: yupResolver(schemaContract),
   });
@@ -83,48 +82,48 @@ const Edit: React.FC<EditProps> = (props) => {
       <div className="form_box">
         <div className={classes.form_box_help}>
           <InputContainer title="Summary">
-            <CustomInput
+            <TextField
               errorText={errors.contractCode?.message}
               label="Contract Code"
               id="contractCode"
               placeholder="Contract Code"
               defaultValue={currentContract.contractCode}
               required
-              statusActive
+              isActive
               {...register('contractCode')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.no?.message}
               label="Contract No"
               id="no"
               placeholder="Contract No"
               defaultValue={currentContract.no}
               required
-              statusActive
+              isActive
               {...register('no')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.name?.message}
               label="Contract Name"
               id="name"
               placeholder="Contract Name"
               defaultValue={currentContract.name}
               required
-              statusActive
+              isActive
               {...register('name')}
             />
             <div className={classes.group_input_price}>
-              <CustomInput
+              <TextField
                 errorText={errors.price?.message}
                 label="Agreement Price"
                 id="price"
                 placeholder="0,00"
                 defaultValue={currentContract.price}
                 required
-                statusActive
+                isActive
                 {...register('price')}
               />
-              <CustomSelect
+              <Select
                 label=""
                 id="currency"
                 name="currencyId"
@@ -132,14 +131,13 @@ const Edit: React.FC<EditProps> = (props) => {
                 options={currencyList}
                 optionValue="currencyId"
                 optionLabel="symbol"
-                setValue={setValue}
-                statusActive
+                isActive
                 defaultValue={currencyDefaultValue}
               />
             </div>
           </InputContainer>
           <InputContainer>
-            <CustomSelect
+            <Select
               errorText={errors.partnerId?.value?.message}
               label="Vendor"
               id="partnerId"
@@ -150,44 +148,48 @@ const Edit: React.FC<EditProps> = (props) => {
               optionValue="partnerId"
               optionLabel="name"
               required
-              setValue={setValue}
               isLoading={loadingVendor}
               isDisabled={loadingVendor}
-              statusActive
+              isActive
               defaultValue={partnerDefaultValue}
             />
             <div className={classes.group_input}>
-              <CustomInput
+              <TextField
                 errorText={errors.startDate?.message}
                 label="Contract Start Date"
                 id="startDate"
                 placeholder="0000-00-12"
                 required
-                statusActive
+                isActive
                 defaultValue={currentContract.startDate}
                 {...register('startDate')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.endDate?.message}
                 label="Contract End Date"
                 id="endDate"
                 placeholder="0000-00-12"
                 required
-                statusActive
+                isActive
                 defaultValue={currentContract.endDate}
                 {...register('endDate')}
               />
             </div>
-            <TextField
+            <TextArea
               errorText={errors.description?.message}
-              maxLength={150}
               label="Description"
               id="description"
-              name="description"
               placeholder="Enter description here ..."
-              control={memoizedControl}
+              isActive
+              name="description"
+              control={control}
+              defaultValue="22312412342"
             />
           </InputContainer>
+        </div>
+        <Divider margin="25px 0 25px 0" />
+        <div className={classes.form_box_document}>
+          <InputContainer title="Documents" />
         </div>
       </div>
     </form>

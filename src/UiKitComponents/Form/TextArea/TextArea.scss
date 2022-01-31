@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .custom_textarea {
   max-width: 355px;
@@ -14,7 +14,8 @@
   &::placeholder {
     color: $form-placeholder;
   }
-  &:focus {
+  &:focus,
+  &_active {
     border-color: $form-focus;
     color: $form-focus;
     background: $form-background-white;

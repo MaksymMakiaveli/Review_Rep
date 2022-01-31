@@ -1,12 +1,18 @@
 import { Company } from '@Types/company.types';
 import { BaseAction, Concat } from '@Types/index';
-import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
+import {
+  DELETE_CONTRACT,
+  GET_CONTRACTS_LIST,
+  GET_ONE_CONTRACT,
+  POST_NEW_CONTRACT,
+  SUCCESS,
+} from '../actionTypes';
 import { TSelectValue } from '@Types/application.types';
 import { Vendor } from '@Types/vendor.types';
 
 export type Contract = {
   contractCode: string;
-  contractId: string;
+  contractId: number;
   name: string;
   no: string;
   companyId: number;
@@ -42,7 +48,10 @@ export type TCreateContract = {
   contractFile: string;
   description: string;
 };
-export type TFormCreateContract = Omit<TCreateContract, 'partnerId' | 'currencyId' | 'contractFile'> & {
+export type TFormCreateContract = Omit<
+  TCreateContract,
+  'partnerId' | 'currencyId' | 'contractFile'
+> & {
   partnerId: TSelectValue<number>;
   currencyId: TSelectValue<number>;
   contractFile: File[];
@@ -81,10 +90,16 @@ export interface PostNewContractSuccess
   };
 }
 
+export interface DeleteContract extends BaseAction<typeof DELETE_CONTRACT> {}
+export interface DeleteContractSuccess
+  extends BaseAction<Concat<typeof DELETE_CONTRACT, typeof SUCCESS>> {}
+
 export type ContractActions =
   | GetContractsList
   | GetContractsListSuccess
   | PostNewContract
   | PostNewContractSuccess
   | GetOneContract
-  | GetOneContractSuccess;
+  | GetOneContractSuccess
+  | DeleteContract
+  | DeleteContractSuccess;

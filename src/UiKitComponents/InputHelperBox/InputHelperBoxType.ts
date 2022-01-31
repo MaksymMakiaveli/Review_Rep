@@ -7,5 +7,5 @@ export interface InputHelperBoxProps {
   errorText?: string;
   required?: boolean;
   disabled?: boolean;
-  statusActive?: boolean;
+  isActive?: boolean;
 }

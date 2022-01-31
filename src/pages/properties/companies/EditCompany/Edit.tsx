@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomInput, Divider } from '@UiKitComponents';
+import { TextField, Divider } from '@UiKitComponents';
 import { Company, TFormCreateCompany, TUpdateCompany } from '@Types/company.types';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { useDispatch } from 'react-redux';
@@ -44,75 +44,75 @@ const Edit: React.FC<EditProps> = (props) => {
       />
       <div className="form_box">
         <InputContainer title="Summary" columns={2}>
-          <CustomInput
+          <TextField
             errorText={errors.name?.message}
             id="CompanyName"
             placeholder="Company name"
             label="Company name"
             defaultValue={currentCompany.name}
-            statusActive
+            isActive
             {...register('name')}
           />
 
-          <CustomInput
+          <TextField
             errorText={errors.taxOffice?.message}
             id="TaxOffice"
             placeholder="Tax Office"
             label="Tax Office"
             defaultValue={currentCompany.taxOffice}
-            statusActive
+            isActive
             {...register('taxOffice')}
           />
 
-          <CustomInput
+          <TextField
             errorText={errors.companyCode?.message}
             id="CompanyCode"
             placeholder="Company code"
             label="Company code"
             defaultValue={currentCompany.companyCode}
-            statusActive
+            isActive
             {...register('companyCode')}
           />
-          <CustomInput
+          <TextField
             errorText={errors.taxNumber?.message}
             id="TXN"
             placeholder="TXN"
             label="TXN"
             defaultValue={currentCompany.taxNumber}
-            statusActive
+            isActive
             {...register('taxNumber', { valueAsNumber: true })}
           />
         </InputContainer>
         <Divider margin="40px 0 20px 0" />
         <div className="markup_helper-box">
           <InputContainer title="Location">
-            <CustomInput
+            <TextField
               errorText={errors.address?.message}
               id="Address"
               placeholder="Add address"
               label="Address"
               defaultValue={currentCompany.address}
-              statusActive
+              isActive
               {...register('address')}
             />
           </InputContainer>
           <InputContainer title="Contacts">
-            <CustomInput
+            <TextField
               errorText={errors.contactName?.message}
               id="Email"
               placeholder="Email"
               label="Email"
               defaultValue={currentCompany.contactName}
-              statusActive
+              isActive
               {...register('contactName')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.phone?.message}
               id="PhoneNumber"
               placeholder="Phone number"
               label="Phone number"
               defaultValue={currentCompany.phone}
-              statusActive
+              isActive
               {...register('phone')}
             />
           </InputContainer>

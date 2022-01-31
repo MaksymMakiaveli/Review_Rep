@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .custom_file_input {
   position: relative;
@@ -20,7 +20,7 @@
       width: 22px;
       height: 19px;
       margin: 0 10px 0 0;
-      background-image: url('../../assets/icons/Upload.svg');
+      background-image: url('../../../assets/icons/Upload.svg');
     }
   }
   input {

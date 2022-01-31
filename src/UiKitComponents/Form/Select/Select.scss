@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .react-select-container {
   max-width: 355px;
@@ -19,6 +19,7 @@
     }
     &__single-value {
       padding: 3px 0;
+      color: $typography-primary-color;
     }
     &__placeholder {
       color: $form-placeholder;

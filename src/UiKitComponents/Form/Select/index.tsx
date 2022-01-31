@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Select from 'react-select';
+import ReactSelect from 'react-select';
 import { Controller } from 'react-hook-form';
-import InputContainer from '../InputHelperBox';
+import InputContainer from '../../InputHelperBox';
 import { TSelectValue } from '@Types/application.types';
-import { CustomSelectProps } from './SelectType';
+import { SelectProps } from './SelectType';
 import cl from 'classnames';
-import './CustomSelect.scss';
+import './Select.scss';
 
-const PureReactSelect = React.memo(Select);
+const PureReactSelect = React.memo(ReactSelect);
 const PureInputContainer = React.memo(InputContainer);
 
-const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
+const Select = <FieldType,>(props: SelectProps<FieldType>) => {
   const {
     errorText,
-    statusActive,
+    isActive,
     label,
     placeholder,
     id,
@@ -25,16 +25,13 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
     isDisabled,
     defaultValue,
     name,
-    setValue,
     getSelectValue,
     ...rest
   } = props;
   const [valueSelect, setValueSelect] = useState<TSelectValue<number>>();
 
-
   const selectError = errorText ? 'react-select-container__error' : '';
-  const selectActive = statusActive ? 'react-select-container__active' : '';
-
+  const selectActive = isActive ? 'react-select-container__active' : '';
 
   const getOptions: TSelectValue<number>[] = useMemo(() => {
     return options.map((option) => ({
@@ -43,23 +40,11 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
     }));
   }, [options]);
 
-
-
   useEffect(() => {
     if (getSelectValue && valueSelect) {
       getSelectValue(valueSelect);
     }
   }, [valueSelect]);
-
-  useEffect(() => {
-    if (setValue && defaultValue) {
-
-      setValue(name, defaultValue);
-
-    }
-  }, [setValue, defaultValue]);
-
-
 
   return (
     <PureInputContainer
@@ -71,6 +56,7 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
     >
       <Controller
         name={name}
+        defaultValue={defaultValue}
         {...rest}
         render={({ field: { onChange, ref } }) => (
           <PureReactSelect
@@ -82,6 +68,7 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
             options={getOptions}
             isLoading={isLoading}
             isDisabled={isDisabled}
+            maxMenuHeight={200}
             onChange={(value) => {
               onChange(value);
               setValueSelect(value as TSelectValue<number>);
@@ -93,4 +80,4 @@ const CustomSelect = <FieldType,>(props: CustomSelectProps<FieldType>) => {
   );
 };
 
-export default CustomSelect;
+export default Select;

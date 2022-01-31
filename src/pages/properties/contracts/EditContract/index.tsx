@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useToggle } from '@hooks';
 import { RootState } from '@RootStateType';
-import { getOneContract } from '@Actions/contracts.action';
+import { deleteContractById, getOneContract } from '@Actions/contracts.action';
 import { Loader } from '@common';
 import { HeaderEditAction, ModalDelete } from '@components';
 import PreviewContract from './Preview';
@@ -28,10 +28,13 @@ const EditContract: React.FC<ContractProps> = () => {
 
   const deleteContract = () => {
     if (currentContract) {
-      console.log('delete contract');
+      const contractId = {
+        contractIds: [currentContract.contractId],
+      };
+      dispatch(deleteContractById(contractId));
     }
     setOpenModal(!open);
-    navigate('/Contract');
+    navigate('/Contracts');
   };
 
   useEffect(() => {

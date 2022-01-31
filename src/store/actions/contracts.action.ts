@@ -1,5 +1,10 @@
 import { ContractActions, TCreateContract } from '@Types/contract.types';
-import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT } from '../actionTypes';
+import {
+  DELETE_CONTRACT,
+  GET_CONTRACTS_LIST,
+  GET_ONE_CONTRACT,
+  POST_NEW_CONTRACT,
+} from '../actionTypes';
 
 export const getContractList = (): ContractActions => ({
   type: GET_CONTRACTS_LIST,
@@ -23,5 +28,14 @@ export const postNewContract = (newContract: TCreateContract): ContractActions =
     url: '/Contract/AddContract',
     method: 'POST',
     data: { ...newContract },
+  },
+});
+
+export const deleteContractById = (contractIds: { contractIds: number[] }): ContractActions => ({
+  type: DELETE_CONTRACT,
+  api: {
+    url: '/Contract/RemoveByIdList',
+    method: 'POST',
+    data: contractIds,
   },
 });

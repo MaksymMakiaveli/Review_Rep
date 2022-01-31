@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Divider, CustomInput, CustomSelect } from '@UiKitComponents';
+import { Divider, TextField, Select } from '@UiKitComponents';
 import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,13 +27,11 @@ const Edit: React.FC<EditProps> = (props) => {
     register,
     formState: { errors },
     control,
-    setValue,
     handleSubmit,
   } = useForm<TFormCreateVendor>({
     resolver: yupResolver(schemaVendor),
   });
   const memoizedControl = useMemo(() => control, []);
-
 
   const countryDefaultValue = useMemo(
     () => ({
@@ -89,47 +87,47 @@ const Edit: React.FC<EditProps> = (props) => {
         />
         <div className="form_box">
           <InputContainer title="Summary" columns={2}>
-            <CustomInput
+            <TextField
               errorText={errors.name?.message}
               id="VendorName"
               placeholder="Vendor name"
               label="Vendor name"
               defaultValue={currentVendor.name}
-              statusActive
+              isActive
               {...register('name')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.taxOffice?.message}
               id="TaxOffice"
               placeholder="Tax Office"
               label="Tax Office"
               defaultValue={currentVendor.taxOffice}
-              statusActive
+              isActive
               {...register('taxOffice')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.partnerCode?.message}
               id="PartnerCode"
               placeholder="Vendor code"
               label="Vendor code"
               defaultValue={currentVendor.partnerCode}
-              statusActive
+              isActive
               {...register('partnerCode')}
             />
-            <CustomInput
+            <TextField
               errorText={errors.taxNumber?.message}
               id="TXN"
               placeholder="TXN"
               label="TXN"
               defaultValue={currentVendor.taxNumber}
-              statusActive
+              isActive
               {...register('taxNumber')}
             />
           </InputContainer>
           <Divider margin="40px 0 20px 0" />
           <div className="markup_helper-box">
             <InputContainer title="Location">
-              <CustomSelect
+              <Select
                 options={countriesList}
                 defaultValue={countryDefaultValue}
                 label="Country"
@@ -142,11 +140,10 @@ const Edit: React.FC<EditProps> = (props) => {
                 isLoading={loadingDefinition}
                 isDisabled={loadingDefinition}
                 getSelectValue={getCountryValue}
-                setValue={setValue}
-                statusActive
+                isActive
               />
 
-              <CustomSelect
+              <Select
                 options={filterCitiesList()}
                 defaultValue={cityDefaultValue}
                 name="cityId"
@@ -158,37 +155,36 @@ const Edit: React.FC<EditProps> = (props) => {
                 optionLabel="name"
                 isLoading={loadingDefinition}
                 isDisabled={!filterCitiesList().length || loadingDefinition}
-                setValue={setValue}
-                statusActive
+                isActive
               />
 
-              <CustomInput
+              <TextField
                 errorText={errors.address?.message}
                 id="Address"
                 placeholder="Add address"
                 label="Address"
                 defaultValue={currentVendor.address}
-                statusActive
+                isActive
                 {...register('address')}
               />
             </InputContainer>
             <InputContainer title="Contacts">
-              <CustomInput
+              <TextField
                 errorText={errors.email?.message}
                 id="Email"
                 placeholder="Email"
                 label="Email"
                 defaultValue={currentVendor.email}
-                statusActive
+                isActive
                 {...register('email')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.phone?.message}
                 id="PhoneNumber"
                 placeholder="Phone number"
                 label="Phone number"
                 defaultValue={currentVendor.phone}
-                statusActive
+                isActive
                 {...register('phone')}
               />
             </InputContainer>

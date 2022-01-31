@@ -26,8 +26,8 @@ const PreviewContract: React.FC<PreviewContractProps> = (props) => {
         <InputContainer>
           <PreviewField label="Vendor" description={currentContract.partner.name} />
           <div className={classes.group_preview}>
-            <PreviewField label="startDate" description={currentContract.startDate} />
-            <PreviewField label="endDate" description={currentContract.endDate} />
+            <PreviewField label="Contract Start Date" description={currentContract.startDate} />
+            <PreviewField label="Contract End Date" description={currentContract.endDate} />
           </div>
           <PreviewField
             label="Description"

@@ -1,9 +1,9 @@
-import { InputHelperBoxProps } from '../InputHelperBox/InputHelperBoxType';
 import { FieldValues, UseControllerProps } from 'react-hook-form';
+import { InputHelperBoxProps } from '../../InputHelperBox/InputHelperBoxType';
 
-export interface TextFieldProps<FieldType extends FieldValues = FieldValues>
+export interface TextAreaProps<FieldType extends FieldValues = FieldValues>
   extends Omit<InputHelperBoxProps, 'children'>,
     UseControllerProps<FieldType> {
-  maxLength: number;
+  maxLength?: number;
   placeholder?: string;
 }

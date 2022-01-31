@@ -2,7 +2,7 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@RootStateType';
 import { getCitiesList, getCountriesList } from '@Actions/definition.action';
-import { CustomInput, CustomSelect, Divider } from '@UiKitComponents';
+import { TextField, Select, Divider } from '@UiKitComponents';
 import { TFormCreateVendor } from '@Types/vendor.types';
 import { postNewVendor } from '@Actions/vendor.action';
 import { Loader } from '@common';
@@ -76,7 +76,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
           <HeaderSaveAction title="New Vendor" errors={errors} onCancelButton={backHistory} />
           <div className="form_box">
             <InputContainer title="Summary" columns={2}>
-              <CustomInput
+              <TextField
                 errorText={errors.name?.message}
                 id="VendorName"
                 placeholder="Vendor name"
@@ -84,14 +84,14 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
                 required
                 {...register('name')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.taxOffice?.message}
                 id="TaxOffice"
                 placeholder="Tax Office"
                 label="Tax Office"
                 {...register('taxOffice')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.partnerCode?.message}
                 id="PartnerCode"
                 placeholder="Vendor code"
@@ -99,7 +99,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
                 required
                 {...register('partnerCode')}
               />
-              <CustomInput
+              <TextField
                 errorText={errors.taxNumber?.message}
                 id="TXN"
                 placeholder="TXN"
@@ -111,7 +111,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
             <Divider margin="50px 0 30px 0" />
             <div className="markup_helper-box">
               <InputContainer title="Location">
-                <CustomSelect
+                <Select
                   label="Country"
                   id="Country"
                   name="countryId"
@@ -125,7 +125,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
                   getSelectValue={getCountryValue}
                   required
                 />
-                <CustomSelect
+                <Select
                   label="City"
                   id="City"
                   name="cityId"
@@ -139,7 +139,7 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
                   required
                 />
 
-                <CustomInput
+                <TextField
                   errorText={errors.address?.message}
                   id="Address"
                   placeholder="Add address"
@@ -149,14 +149,14 @@ const CreateVendor: React.FC<CreateVendorProps> = () => {
                 />
               </InputContainer>
               <InputContainer title="Contacts">
-                <CustomInput
+                <TextField
                   errorText={errors.email?.message}
                   id="Email"
                   placeholder="Email"
                   label="Email"
                   {...register('email')}
                 />
-                <CustomInput
+                <TextField
                   errorText={errors.phone?.message}
                   id="PhoneNumber"
                   placeholder="Phone number"
