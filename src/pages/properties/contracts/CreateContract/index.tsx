@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import classes from '../Contract.module.scss';
 import { FileInput, TextField, Select, Divider, TextArea, PreviewFile } from '@UiKitComponents';
-import { TFormCreateContract } from '@Types/contract.types';
+import { TCreateContract, TFormCreateContract } from '@Types/contract.types';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { GetVendorList } from '@Actions/vendor.action';
 import { getCurrencyList } from '@Actions/currency.action';
 import { schemaContract } from '@schema/contract';
 import { useBackHistory } from '@hooks';
-// import { postNewContract } from '@Actions/contracts.action';
+import { postNewContract } from '@Actions/contracts.action';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Loader } from '@common';
@@ -18,12 +18,14 @@ interface CreateContractProps {}
 
 const getVendorState = (state: RootState) => state.VendorReducer;
 const getCurrencyState = (state: RootState) => state.CurrencyReducer;
+const getContractState = (state: RootState) => state.ContractReducer;
 
 const CreateContract: React.FC<CreateContractProps> = () => {
-  const backHistory = useBackHistory();
-  const dispatch = useDispatch();
   const { vendorList, loadingVendor } = useSelector(getVendorState);
   const { currencyList, loadingCurrency } = useSelector(getCurrencyState);
+  const { loadingContract } = useSelector(getContractState);
+  const backHistory = useBackHistory();
+  const dispatch = useDispatch();
   const {
     register,
     control,
@@ -39,16 +41,17 @@ const CreateContract: React.FC<CreateContractProps> = () => {
     const endDate = new Date(contract.endDate).toISOString();
     const startDate = new Date(contract.startDate).toISOString();
 
-    const newContract = {
+    const newContract: TCreateContract = {
       ...contract,
       endDate: endDate,
       startDate: startDate,
       currencyId: contract.currencyId.value,
       partnerId: contract.partnerId.value,
+      currencyName: contract.currencyId.label,
+      contractFile: '',
     };
 
-    console.log(newContract);
-    // dispatch(postNewContract(newContract));
+    dispatch(postNewContract(newContract));
   };
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
     }
   }, []);
 
-  if (loadingVendor || loadingCurrency) {
+  if (loadingVendor || loadingCurrency || loadingContract) {
     return <Loader />;
   }
 
@@ -106,6 +109,7 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     {...register('price')}
                   />
                   <Select
+                    errorText={errors.currencyId?.value?.message}
                     label=""
                     id="currency"
                     name="currencyId"
@@ -113,10 +117,6 @@ const CreateContract: React.FC<CreateContractProps> = () => {
                     options={currencyList}
                     optionValue="currencyId"
                     optionLabel="symbol"
-                    defaultValue={{
-                      value: currencyList[0]?.currencyId,
-                      label: currencyList[0]?.symbol,
-                    }}
                   />
                 </div>
               </InputContainer>

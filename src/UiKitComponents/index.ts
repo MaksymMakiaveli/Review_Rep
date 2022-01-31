@@ -11,6 +11,7 @@ import TextArea from './Form/TextArea';
 import FileInput from './Form/FileInput';
 import Select from './Form/Select';
 import TextField from './Form/TextField';
+import ModalDelete from './Modals/ModalDelete';
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   InputHelperBox,
   TextArea,
   PreviewFile,
+  ModalDelete,
 };

@@ -2,6 +2,7 @@ import { Company } from '@Types/company.types';
 import { BaseAction, Concat } from '@Types/index';
 import {
   DELETE_CONTRACT,
+  FAIL,
   GET_CONTRACTS_LIST,
   GET_ONE_CONTRACT,
   POST_NEW_CONTRACT,
@@ -47,6 +48,7 @@ export type TCreateContract = {
   endDate: string;
   contractFile: string;
   description: string;
+  currencyName: string;
 };
 export type TFormCreateContract = Omit<
   TCreateContract,
@@ -61,6 +63,7 @@ export interface ContractState {
   contracts: Contract[] | [];
   currentContract: Contract | null;
   loadingContract: boolean;
+  errorContract: string | null;
 }
 
 export interface GetContractsList extends BaseAction<typeof GET_CONTRACTS_LIST> {}
@@ -89,16 +92,27 @@ export interface PostNewContractSuccess
     resultObject: Contract;
   };
 }
+export interface PostNewContractFail
+  extends BaseAction<Concat<typeof POST_NEW_CONTRACT, typeof FAIL>> {
+  response: {
+    errors: {
+      [key: string]: string[];
+    };
+  };
+}
 
 export interface DeleteContract extends BaseAction<typeof DELETE_CONTRACT> {}
 export interface DeleteContractSuccess
-  extends BaseAction<Concat<typeof DELETE_CONTRACT, typeof SUCCESS>> {}
+  extends BaseAction<Concat<typeof DELETE_CONTRACT, typeof SUCCESS>> {
+  data: { contractIds: number[] };
+}
 
 export type ContractActions =
   | GetContractsList
   | GetContractsListSuccess
   | PostNewContract
   | PostNewContractSuccess
+  | PostNewContractFail
   | GetOneContract
   | GetOneContractSuccess
   | DeleteContract

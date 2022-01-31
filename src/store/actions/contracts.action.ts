@@ -38,4 +38,5 @@ export const deleteContractById = (contractIds: { contractIds: number[] }): Cont
     method: 'POST',
     data: contractIds,
   },
+  data: contractIds,
 });

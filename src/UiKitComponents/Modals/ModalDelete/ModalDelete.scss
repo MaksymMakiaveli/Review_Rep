@@ -1,11 +1,14 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
+
+.rs-modal {
+  top: 15%;
+}
 
 .modal_delete {
   max-width: 500px;
   margin: 0 auto;
   .rs-modal-content {
     padding: 40px 56px;
-    top: 250px;
   }
   .rs-modal-body {
     margin: 32px 0;

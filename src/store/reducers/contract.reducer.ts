@@ -1,11 +1,19 @@
 import { ContractActions, ContractState } from '@Types/contract.types';
-import { GET_CONTRACTS_LIST, GET_ONE_CONTRACT, POST_NEW_CONTRACT, SUCCESS } from '../actionTypes';
+import {
+  DELETE_CONTRACT,
+  FAIL,
+  GET_CONTRACTS_LIST,
+  GET_ONE_CONTRACT,
+  POST_NEW_CONTRACT,
+  SUCCESS,
+} from '../actionTypes';
 import { concatActions } from '@helpers/functions';
 
 const initialState: ContractState = {
   contracts: [],
   currentContract: null,
   loadingContract: false,
+  errorContract: null,
 };
 
 export const ContractReducer = (state = initialState, action: ContractActions): ContractState => {
@@ -16,16 +24,9 @@ export const ContractReducer = (state = initialState, action: ContractActions): 
         loadingContract: true,
       };
     case concatActions(GET_CONTRACTS_LIST, SUCCESS):
-      const newContractList = action.response.resultObject.map((contract) => {
-        return {
-          ...contract,
-          startDate: contract.startDate.split('T')[0],
-          endDate: contract.endDate.split('T')[0],
-        };
-      });
       return {
         ...state,
-        contracts: newContractList,
+        contracts: [...state.contracts, ...action.response.resultObject],
         loadingContract: false,
       };
     case GET_ONE_CONTRACT:
@@ -48,6 +49,26 @@ export const ContractReducer = (state = initialState, action: ContractActions): 
       return {
         ...state,
         contracts: [...state.contracts, action.response.resultObject],
+        loadingContract: false,
+      };
+    case concatActions(POST_NEW_CONTRACT, FAIL):
+      console.log(action.response.errors);
+      return {
+        ...state,
+        loadingContract: false,
+      };
+    case DELETE_CONTRACT:
+      return {
+        ...state,
+        loadingContract: true,
+      };
+    case concatActions(DELETE_CONTRACT, SUCCESS):
+      const newContracts = state.contracts.filter(
+        (contract) => !action.data.contractIds.includes(contract.contractId)
+      );
+      return {
+        ...state,
+        contracts: newContracts,
         loadingContract: false,
       };
     default:

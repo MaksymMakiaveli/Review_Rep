@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContractState } from '@Types/contract.types';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { getContractList } from '@Actions/contracts.action';
+import { deleteContractById, getContractList } from '@Actions/contracts.action';
 import { CustomTable } from '@UiKitComponents';
 import { DataKeyType } from '@Types/application.types';
 
@@ -51,14 +51,26 @@ const dataKeyContractList: DataKeyType[] = [
 const getContractState = (state: RootState) => state.ContractReducer;
 
 const ListContracts: React.FC<ListContractsProps> = () => {
-  const { contracts, loadingContract } = useSelector<RootState, ContractState>(getContractState);
   const dispatch = useDispatch();
+  const { contracts, loadingContract } = useSelector<RootState, ContractState>(getContractState);
   const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
+
   useEffect(() => {
-    if (!contracts.length) {
-      dispatch(getContractList());
-    }
+    dispatch(getContractList());
   }, []);
+
+  const updateContractsList = contracts.map((contract) => ({
+    ...contract,
+    endDate: contract.endDate.split('T')[0],
+    startDate: contract.startDate.split('T')[0],
+  }));
+
+  const deleteContracts = () => {
+    const contractsIds = {
+      contractIds: checkedItemsList as number[],
+    };
+    dispatch(deleteContractById(contractsIds));
+  };
 
   if (loadingContract) {
     return <Loader />;
@@ -79,9 +91,10 @@ const ListContracts: React.FC<ListContractsProps> = () => {
           checkedItemsList={checkedItemsList}
           pageCreatingUrl="newContract"
           textRedirectButton="New Contract"
+          actionButtonDelete={deleteContracts}
         />
         <CustomTable
-          data={contracts}
+          data={updateContractsList}
           dataKey={dataKeyContractList}
           currentDataKey="contractId"
           setCheckedItemsList={setCheckedItemsList}
