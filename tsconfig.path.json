@@ -14,7 +14,8 @@
       "@helpers/*": ["./src/helpers/*"],
       "@schema/*": ["./src/schemas/*"],
       "@Types/*": ["./src/store/types/*"],
-      "@Actions/*": ["./src/store/actions/*"]
+      "@Actions/*": ["./src/store/actions/*"],
+      "@TypeComponents/*": ["./src/components/*"]
     }
   }
 }

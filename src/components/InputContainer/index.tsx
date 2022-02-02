@@ -2,16 +2,22 @@ import React from 'react';
 import classes from './InputContainer.module.scss';
 
 interface InputContainerProps {
-  title: string;
+  title?: string;
+  styles?: React.CSSProperties;
+  columns?: number;
 }
 
 const InputContainer: React.FC<InputContainerProps> = (props) => {
-  const { title, children } = props;
-  let gridTemplate = '355px 355px';
-  if (Array.isArray(children)) {
-    if (children.length <= 3) {
-      gridTemplate = '355px';
-    }
+  const { title, children, styles, columns = 1 } = props;
+  let gridTemplateColumns = '355px';
+  if (columns === 1) {
+    gridTemplateColumns = '355px';
+  }
+  if (columns === 2) {
+    gridTemplateColumns = '355px 355px';
+  }
+  if (columns === 3) {
+    gridTemplateColumns = '355px 355px 355px';
   }
 
   return (
@@ -19,7 +25,7 @@ const InputContainer: React.FC<InputContainerProps> = (props) => {
       <h5 className={classes.inputContainer_title}>{title}</h5>
       <div
         className={classes.inputContainer_box}
-        style={{ gridTemplateColumns: gridTemplate }}
+        style={{ gridTemplateColumns: gridTemplateColumns, ...styles }}
       >
         {children}
       </div>

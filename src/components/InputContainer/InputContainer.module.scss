@@ -3,11 +3,11 @@
   width: 100%;
 
   &_title {
-    margin: 0 0 25px 0;
+    height: 24px;
   }
   &_box {
+    margin: 25px 0 0 0;
     display: grid;
-    grid-template-columns: 355px 355px;
     grid-row-gap: 30px;
     justify-content: space-between;
   }

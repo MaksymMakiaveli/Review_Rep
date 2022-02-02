@@ -30,8 +30,8 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
         navigate(action.redirect.path);
       }
     })
-    .catch((error: Error | AxiosError) => {
-      next({ ...action, type: concatActions(type, FAIL), error });
+    .catch((error: AxiosError) => {
+      next({ ...action, type: concatActions(type, FAIL), response: error.response?.data });
     });
 };
 

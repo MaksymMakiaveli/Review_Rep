@@ -15,8 +15,13 @@ const CustomCell: React.FC<CustomCellProps> = (props) => {
   const mappingValue = (): string | number => {
     const arrKey = dataKey.split('.');
     let newData = rowData;
+
     arrKey.forEach((key) => {
-      newData = newData[key];
+      if (!newData[key]) {
+        newData = '';
+      } else {
+        newData = newData[key];
+      }
     });
     return newData;
   };

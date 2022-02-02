@@ -24,4 +24,16 @@
     -webkit-box-orient: vertical;
     line-height: 1.3em;
   }
+
+  &.field_textField {
+    height: 166px;
+    .field_description {
+      display: block;
+      padding: 16px;
+      max-height: 144px;
+      height: 100%;
+      line-height: 1em  ;
+    }
+  }
 }
+
