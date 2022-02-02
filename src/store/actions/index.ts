@@ -4,6 +4,7 @@ import { DefinitionActions } from '@Types/definition.types';
 import { VendorActions } from '@Types/vendor.types';
 import { ContractActions } from '@Types/contract.types';
 import { CurrencyActions } from '@Types/currency.type';
+import { TitleActions } from '@Types/title.types';
 
 export type ActionsTypes =
   | ApplicationActions
@@ -11,4 +12,5 @@ export type ActionsTypes =
   | DefinitionActions
   | VendorActions
   | ContractActions
-  | CurrencyActions;
+  | CurrencyActions
+  | TitleActions;

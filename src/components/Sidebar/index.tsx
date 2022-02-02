@@ -90,7 +90,7 @@ const linkListUser: LinkListType[] = [
     icon: <Dashboard />,
   },
   {
-    link: 'Role Authorization',
+    link: 'Titles',
     icon: <Dashboard />,
   },
 ];
