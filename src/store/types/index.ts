@@ -25,3 +25,8 @@ export interface BaseAction<Type> {
   redirect?: Redirect;
   data?: any;
 }
+
+export interface ResponseAsetlyApi<TypeResultObject> {
+  resultObject: TypeResultObject;
+  resultStatus: boolean;
+}

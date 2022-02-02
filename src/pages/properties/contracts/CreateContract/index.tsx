@@ -48,7 +48,6 @@ const CreateContract: React.FC<CreateContractProps> = () => {
       currencyId: contract.currencyId.value,
       partnerId: contract.partnerId.value,
       currencyName: contract.currencyId.label,
-      contractFile: '',
     };
 
     dispatch(postNewContract(newContract));

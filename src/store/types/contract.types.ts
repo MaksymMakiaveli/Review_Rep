@@ -46,7 +46,7 @@ export type TCreateContract = {
   currencyId: number;
   startDate: string;
   endDate: string;
-  contractFile: string;
+  contractFile: File[];
   description: string;
   currencyName: string;
 };
