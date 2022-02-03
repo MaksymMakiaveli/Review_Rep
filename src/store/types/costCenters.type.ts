@@ -1,5 +1,12 @@
 import { BaseAction, Concat, ResponseAsetlyApi } from '@Types/index';
-import { GET_COST_CENTERS_LIST, POST_NEW_COST_CENTER, SUCCESS } from '../actionTypes';
+import {
+  DELETE_COST_CENTER,
+  GET_COST_CENTERS_LIST,
+  GET_ONE_COST_CENTER,
+  POST_NEW_COST_CENTER,
+  SUCCESS,
+  UPDATE_COST_CENTER,
+} from '../actionTypes';
 
 export type CostCenter = {
   costCenterId: number;
@@ -15,29 +22,20 @@ export type CostCenter = {
   nonCurrAssets: any[];
 };
 
-// "costCenterId": 1,
-//   "costCenterCode": "string",
-//   "companyId": 7,
-//   "name": "string",
-//   "createdDate": "2022-02-02T10:32:36.9305565+00:00",
-//   "creatorId": 3,
-//   "modifiedDate": null,
-//   "modifiedId": null,
-//   "isValid": true,
-//   "nonCurrAssets": []
-
 export interface CostCenterState {
   costCentersList: CostCenter[];
   currentCostCenter: CostCenter | null;
   loadingCostCenter: boolean;
 }
 
-export type TCreateContract = {
+export type TCreateCostCenter = {
   costCenterCode: string;
   name: string;
 };
 
-export type TFormCreateContract = TCreateContract;
+export type TUpdateCostCenter = TCreateCostCenter & Pick<CostCenter, 'costCenterId'>;
+
+export type TFormCreateCostCenter = TCreateCostCenter;
 
 export interface GetCostCentersList extends BaseAction<typeof GET_COST_CENTERS_LIST> {}
 export interface GetCostCentersListSuccess
@@ -50,9 +48,33 @@ export interface PostNewCostCenterSuccess
   extends BaseAction<Concat<typeof POST_NEW_COST_CENTER, typeof SUCCESS>> {
   response: ResponseAsetlyApi<CostCenter>;
 }
+export interface GetOneCostCenter extends BaseAction<typeof GET_ONE_COST_CENTER> {}
+export interface GetOneCostCenterSuccess
+  extends BaseAction<Concat<typeof GET_ONE_COST_CENTER, typeof SUCCESS>> {
+  response: ResponseAsetlyApi<CostCenter>;
+}
+
+export interface DeleteCostCenter extends BaseAction<typeof DELETE_COST_CENTER> {}
+export interface DeleteCostCenterSuccess
+  extends BaseAction<Concat<typeof DELETE_COST_CENTER, typeof SUCCESS>> {
+  data: { costCenterIds: number[] };
+}
+
+export interface UpdateCostCenter extends BaseAction<typeof UPDATE_COST_CENTER> {}
+export interface UpdateCostCenterSuccess
+  extends BaseAction<Concat<typeof UPDATE_COST_CENTER, typeof SUCCESS>> {
+  response: ResponseAsetlyApi<CostCenter>;
+  // response: Required<Pick<ResponseAsetlyApi<CostCenter>, 'resultStatus' | 'languageKeyword'>>;
+}
 
 export type CostCenterActions =
   | GetCostCentersList
   | GetCostCentersListSuccess
   | PostNewCostCenter
-  | PostNewCostCenterSuccess;
+  | PostNewCostCenterSuccess
+  | GetOneCostCenter
+  | GetOneCostCenterSuccess
+  | DeleteCostCenter
+  | DeleteCostCenterSuccess
+  | UpdateCostCenter
+  | UpdateCostCenterSuccess;

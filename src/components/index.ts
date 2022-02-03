@@ -7,6 +7,7 @@ import HeaderSaveAction from './HeaderSaveAction';
 import HeaderEditAction from './HeaderEditAction';
 import PreviewField from './PreviewField';
 import SidebarRS from './SidebarRS';
+import CustomRouter from './CustomRouter';
 
 export {
   EmptyPage,
@@ -18,4 +19,5 @@ export {
   HeaderEditAction,
   PreviewField,
   SidebarRS,
+  CustomRouter,
 };

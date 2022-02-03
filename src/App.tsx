@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GetToken } from '@Actions/application.action';
 import { Route, Routes } from 'react-router-dom';
-import { Header, Sidebar } from '@components';
+import { Header, SidebarRS } from '@components';
 import { Loader } from '@common';
 
 const Company = React.lazy(() => import('@pages/properties/companies/Company'));
@@ -21,8 +21,8 @@ function App() {
   return (
     <div className="container">
       <div className="app_wrapper">
-        <Sidebar />
-        {/*<SidebarRS />*/}
+        {/*<Sidebar />*/}
+        <SidebarRS />
         <div className="content_wrapper">
           <Header />
           <section className="contents">

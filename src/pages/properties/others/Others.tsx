@@ -1,18 +1,14 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ListConstCenters from './costcenters/ListCostCenters';
-import CreateCostCenter from './costcenters/CreateCostCenter';
+import CostCenters from './CostCenters';
 
 const Others = () => {
   return (
     <>
       <Routes>
         <Route path="Checkouts/*" />
-        <Route path="CostCenters">
-          <Route index element={<ListConstCenters />} />
-          <Route path="CreateCostCenter" element={<CreateCostCenter />} />
-        </Route>
-        <Route path="Exittypes/*" />
+        <Route path="CostCenters/*" element={<CostCenters />} />
+        <Route path="ExitTypes/*" />
       </Routes>
     </>
   );

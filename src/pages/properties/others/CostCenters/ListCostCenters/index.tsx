@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { DataKeyType } from '@Types/application.types';
 import { RootState } from '@RootStateType';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCostCentersList } from '@Actions/costCenter.action';
+import { useSelector } from 'react-redux';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@TypeComponents/index';
 import { CustomTable } from '@UiKitComponents';
@@ -28,13 +27,8 @@ const dataKeyCostCenterList: DataKeyType[] = [
 const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 
 const ListConstCenters: React.FC<ListConstCentersProps> = () => {
-  const dispatch = useDispatch();
   const { costCentersList, loadingCostCenter } = useSelector(getCostCenterState);
   const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
-
-  useEffect(() => {
-    dispatch(getCostCentersList());
-  }, []);
 
   if (loadingCostCenter) {
     return <Loader />;
@@ -55,7 +49,7 @@ const ListConstCenters: React.FC<ListConstCentersProps> = () => {
         <TableHeaderActions
           checkedItemsList={checkedItemsList}
           pageCreatingUrl="CreateCostCenter"
-          textRedirectButton="Cost Center"
+          textRedirectButton="New Cost Center"
         />
         <CustomTable
           data={costCentersList}

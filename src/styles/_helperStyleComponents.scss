@@ -1,3 +1,5 @@
+@import 'variables';
+
 .padding_wrapper_page {
   padding: 24px 25px 40px 72px;
 }
@@ -16,4 +18,13 @@
   display: grid;
   grid-template-columns: 355px 355px;
   justify-content: space-between;
+}
+.preview_back_link {
+  position: absolute;
+  top: -20px;
+  left: 40px;
+  font-weight: 500;
+  color: $main-blue-color;
+  cursor: pointer;
+  transform: translate(-50%, 0);
 }

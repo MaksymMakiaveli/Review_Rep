@@ -1,5 +1,12 @@
 import { CostCenterActions, CostCenterState } from '@Types/costCenters.type';
-import { GET_COST_CENTERS_LIST, SUCCESS } from '../actionTypes';
+import {
+  DELETE_COST_CENTER,
+  GET_COST_CENTERS_LIST,
+  GET_ONE_COST_CENTER,
+  POST_NEW_COST_CENTER,
+  SUCCESS,
+  UPDATE_COST_CENTER,
+} from '../actionTypes';
 import { concatActions } from '@helpers/functions';
 
 const initialState: CostCenterState = {
@@ -21,7 +28,59 @@ export const CostCenterReducer = (
     case concatActions(GET_COST_CENTERS_LIST, SUCCESS):
       return {
         ...state,
-        costCentersList: [...state.costCentersList, ...action.response.resultObject],
+        costCentersList: action.response.resultObject,
+        loadingCostCenter: false,
+      };
+    case POST_NEW_COST_CENTER:
+      return {
+        ...state,
+        loadingCostCenter: true,
+      };
+    case concatActions(POST_NEW_COST_CENTER, SUCCESS):
+      return {
+        ...state,
+        costCentersList: [...state.costCentersList, action.response.resultObject],
+        loadingCostCenter: false,
+      };
+    case GET_ONE_COST_CENTER:
+      return {
+        ...state,
+        loadingCostCenter: true,
+      };
+    case concatActions(GET_ONE_COST_CENTER, SUCCESS):
+      return {
+        ...state,
+        currentCostCenter: action.response.resultObject,
+        loadingCostCenter: false,
+      };
+    case DELETE_COST_CENTER:
+      return {
+        ...state,
+        loadingCostCenter: true,
+      };
+    case concatActions(DELETE_COST_CENTER, SUCCESS):
+      const newCostCenterList = state.costCentersList.filter(
+        (costCenter) => !action.data.costCenterIds.includes(costCenter.costCenterId)
+      );
+      return {
+        ...state,
+        costCentersList: newCostCenterList,
+        loadingCostCenter: false,
+      };
+    case UPDATE_COST_CENTER:
+      return {
+        ...state,
+        loadingCostCenter: true,
+      };
+    case concatActions(UPDATE_COST_CENTER, SUCCESS):
+      return {
+        ...state,
+        currentCostCenter: action.response.resultObject,
+        costCentersList: state.costCentersList.map((costCenter) =>
+          costCenter.costCenterId === action.response.resultObject.costCenterId
+            ? action.response.resultObject
+            : costCenter
+        ),
         loadingCostCenter: false,
       };
     default:

@@ -2,7 +2,7 @@ import React from 'react';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { TFormCreateContract } from '@Types/costCenters.type';
+import { TFormCreateCostCenter } from '@Types/costCenters.type';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { useBackHistory } from '@hooks';
@@ -19,11 +19,15 @@ const CreateCostCenter: React.FC<CreateCostCenterProps> = () => {
   const { loadingCostCenter } = useSelector(getCostCenterState);
   const backHistory = useBackHistory();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm<TFormCreateContract>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormCreateCostCenter>({
     resolver: yupResolver(costCenterSchema),
   });
 
-  const onSubmit = (costCenter: TFormCreateContract) => {
+  const onSubmit = (costCenter: TFormCreateCostCenter) => {
     dispatch(postNewCostCenter(costCenter));
   };
 
@@ -39,6 +43,7 @@ const CreateCostCenter: React.FC<CreateCostCenterProps> = () => {
           <div className="form_box">
             <InputContainer>
               <TextField
+                errorText={errors.costCenterCode?.message}
                 id="CostCenterCode"
                 label="Cost Center Code"
                 placeholder="Cost Center Code"
@@ -46,6 +51,7 @@ const CreateCostCenter: React.FC<CreateCostCenterProps> = () => {
                 required
               />
               <TextField
+                errorText={errors.name?.message}
                 id="CostCenterName"
                 label="Cost Center Name"
                 placeholder="Cost Center Name"

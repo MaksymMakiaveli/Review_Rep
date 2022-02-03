@@ -4,7 +4,7 @@ import { concatActions } from '@helpers/functions';
 import { FAIL, SUCCESS } from '../actionTypes';
 import { AxiosError, AxiosResponse } from 'axios';
 import axios from '../../config/axios';
-import { useNavigate } from 'react-router-dom';
+import customHistory from '../../config/history';
 
 const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
   const { type } = action;
@@ -26,8 +26,7 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
         response: response.data,
       });
       if (action.redirect) {
-        const navigate = useNavigate();
-        navigate(action.redirect.path);
+        customHistory.replace(action.redirect.path);
       }
     })
     .catch((error: AxiosError) => {

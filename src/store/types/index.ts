@@ -26,7 +26,8 @@ export interface BaseAction<Type> {
   data?: any;
 }
 
-export interface ResponseAsetlyApi<TypeResultObject> {
+export interface ResponseAsetlyApi<TypeResultObject extends any> {
   resultObject: TypeResultObject;
   resultStatus: boolean;
+  languageKeyword?: string;
 }
