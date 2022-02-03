@@ -41,5 +41,20 @@
         text-transform: uppercase;
       }
     }
+    .rs-dropdown {
+      background: transparent;
+
+      &-toggle {
+        background: transparent;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        &-caret {
+          vertical-align: center;
+          top: 0;
+          right: 0;
+        }
+      }
+    }
   }
 }
