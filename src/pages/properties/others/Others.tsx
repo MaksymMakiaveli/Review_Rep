@@ -6,7 +6,7 @@ const Others = () => {
   return (
     <>
       <Routes>
-        <Route path="Checkouts/*" />
+        <Route path="CheckFactors/*" />
         <Route path="CostCenters/*" element={<CostCenters />} />
         <Route path="ExitTypes/*" />
       </Routes>
