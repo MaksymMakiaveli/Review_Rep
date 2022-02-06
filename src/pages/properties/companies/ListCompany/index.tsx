@@ -6,10 +6,11 @@ import { EmptyPage, TableHeaderActions } from '@components';
 import { CustomTable } from '@UiKitComponents';
 import { Loader } from '@common';
 import { DataKeyType } from '@Types/application.types';
+import { Company } from '@Types/company.types';
 
 interface ListCompanyProps {}
 
-const dataKeyCompanyList: DataKeyType[] = [
+const dataKeyCompanyList: DataKeyType<Company>[] = [
   {
     key: 'companyId',
     label: 'Company Id',

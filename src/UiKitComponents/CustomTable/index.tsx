@@ -10,14 +10,14 @@ interface DataType extends UnknownDataType {
   activeStatus?: 'ACTIVE' | null;
 }
 
-interface CustomTableProps {
+interface CustomTableProps<T> {
   data: DataType[];
-  dataKey: DataKeyType[];
+  dataKey: DataKeyType<T>[];
   currentDataKey: string;
   setCheckedItemsList(state: string[] | number[]): void;
 }
 
-const CustomTable: React.FC<CustomTableProps> = (props) => {
+const CustomTable = <T,>(props: CustomTableProps<T>) => {
   const { data, dataKey, currentDataKey, setCheckedItemsList } = props;
 
   const [checkedKeys, setCheckedKeys] = React.useState<any[]>([]);
@@ -48,7 +48,9 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
   });
 
   const handleCheck = (value?: string | number, checked?: boolean) => {
-    const keys = checked ? [...checkedKeys, value] : checkedKeys.filter((item: any) => item !== value);
+    const keys = checked
+      ? [...checkedKeys, value]
+      : checkedKeys.filter((item: any) => item !== value);
     setCheckedItemsList(keys);
     setCheckedKeys(keys);
   };
@@ -76,9 +78,9 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
         {dataKey.map((dataItem) => {
           const { key, label, ...rest } = dataItem;
           return (
-            <Table.Column {...rest} key={key} verticalAlign="middle">
+            <Table.Column {...rest} key={key as string} verticalAlign="middle">
               <Table.HeaderCell className="custom_header_cell">{label}</Table.HeaderCell>
-              <CustomCell currentDataKey={currentDataKey} dataKey={key} />
+              <CustomCell currentDataKey={currentDataKey} dataKey={key as string} />
             </Table.Column>
           );
         })}

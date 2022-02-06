@@ -1,4 +1,4 @@
-import { CheckFactorActions, CheckFactorState } from '@Types/CheckFactors.type';
+import { CheckFactorActions, CheckFactorState } from '@Types/checkFactors.type';
 import { GET_CHECK_FACTORS_LIST, SUCCESS } from '../actionTypes';
 import { concatActions } from '@helpers/functions';
 

@@ -1,4 +1,4 @@
-import { CheckFactorActions } from '@Types/CheckFactors.type';
+import { CheckFactorActions } from '@Types/checkFactors.type';
 import { GET_CHECK_FACTORS_LIST } from '../actionTypes';
 
 export const getCheckFactorsList = (): CheckFactorActions => ({

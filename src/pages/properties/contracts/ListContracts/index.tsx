@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { ContractState } from '@Types/contract.types';
+import { Contract } from '@Types/contract.types';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { deleteContractById, getContractList } from '@Actions/contracts.action';
@@ -10,7 +10,7 @@ import { DataKeyType } from '@Types/application.types';
 
 interface ListContractsProps {}
 
-const dataKeyContractList: DataKeyType[] = [
+const dataKeyContractList: DataKeyType<Contract>[] = [
   {
     key: 'name',
     label: 'Contract name',
@@ -52,7 +52,7 @@ const getContractState = (state: RootState) => state.ContractReducer;
 
 const ListContracts: React.FC<ListContractsProps> = () => {
   const dispatch = useDispatch();
-  const { contracts, loadingContract } = useSelector<RootState, ContractState>(getContractState);
+  const { contracts, loadingContract } = useSelector(getContractState);
   const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
 
   useEffect(() => {

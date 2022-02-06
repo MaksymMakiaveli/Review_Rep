@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetVendorList } from '@Actions/vendor.action';
-import { VendorState } from '@Types/vendor.types';
+import { Vendor, VendorState } from '@Types/vendor.types';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { CustomTable } from '@UiKitComponents';
@@ -11,7 +11,7 @@ import classes from './VendorList.module.scss';
 
 interface VendorListProps {}
 
-const dataKeyVendorList: DataKeyType[] = [
+const dataKeyVendorList: DataKeyType<Vendor>[] = [
   {
     key: 'name',
     label: 'Vendor Name',
@@ -33,7 +33,7 @@ const dataKeyVendorList: DataKeyType[] = [
     flexGrow: 1,
   },
   {
-    key: 'city.name',
+    key: 'city.name' as keyof Vendor,
     label: 'CITY',
     align: 'left',
     flexGrow: 1,
@@ -44,13 +44,9 @@ const dataKeyVendorList: DataKeyType[] = [
 const getVendorState = (state: RootState) => state.VendorReducer;
 
 const VendorList: React.FC<VendorListProps> = () => {
-  const { vendorList, loadingVendor } = useSelector<RootState, VendorState>(
-    getVendorState
-  );
+  const { vendorList, loadingVendor } = useSelector<RootState, VendorState>(getVendorState);
 
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>(
-    []
-  );
+  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {

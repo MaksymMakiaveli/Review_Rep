@@ -3,9 +3,9 @@ import { FAIL, GET_TOKEN, SUCCESS } from '../actionTypes';
 
 export type PageMode = 'EDIT' | 'REVIEW' | null;
 
-export type DataKeyType = {
+export type DataKeyType<Keys> = {
   label: string;
-  key: string;
+  key: keyof Keys;
   align?: 'center' | 'right' | 'left';
   flexGrow?: number;
   width?: number;
@@ -30,16 +30,14 @@ export interface ApplicationState {
   error: string | null;
 }
 export interface GetToken extends BaseAction<typeof GET_TOKEN> {}
-export interface GetTokenSuccess
-  extends BaseAction<Concat<typeof GET_TOKEN, typeof SUCCESS>> {
+export interface GetTokenSuccess extends BaseAction<Concat<typeof GET_TOKEN, typeof SUCCESS>> {
   response: {
     [key: string]: string | null;
     token: string;
   };
 }
 
-export interface GetTokenFail
-  extends BaseAction<Concat<typeof GET_TOKEN, typeof FAIL>> {
+export interface GetTokenFail extends BaseAction<Concat<typeof GET_TOKEN, typeof FAIL>> {
   error: {
     [key: string]: any;
     message: string;
