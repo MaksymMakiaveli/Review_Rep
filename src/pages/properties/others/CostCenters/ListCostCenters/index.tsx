@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@TypeComponents/index';
 import { CustomTable } from '@UiKitComponents';
-import { CostCenter } from '@Types/costCenters.type';
+import { CostCenter, TCostCenterTable } from '@Types/costCenters.type';
 
 interface ListConstCentersProps {}
 
@@ -31,6 +31,12 @@ const ListConstCenters: React.FC<ListConstCentersProps> = () => {
   const { costCentersList, loadingCostCenter } = useSelector(getCostCenterState);
   const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
 
+  const listForTable: TCostCenterTable[] = costCentersList.map((costCenter) => ({
+    costCenterCode: costCenter.costCenterCode,
+    costCenterId: costCenter.costCenterId,
+    name: costCenter.name,
+  }));
+
   if (loadingCostCenter) {
     return <Loader />;
   }
@@ -53,7 +59,7 @@ const ListConstCenters: React.FC<ListConstCentersProps> = () => {
           textRedirectButton="New Cost Center"
         />
         <CustomTable
-          data={costCentersList}
+          data={listForTable}
           dataKey={dataKeyCostCenterList}
           currentDataKey="costCenterId"
           setCheckedItemsList={setCheckedItemsList}

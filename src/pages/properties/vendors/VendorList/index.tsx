@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetVendorList } from '@Actions/vendor.action';
-import { Vendor, VendorState } from '@Types/vendor.types';
+import { TVendorTable } from '@Types/vendor.types';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { CustomTable } from '@UiKitComponents';
 import { Loader } from '@common';
 import { DataKeyType } from '@Types/application.types';
-import classes from './VendorList.module.scss';
 
 interface VendorListProps {}
 
-const dataKeyVendorList: DataKeyType<Vendor>[] = [
+const dataKeyVendorList: DataKeyType<TVendorTable>[] = [
   {
     key: 'name',
     label: 'Vendor Name',
@@ -33,7 +32,7 @@ const dataKeyVendorList: DataKeyType<Vendor>[] = [
     flexGrow: 1,
   },
   {
-    key: 'city.name' as keyof Vendor,
+    key: 'cityName',
     label: 'CITY',
     align: 'left',
     flexGrow: 1,
@@ -44,8 +43,7 @@ const dataKeyVendorList: DataKeyType<Vendor>[] = [
 const getVendorState = (state: RootState) => state.VendorReducer;
 
 const VendorList: React.FC<VendorListProps> = () => {
-  const { vendorList, loadingVendor } = useSelector<RootState, VendorState>(getVendorState);
-
+  const { vendorList, loadingVendor } = useSelector(getVendorState);
   const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
   const dispatch = useDispatch();
 
@@ -68,16 +66,27 @@ const VendorList: React.FC<VendorListProps> = () => {
     );
   }
 
+  const listForTable: TVendorTable[] = vendorList.map((vendor) => {
+    const cityName = vendor.city ? vendor.city.name : '';
+    return {
+      name: vendor.name,
+      cityName: cityName,
+      phone: vendor.phone,
+      taxNumber: vendor.taxNumber,
+      partnerId: vendor.partnerId,
+    };
+  });
+
   return (
-    <div className={classes.vendorList}>
-      <div className={classes.vendorList_wrapper}>
+    <div>
+      <div className="padding_wrapper_table-page">
         <TableHeaderActions
           checkedItemsList={checkedItemsList}
           pageCreatingUrl="/Vendors/newVendor"
           textRedirectButton="New Vendor"
         />
         <CustomTable
-          data={vendorList}
+          data={listForTable}
           dataKey={dataKeyVendorList}
           currentDataKey="partnerId"
           setCheckedItemsList={setCheckedItemsList}

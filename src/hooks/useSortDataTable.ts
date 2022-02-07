@@ -22,18 +22,13 @@ const useSortDataTable = (
   const sortColumns = () => {
     if (sortColumn && sortType) {
       return data.sort((a, b) => {
-        let x = a[sortColumn];
-        let y = b[sortColumn];
-        if (typeof x === 'string') {
-          x = x.charCodeAt(0);
-        }
-        if (typeof y === 'string') {
-          y = y.charCodeAt(0);
-        }
+        let x: string = a[sortColumn] ? a[sortColumn].toString() : '';
+        let y: string = b[sortColumn] ? b[sortColumn].toString() : '';
+
         if (sortType === 'asc') {
-          return x - y;
+          return y.localeCompare(x);
         } else {
-          return y - x;
+          return x.localeCompare(y);
         }
       });
     }

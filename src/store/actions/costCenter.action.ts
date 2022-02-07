@@ -76,7 +76,7 @@ export const updateCostCenter =
     try {
       const costCenterId = costCenter.costCenterId;
       dispatch({ type: UPDATE_COST_CENTER });
-      const updateCostCenter = await axios.put('/CostCenter/UpdateCostCenter', costCenter);
+      const updateCostCenter = await axios.post('/CostCenter/UpdateCostCenter', costCenter);
       const responseUpdated: Required<
         Pick<ResponseAsetlyApi<CostCenter>, 'resultStatus' | 'languageKeyword'>
       > = await updateCostCenter.data;

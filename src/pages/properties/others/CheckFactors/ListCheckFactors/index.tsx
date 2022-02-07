@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DataKeyType } from '@Types/application.types';
-import { CheckFactors } from '@Types/checkFactors.type';
+import { CheckFactory, TCheckFactorTable } from '@Types/checkFactors.type';
 import { RootState } from '@RootStateType';
 import { useSelector } from 'react-redux';
 import { Loader } from '@common';
@@ -9,7 +9,7 @@ import { CustomTable } from '@UiKitComponents';
 
 interface ListCheckFactorsProps {}
 
-const dataKeyCheckFactorsList: DataKeyType<CheckFactors>[] = [
+const dataKeyCheckFactorsList: DataKeyType<CheckFactory>[] = [
   {
     key: 'name',
     label: 'check out reason',
@@ -41,6 +41,12 @@ const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
     );
   }
 
+  const listForTable: TCheckFactorTable[] = checkFactorList.map((checkFactor) => ({
+    name: checkFactor.name,
+    checkFactorCode: checkFactor.checkFactorCode,
+    checkFactorId: checkFactor.checkFactorId,
+  }));
+
   return (
     <div>
       <div className="padding_wrapper_table-page">
@@ -50,7 +56,7 @@ const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
           textRedirectButton="New Check Factor"
         />
         <CustomTable
-          data={checkFactorList}
+          data={listForTable}
           dataKey={dataKeyCheckFactorsList}
           currentDataKey="checkFactorId"
           setCheckedItemsList={setCheckedItemsList}

@@ -22,6 +22,10 @@ export type CostCenter = {
   nonCurrAssets: any[];
 };
 
+export type TCostCenterTable = Required<
+  Pick<CostCenter, 'costCenterId' | 'costCenterCode' | 'name'>
+>;
+
 export interface CostCenterState {
   costCentersList: CostCenter[];
   currentCostCenter: CostCenter | null;
@@ -64,7 +68,6 @@ export interface UpdateCostCenter extends BaseAction<typeof UPDATE_COST_CENTER> 
 export interface UpdateCostCenterSuccess
   extends BaseAction<Concat<typeof UPDATE_COST_CENTER, typeof SUCCESS>> {
   response: ResponseAsetlyApi<CostCenter>;
-  // response: Required<Pick<ResponseAsetlyApi<CostCenter>, 'resultStatus' | 'languageKeyword'>>;
 }
 
 export type CostCenterActions =

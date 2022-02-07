@@ -21,7 +21,7 @@ const CustomTable = <T,>(props: CustomTableProps<T>) => {
   const { data, dataKey, currentDataKey, setCheckedItemsList } = props;
 
   const [checkedKeys, setCheckedKeys] = React.useState<any[]>([]);
-  const [limitPage, setLimitPage] = useState(15);
+  const [limitPage, setLimitPage] = useState(10);
   const [page, setPage] = useState(1);
   const [sortedData, options, handleSortColumn] = useSortDataTable(data);
 
