@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+.sidebar {
+  max-height: 1140px;
+  min-height: 935px;
+  flex: 0 0 316px;
+  padding: 16px 20px 40px 20px;
+  background: $main-blue-color;
+  .rs-sidenav {
+    background: transparent;
+    &-body {
+      margin-top: 60px;
+      background: transparent;
+    }
+    &-nav {
+      a {
+        padding: 0;
+        color: #fff;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        &:hover,
+        &:focus,
+        &:active {
+          background: $typography-primary-color;
+          color: $typography-default-color;
+          border: none;
+        }
+        svg {
+          margin-right: 10px;
+        }
+      }
+    }
+    &-subtitle {
+      margin: 16px 0 10px 0;
+      span {
+        color: $main-white;
+        letter-spacing: 2px;
+        line-height: 158%;
+        font-size: $overline-fz;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
+    }
+  }
+}

@@ -21,6 +21,7 @@ module.exports = {
           '@Types': './src/store/types',
           '@hooks': './src/hooks',
           '@schema': './src/schemas',
+          '@TypeComponents': './src/components',
         },
       },
     },

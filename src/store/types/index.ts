@@ -23,4 +23,10 @@ export interface BaseAction<Type> {
   api?: AxiosRequestConfig;
   apiKey?: true | string;
   redirect?: Redirect;
+  data?: any;
+}
+
+export interface ResponseAsetlyApi<TypeResultObject> {
+  resultObject: TypeResultObject;
+  resultStatus: boolean;
 }

@@ -1,0 +1,53 @@
+@import '../../../styles/variables';
+
+.form_box_help {
+  display: grid;
+  grid-template-columns: 355px 355px;
+  justify-content: space-between;
+}
+.form_box_document {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form_box_files {
+  margin-top: 32px;
+  div:not(:first-child) {
+    margin-top: 10px;
+  }
+}
+.group_input {
+  display: flex;
+  justify-content: space-between;
+  input {
+    width: 150px;
+  }
+}
+.group_preview {
+  display: flex;
+  justify-content: space-between;
+  div {
+    width: 150px;
+  }
+}
+.group_input_price {
+  display: flex;
+  justify-content: space-between;
+  div[class='custom-input-container']:first-child {
+    width: 210px !important;
+  }
+  div[class='custom-input-container']:last-child {
+    width: 110px;
+  }
+}
+.group_preview_price {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  div:first-child {
+    width: 210px;
+  }
+  div:last-child {
+    width: 110px;
+  }
+}

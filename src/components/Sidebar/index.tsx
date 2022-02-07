@@ -23,7 +23,8 @@ interface SidebarProps {}
 
 type LinkListType = {
   link: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  children?: LinkListType[];
 };
 
 const linkListDashboard: LinkListType[] = [
@@ -74,6 +75,7 @@ const linkListProperties: LinkListType[] = [
   {
     link: 'Other',
     icon: <Other />,
+    children: [{ link: 'Other Child 1' }, { link: 'Other Child 2' }, { link: 'Other Child 3' }],
   },
   {
     link: 'Contracts',
@@ -98,6 +100,41 @@ const linkListUser: LinkListType[] = [
 const Sidebar: React.FC<SidebarProps> = () => {
   const [visibility, setVisibility] = useState(false);
 
+  // const mappedList = (listLinks: LinkListType[]) => {
+  //   return listLinks.map((itemList) => {
+  //     if (itemList.children && itemList.children.length) {
+  //       return (
+  //         <li key={itemList.link} className={classes.list_item}>
+  //           <Dropdown title={itemList.link} icon={itemList.icon}>
+  //             {itemList.children.map((children) => (
+  //               <Dropdown.Item key={children.link}>
+  //                 <NavLink
+  //                   to={children.link}
+  //                   className={({ isActive }) => (isActive ? classes.activeLink : '')}
+  //                 >
+  //                   <span>{children.link}</span>
+  //                 </NavLink>
+  //               </Dropdown.Item>
+  //             ))}
+  //           </Dropdown>
+  //         </li>
+  //       );
+  //     } else {
+  //       return (
+  //         <li key={itemList.link} className={classes.list_item}>
+  //           {itemList.icon}
+  //           <NavLink
+  //             to={itemList.link}
+  //             className={({ isActive }) => (isActive ? classes.activeLink : '')}
+  //           >
+  //             <span>{itemList.link}</span>
+  //           </NavLink>
+  //         </li>
+  //       );
+  //     }
+  //   });
+  // };
+
   return (
     <aside
       className={cl(classes.sidebar, 'sidebar', {
@@ -107,10 +144,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
       <div className={classes.wrapper}>
         <div className={classes.logo_box}>
           <Logo />
-          <button
-            className={classes.button_show}
-            onClick={() => setVisibility(!visibility)}
-          >
+          <button className={classes.button_show} onClick={() => setVisibility(!visibility)}>
             <HideBar />
           </button>
         </div>
@@ -121,9 +155,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 {itemList.icon}
                 <NavLink
                   to={itemList.link}
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : ''
-                  }
+                  className={({ isActive }) => (isActive ? classes.activeLink : '')}
                 >
                   <span>{itemList.link}</span>
                 </NavLink>
@@ -137,9 +169,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 {itemList.icon}
                 <NavLink
                   to={itemList.link}
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : ''
-                  }
+                  className={({ isActive }) => (isActive ? classes.activeLink : '')}
                 >
                   <span>{itemList.link}</span>
                 </NavLink>
@@ -153,9 +183,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 {itemList.icon}
                 <NavLink
                   to={itemList.link}
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : ''
-                  }
+                  className={({ isActive }) => (isActive ? classes.activeLink : '')}
                 >
                   <span>{itemList.link}</span>
                 </NavLink>
@@ -169,9 +197,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 {itemList.icon}
                 <NavLink
                   to={itemList.link}
-                  className={({ isActive }) =>
-                    isActive ? classes.activeLink : ''
-                  }
+                  className={({ isActive }) => (isActive ? classes.activeLink : '')}
                 >
                   <span>{itemList.link}</span>
                 </NavLink>

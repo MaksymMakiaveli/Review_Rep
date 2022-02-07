@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+.previewFile {
+  width: 100%;
+  height: 56px;
+  padding: 18px 16px;
+  background: $main-gray-background;
+  &__name {
+    display: inline-block;
+    max-width: 50%;
+    height: 20px;
+    overflow: hidden;
+    color: $main-blue-color;
+    text-decoration: underline;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.3em;
+  }
+}

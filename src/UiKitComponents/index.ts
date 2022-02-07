@@ -4,10 +4,14 @@ import CustomTable from './CustomTable';
 import SearchInput from './SearchInput';
 import CheckboxCell from './CheckboxCell';
 import CustomCheckbox from './CustomCheckbox';
-import CustomInput from './CustomInput';
 import CustomCell from './CustomCell';
-import CustomFileInput from './CustomFileInput';
-import CustomSelect from './CustomSelect';
+import InputHelperBox from './InputHelperBox';
+import PreviewFile from './PreviewFile';
+import TextArea from './Form/TextArea';
+import FileInput from './Form/FileInput';
+import Select from './Form/Select';
+import TextField from './Form/TextField';
+import ModalDelete from './Modals/ModalDelete';
 
 export {
   Button,
@@ -16,8 +20,12 @@ export {
   CheckboxCell,
   CustomTable,
   CustomCheckbox,
-  CustomInput,
-  CustomSelect,
+  TextField,
+  Select,
   CustomCell,
-  CustomFileInput,
+  FileInput,
+  InputHelperBox,
+  TextArea,
+  PreviewFile,
+  ModalDelete,
 };

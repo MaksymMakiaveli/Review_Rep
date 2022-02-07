@@ -21,6 +21,7 @@ import FilterBtn from './FilterBtn';
 import Export from './Export';
 import Import from './Import';
 import TrashBasket from './TrashBasket';
+import Upload from './Upload';
 
 export {
   Import,
@@ -46,4 +47,5 @@ export {
   Departments,
   FilterBtn,
   TrashBasket,
+  Upload,
 };

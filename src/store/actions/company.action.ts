@@ -1,8 +1,4 @@
-import {
-  CompanyActions,
-  TUpdateCompany,
-  TCreateCompany,
-} from '@Types/company.types';
+import { CompanyActions, TUpdateCompany, TCreateCompany } from '@Types/company.types';
 import {
   DELETE_COMPANY,
   GET_COMPANY_LIST,
@@ -14,7 +10,7 @@ import {
 export const GetCompanyList = (): CompanyActions => ({
   type: GET_COMPANY_LIST,
   api: {
-    url: '/Firm/GetCompaniesList',
+    url: '/Company/GetCompaniesList',
     method: 'GET',
   },
 });
@@ -22,7 +18,7 @@ export const GetCompanyList = (): CompanyActions => ({
 export const GetOneCompany = (id: string | number): CompanyActions => ({
   type: GET_ONE_COMPANY,
   api: {
-    url: `/Firm/GetFirmByCompanyId/${id}`,
+    url: `/Company/GetCompanyById/${id}`,
     method: 'GET',
   },
 });
@@ -31,7 +27,7 @@ export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
   type: POST_NEW_COMPANY,
 
   api: {
-    url: '/Firm/AddFirm',
+    url: '/Company/AddFirm',
     method: 'POST',
     data: {
       ...newCompany,
@@ -42,7 +38,7 @@ export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
 export const updateCompany = (company: TUpdateCompany): CompanyActions => ({
   type: PUT_COMPANY,
   api: {
-    url: `/Firm/UpdateFirm`,
+    url: `/Company/UpdateFirm`,
     method: 'PUT',
     data: {
       ...company,
@@ -53,7 +49,7 @@ export const updateCompany = (company: TUpdateCompany): CompanyActions => ({
 export const deleteCompanies = (companyIds: number[]): CompanyActions => ({
   type: DELETE_COMPANY,
   api: {
-    url: `/Firm/RemoveByIdList`,
+    url: `/Company/RemoveByIdList`,
     method: 'POST',
     data: {
       CompanyIds: companyIds,

@@ -20,16 +20,13 @@ html {
   .app_wrapper {
     position: relative;
     display: flex;
-    height: 100vh;
     .content_wrapper {
       flex-basis: 100%;
       .contents {
         position: relative;
         background: $main-white;
         border-radius: 4px;
-        max-height: 1010px;
         min-height: 800px;
-        height: calc(100% - 110px);
         margin: 30px 0 0 23px;
       }
     }
