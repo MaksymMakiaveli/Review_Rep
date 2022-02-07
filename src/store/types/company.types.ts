@@ -37,6 +37,8 @@ export type Company = {
   userAuthorizedCompanies: any[];
 };
 
+export interface TCompanyTable extends Required<Pick<Company, 'companyId' | 'name' | 'companyCode' | 'address'>> {}
+
 export type TCreateCompany = {
   companyCode: string;
   name: string;
@@ -48,6 +50,7 @@ export type TCreateCompany = {
   taxNumber: string;
   taxOffice?: string;
 };
+
 export type TFormCreateCompany = Omit<
   TCreateCompany,
   'countryId' | 'cityId'

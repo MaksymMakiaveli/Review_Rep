@@ -6,11 +6,11 @@ import { EmptyPage, TableHeaderActions } from '@components';
 import { CustomTable } from '@UiKitComponents';
 import { Loader } from '@common';
 import { DataKeyType } from '@Types/application.types';
-import { Company } from '@Types/company.types';
+import { TCompanyTable } from '@Types/company.types';
 
 interface ListCompanyProps {}
 
-const dataKeyCompanyList: DataKeyType<Company>[] = [
+const dataKeyCompanyList: DataKeyType<TCompanyTable>[] = [
   {
     key: 'companyId',
     label: 'Company Id',
@@ -67,6 +67,13 @@ const ListCompany: React.FC<ListCompanyProps> = () => {
     );
   }
 
+  const listForTable: TCompanyTable[] = companyList.map((company) => ({
+    address: company.address,
+    companyCode: company.companyCode,
+    companyId: company.companyId,
+    name: company.name,
+  }));
+
   return (
     <div>
       <div className="padding_wrapper_table-page">
@@ -76,7 +83,7 @@ const ListCompany: React.FC<ListCompanyProps> = () => {
           textRedirectButton="New Company"
         />
         <CustomTable
-          data={companyList}
+          data={listForTable}
           dataKey={dataKeyCompanyList}
           currentDataKey="companyId"
           setCheckedItemsList={setCheckedItemsList}

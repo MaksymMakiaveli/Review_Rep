@@ -13,6 +13,7 @@ import Select from './Form/Select';
 import TextField from './Form/TextField';
 import ModalDelete from './Modals/ModalDelete';
 import AccordionForSidebar from './AccordionForSidebar';
+import ReactTable from './ReactTable';
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   PreviewFile,
   ModalDelete,
   AccordionForSidebar,
+  ReactTable
 };

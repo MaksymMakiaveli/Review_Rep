@@ -4,9 +4,7 @@ import VendorList from './VendorList';
 import CreateVendor from './CreateVendor';
 import EditVendor from './EditVendor';
 
-interface VendorsProps {}
-
-const Vendors: React.FC<VendorsProps> = () => {
+const Vendors = () => {
   return (
     <>
       <Routes>

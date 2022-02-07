@@ -39,13 +39,12 @@ export type Vendor = {
   nonCurrAssetsPartner: any[];
 };
 
-// export type TVendorTable = Required<Pick<Vendor, 'name' | 'phone' | 'taxNumber' | 'partnerId'>> & {
-//   cityName: Required<Pick<City, 'name'>>;
-// };
+
 export interface TVendorTable
   extends Required<Pick<Vendor, 'name' | 'phone' | 'taxNumber' | 'partnerId'>> {
   cityName: City['name'];
 }
+
 
 export type TCreateVendor = {
   partnerCode: string;
