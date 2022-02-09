@@ -6,6 +6,7 @@ import { VendorReducer } from './vendor.reducer';
 import { ContractReducer } from './contract.reducer';
 import { CurrencyReducer } from './currency.reducer';
 import { CostCenterReducer } from './costCenter.reducer';
+import { DepartmentReducer } from './department.reducer';
 
 const reducer = combineReducers({
   ApplicationReducer,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   ContractReducer,
   CurrencyReducer,
   CostCenterReducer,
+  DepartmentReducer,
 });
 
 export default reducer;

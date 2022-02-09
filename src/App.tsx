@@ -9,6 +9,7 @@ const Company = React.lazy(() => import('@pages/properties/companies/Company'));
 const Contract = React.lazy(() => import('@pages/properties/contracts/Contract'));
 const Vendors = React.lazy(() => import('@pages/properties/vendors/Vendors'));
 const Others = React.lazy(() => import('@pages/properties/others/Others'));
+const Departments = React.lazy(() => import('@pages/properties/departments/Department'));
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
                 <Route path="Contracts/*" element={<Contract />} />
                 <Route path="Vendors/*" element={<Vendors />} />
                 <Route path="Others/*" element={<Others />} />
+                <Route path="Departments/*" element={<Departments />} />
               </Routes>
             </React.Suspense>
           </section>
