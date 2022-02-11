@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import TitleList from '@pages/title/TitleList';
-import CreateTitle from '@pages/title/CreateTitle';
+import TitleList from '@pages/user/titles/TitleList';
+import CreateTitle from '@pages/user/titles/CreateTitle';
 import EditTitle from './EditTitle';
 
 interface TitlesProps {}

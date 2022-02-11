@@ -5,8 +5,8 @@ import { GetOneTitle } from '@Actions/title.action';
 import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { useToggle } from '@hooks';
-import Preview from '@pages/title/EditTitle/Preview';
-import Edit from '@pages/title/EditTitle/Edit';
+import Preview from '@pages/user/titles/EditTitle/Preview';
+import Edit from '@pages/user/titles/EditTitle/Edit';
 
 type TitleParams = {
   UserTitleID: string;

@@ -3,7 +3,7 @@ import { HeaderEditAction, InputContainer, PreviewField } from '@components';
 import { ModalDelete } from '@UiKitComponents';
 import { Title } from '@Types/title.types';
 import { useToggle } from '@hooks';
-import { deleteCompanies } from '@Actions/company.action';
+import { deleteTitle } from '@Actions/title.action';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
@@ -18,9 +18,9 @@ const Preview: React.FC<PreviewProps> = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const deleteTitle = () => {
+  const deleteTitles = () => {
     if (currentTitle) {
-      dispatch(deleteCompanies([currentTitle.userTitleId]));
+      dispatch(deleteTitle([currentTitle.userTitleId]));
     }
     setOpenModal(!open);
     navigate('/Titles');
@@ -33,7 +33,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
         openDeleteModal={setOpenModal}
       />
       <div className="form_box">
-        <InputContainer columns={2}>
+        <InputContainer>
           <PreviewField label="Title Code" description={currentTitle.userTitleCode} />
           <PreviewField label="Title" description={currentTitle.title} />
         </InputContainer>
@@ -44,7 +44,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
         name={currentTitle.title}
         open={openModal}
         setOpen={setOpenModal}
-        onDelete={deleteTitle}
+        onDelete={deleteTitles}
       />
     </>
   );

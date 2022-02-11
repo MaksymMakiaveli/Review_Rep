@@ -40,7 +40,7 @@ const Edit: React.FC<EditProps> = (props) => {
         onCancelButton={backToPreview}
       />
       <div className="form_box">
-        <InputContainer columns={2}>
+        <InputContainer>
           <TextField
             errorText={errors.userTitleCode?.message}
             id="TitleCode"
@@ -48,6 +48,7 @@ const Edit: React.FC<EditProps> = (props) => {
             label="Title Code"
             defaultValue={currentTitle.userTitleCode}
             isActive
+            required
             {...register('userTitleCode')}
           />
           <TextField
@@ -57,6 +58,7 @@ const Edit: React.FC<EditProps> = (props) => {
             label="Title"
             defaultValue={currentTitle.title}
             isActive
+            required
             {...register('title')}
           />
         </InputContainer>

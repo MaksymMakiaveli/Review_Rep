@@ -43,7 +43,7 @@ const ListTitle: React.FC<ListTitleProps> = () => {
   if (loadingTitle) {
     return <Loader />;
   }
-
+  
   if (titleList && !titleList.length) {
     return (
       <EmptyPage textButton="Title" redirectPath="newTitle">

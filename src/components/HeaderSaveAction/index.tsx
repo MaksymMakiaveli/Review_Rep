@@ -13,8 +13,6 @@ const HeaderSaveAction: React.FC<HeaderSaveActionProps> = (props) => {
 
   const disabledButton = errors && !!Object.keys(errors).length;
 
-  console.log(errors);
-  
   return (
     <div className={classes.header_box}>
       <h5>{title}</h5>

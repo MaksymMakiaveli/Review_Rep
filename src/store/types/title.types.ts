@@ -18,7 +18,7 @@ export type Title = {
 
 export type TCreateTitle = {
   userTitleCode: string,
-  title: string,
+  title: string
 };
 
 export type TUpdateTitle = TCreateTitle & Pick<Title, 'userTitleId'>;

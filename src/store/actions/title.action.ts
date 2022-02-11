@@ -50,7 +50,7 @@ export const deleteTitle = (titleIds: number[]): TitleActions => ({
     url: `/UserTitle/RemoveByIdList`,
     method: 'POST',
     data: {
-      TitleIds: titleIds,
+      UserTitleIds: titleIds,
     },
   },
 });
