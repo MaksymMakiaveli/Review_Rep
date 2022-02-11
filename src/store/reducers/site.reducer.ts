@@ -40,7 +40,7 @@ export const SiteReducer = (
     case concatActions(GET_ONE_SITE, SUCCESS):
       return {
         ...state,
-        currentSite: action.response.resultObject,
+        currentSite: action.response.resultObject[0],
         loadingSite: false,
       };
     case POST_NEW_SITE:

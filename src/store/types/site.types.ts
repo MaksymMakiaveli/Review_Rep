@@ -89,7 +89,7 @@ export interface GetOneSiteSuccess
   extends BaseAction<Concat<typeof GET_ONE_SITE, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
-    resultObject: Site;
+    resultObject: Site[];
   };
 }
 

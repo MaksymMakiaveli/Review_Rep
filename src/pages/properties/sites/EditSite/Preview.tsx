@@ -59,11 +59,11 @@ const Preview: React.FC<PreviewProps> = (props) => {
           <InputContainer title="Location">
             <PreviewField 
               label="Country" 
-              description={'country'} 
+              description={currentSite.city.country.name} 
             />
             <PreviewField 
               label="City" 
-              description={'city'} 
+              description={currentSite.city.name} 
             />
             <PreviewField 
               label="Town" 

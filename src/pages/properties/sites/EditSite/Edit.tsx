@@ -40,14 +40,14 @@ const Edit: React.FC<EditProps> = (props) => {
   const countryDefaultValue = useMemo(
     () => ({
       value: currentSite.countryId,
-      label: 'currentSite.city.country.name',
+      label: currentSite.city.country.name,
     }),
     []
   );
   const cityDefaultValue = useMemo(
     () => ({
       value: currentSite.cityId,
-      label: 'currentSite.city.name',
+      label: currentSite.city.name,
     }),
     []
   );
