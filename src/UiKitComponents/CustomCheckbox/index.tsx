@@ -5,8 +5,8 @@ import './CustomCheckbox.scss';
 
 interface CustomCheckboxProps extends CheckboxProps {}
 
-const CustomCheckbox: React.FC<CustomCheckboxProps> = (props) => {
+const CustomCheckbox = (props: CustomCheckboxProps) => {
   const { ...rest } = props;
   return <Checkbox {...rest} className="custom_checkbox" />;
 };
-export default CustomCheckbox;
+export default React.memo(CustomCheckbox);

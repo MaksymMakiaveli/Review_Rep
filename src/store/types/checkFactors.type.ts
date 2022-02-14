@@ -29,7 +29,7 @@ export interface CheckFactorState {
 
 export type TCheckFactorTable = Required<
   Pick<CheckFactory, 'name' | 'checkFactorCode' | 'checkFactorId'>
->;
+> & { isSelected: boolean };
 
 export type TCreateCheckFactor = Pick<CheckFactory, 'name' | 'checkFactorCode' | 'description'>;
 

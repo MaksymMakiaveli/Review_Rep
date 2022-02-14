@@ -3,18 +3,35 @@ import { FAIL, GET_TOKEN, SUCCESS } from '../actionTypes';
 
 export type PageMode = 'EDIT' | 'REVIEW' | null;
 
-export type DataKeyType<Keys> = {
+export type DataKeyType<Type extends object = {}> = {
   label: string;
-  key: keyof Keys;
+  key: string;
+  // TODO: Нужно почистить типы
+  mustDeleteKey?: keyof Type;
   align?: 'center' | 'right' | 'left';
   flexGrow?: number;
   width?: number;
   sortable?: boolean;
 };
 
+export type DataKeyReactTable<Keys> = {
+  Header: string;
+  accessor: keyof Keys;
+  textAlign?: 'center' | 'start' | 'end';
+  width?: number;
+};
+
 export type TSelectValue<ValueType extends number | string> = {
   label: string;
   value: ValueType;
+};
+
+export type MappedObjectType<Type> = {
+  [Property in keyof Type]: Type[Property];
+};
+
+export type DataType<T> = MappedObjectType<T> & {
+  isSelected: boolean;
 };
 
 export type UnknownDataType = {

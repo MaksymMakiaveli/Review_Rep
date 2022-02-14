@@ -3,51 +3,42 @@ import { RootState } from '@RootStateType';
 import { useSelector } from 'react-redux';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { ReactTable } from '@UiKitComponents';
+
+import { TCheckFactorTable } from '@Types/checkFactors.type';
+import { TableSemantic } from '@UiKitComponents';
+import { DataKeyType } from '@Types/application.types';
 
 interface ListCheckFactorsProps {}
 
-// const dataKeyCheckFactorsList: DataKeyType<CheckFactory>[] = [
-//   {
-//     key: 'name',
-//     label: 'check out reason',
-//     align: 'left',
-//     flexGrow: 1,
-//   },
-//   {
-//     key: 'checkFactorCode',
-//     label: 'check out code',
-//     align: 'left',
-//     flexGrow: 1,
-//   },
-// ];
+const columns: DataKeyType[] = [
+  {
+    key: 'checkFactorId',
+    label: 'Check Factor ID',
+  },
+  {
+    key: 'checkFactorCode',
+    label: 'Check Factor Code',
+  },
+  {
+    key: 'name',
+    label: 'Check Factor Name',
+  },
+];
 
 const getCheckFactorState = (state: RootState) => state.CheckFactorReducer;
 
 const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
   const { checkFactorList, loadingCheckFactor } = useSelector(getCheckFactorState);
-  // const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
 
-  // Test Components
-  const memoizedColumns = useMemo(
-    () => [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        width: 200,
-      },
-      {
-        Header: 'Check Factor Id',
-        accessor: 'checkFactorId',
-      },
-    ],
-    []
-  );
-  // Test Components
-  const memoizedData = useMemo(() => checkFactorList, [checkFactorList]);
-  //
-
-  //
+  const memoizedData = useMemo((): TCheckFactorTable[] => {
+    return checkFactorList.map((checkFactor) => ({
+      name: checkFactor.name,
+      checkFactorCode: checkFactor.checkFactorCode,
+      checkFactorId: checkFactor.checkFactorId,
+      isSelected: false,
+    }));
+  }, [checkFactorList]);
+  const memoizedColumns = useMemo((): DataKeyType[] => columns, []);
 
   if (loadingCheckFactor) {
     return <Loader />;
@@ -61,28 +52,14 @@ const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
     );
   }
 
-  // const listForTable: TCheckFactorTable[] = checkFactorList.map((checkFactor) => ({
-  //   name: checkFactor.name,
-  //   checkFactorCode: checkFactor.checkFactorCode,
-  //   checkFactorId: checkFactor.checkFactorId,
-  // }));
-
   return (
-    <div>
-      <div className="padding_wrapper_table-page">
-        <TableHeaderActions
-          // checkedItemsList={checkedItemsList}
-          pageCreatingUrl="CreateCheckFactor"
-          textRedirectButton="New Check Factor"
-        />
-        {/* <CustomTable
-          data={listForTable}
-          dataKey={dataKeyCheckFactorsList}
-          currentDataKey="checkFactorId"
-          setCheckedItemsList={setCheckedItemsList}
-        /> */}
-        <ReactTable columns={memoizedColumns} data={memoizedData} />
-      </div>
+    <div className="padding_wrapper_table-page">
+      <TableHeaderActions
+        pageCreatingUrl="CreateCheckFactor"
+        textRedirectButton="New Check Factor"
+      />
+
+      <TableSemantic data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />
     </div>
   );
 };

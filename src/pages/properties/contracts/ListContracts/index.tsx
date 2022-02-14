@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { Contract } from '@Types/contract.types';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { deleteContractById, getContractList } from '@Actions/contracts.action';
 import { CustomTable } from '@UiKitComponents';
 import { DataKeyType } from '@Types/application.types';
+import { Contract } from '@Types/contract.types';
 
 interface ListContractsProps {}
 

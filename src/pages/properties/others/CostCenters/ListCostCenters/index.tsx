@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@TypeComponents/index';
 import { CustomTable } from '@UiKitComponents';
-import { CostCenter, TCostCenterTable } from '@Types/costCenters.type';
+import { TCostCenterTable } from '@Types/costCenters.type';
 
 interface ListConstCentersProps {}
 
-const dataKeyCostCenterList: DataKeyType<CostCenter>[] = [
+const dataKeyCostCenterList: DataKeyType<TCostCenterTable>[] = [
   {
     key: 'costCenterCode',
     label: 'Cost Center Code',

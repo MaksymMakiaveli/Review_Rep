@@ -10,14 +10,14 @@ interface DataType extends UnknownDataType {
   activeStatus?: 'ACTIVE' | null;
 }
 
-interface CustomTableProps<T> {
+interface CustomTableProps {
   data: DataType[];
-  dataKey: DataKeyType<T>[];
+  dataKey: DataKeyType<any>[];
   currentDataKey: string;
   setCheckedItemsList(state: string[] | number[]): void;
 }
 
-const CustomTable = <T,>(props: CustomTableProps<T>) => {
+const CustomTable = (props: CustomTableProps) => {
   const { data, dataKey, currentDataKey, setCheckedItemsList } = props;
 
   const [checkedKeys, setCheckedKeys] = React.useState<any[]>([]);
@@ -44,6 +44,7 @@ const CustomTable = <T,>(props: CustomTableProps<T>) => {
   const filteredData = sortedData.filter((v: any, i: any) => {
     const start = limitPage * (page - 1);
     const end = start + limitPage;
+    console.log(start);
     return i >= start && i < end;
   });
 
@@ -89,7 +90,6 @@ const CustomTable = <T,>(props: CustomTableProps<T>) => {
         <Pagination
           prev
           next
-          ellipsis
           boundaryLinks
           maxButtons={2}
           size="sm"
