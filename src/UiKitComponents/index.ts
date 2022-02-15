@@ -15,6 +15,7 @@ import ModalDelete from './Modals/ModalDelete';
 import AccordionForSidebar from './AccordionForSidebar';
 import TableRS from './TableRS';
 import TableSemantic from './TableSemantic';
+import Table from './Table';
 
 export {
   Button,
@@ -34,4 +35,5 @@ export {
   AccordionForSidebar,
   TableRS,
   TableSemantic,
+  Table,
 };

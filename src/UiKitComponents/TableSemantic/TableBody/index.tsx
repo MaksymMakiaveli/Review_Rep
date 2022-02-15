@@ -1,12 +1,8 @@
 import React from 'react';
 
-// import { Table } from 'semantic-ui-react';
-
 import { DataKeyType } from '@Types/application.types';
 import TableBodyRow from '../TableBodyRow';
 import { Draggable } from 'react-beautiful-dnd';
-
-// const MemoizedTableBody = React.memo(Table.Body);
 
 interface TableBodyProps<T extends object> {
   readonly data: T[];
@@ -20,10 +16,10 @@ const TableBody = <T extends object>(
   props: TableBodyProps<T>,
   ref: React.Ref<HTMLTableSectionElement> | null
 ) => {
-  const { data, columnsConfig, keyTable, selectedKeys, handleCheckbox } = props;
+  const { data, columnsConfig, keyTable, selectedKeys, handleCheckbox, ...rest } = props;
 
   return (
-    <tbody className="table-ui__body" ref={ref}>
+    <tbody className="table-ui__body" ref={ref} {...rest}>
       {data.map((item, index) => (
         <Draggable
           key={(item as any)[keyTable]}

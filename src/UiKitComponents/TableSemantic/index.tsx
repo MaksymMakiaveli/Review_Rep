@@ -10,7 +10,7 @@ import { usePagination, useSelectKeysTable } from '@hooks';
 import './TableSemantic.scss';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-interface TableSemanticProps<T extends object, Keys extends keyof T> {
+interface TableSemanticProps<T extends object = {}, Keys extends keyof T = any> {
   readonly data: T[];
   readonly columnsConfig: DataKeyType[];
   readonly keyTable: Keys;

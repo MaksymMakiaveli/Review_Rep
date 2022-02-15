@@ -5,23 +5,23 @@ import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
 
 import { TCheckFactorTable } from '@Types/checkFactors.type';
-import { TableSemantic } from '@UiKitComponents';
-import { DataKeyType } from '@Types/application.types';
+import { Table } from '@UiKitComponents';
+import { ColumnsTable } from '@Types/application.types';
 
 interface ListCheckFactorsProps {}
 
-const columns: DataKeyType[] = [
+const columns: ColumnsTable<TCheckFactorTable>[] = [
   {
-    key: 'checkFactorId',
-    label: 'Check Factor ID',
+    dataKey: 'checkFactorId',
+    title: 'Check Factor ID',
   },
   {
-    key: 'checkFactorCode',
-    label: 'Check Factor Code',
+    dataKey: 'checkFactorCode',
+    title: 'Check Factor Code',
   },
   {
-    key: 'name',
-    label: 'Check Factor Name',
+    dataKey: 'name',
+    title: 'Check Factor Name',
   },
 ];
 
@@ -30,15 +30,17 @@ const getCheckFactorState = (state: RootState) => state.CheckFactorReducer;
 const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
   const { checkFactorList, loadingCheckFactor } = useSelector(getCheckFactorState);
 
-  const memoizedData = useMemo((): TCheckFactorTable[] => {
-    return checkFactorList.map((checkFactor) => ({
-      name: checkFactor.name,
-      checkFactorCode: checkFactor.checkFactorCode,
-      checkFactorId: checkFactor.checkFactorId,
-      isSelected: false,
-    }));
+  const memoizedData = useMemo(() => {
+    return checkFactorList.map(
+      (checkFactor): TCheckFactorTable => ({
+        name: checkFactor.name,
+        checkFactorCode: checkFactor.checkFactorCode,
+        checkFactorId: checkFactor.checkFactorId,
+        isSelected: false,
+      })
+    );
   }, [checkFactorList]);
-  const memoizedColumns = useMemo((): DataKeyType[] => columns, []);
+  const memoizedColumns = useMemo(() => columns, []);
 
   if (loadingCheckFactor) {
     return <Loader />;
@@ -59,7 +61,12 @@ const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
         textRedirectButton="New Check Factor"
       />
 
-      <TableSemantic data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />
+      {/*<TableSemantic data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />*/}
+      <Table<TCheckFactorTable>
+        data={memoizedData}
+        columnsConfig={memoizedColumns}
+        keyTable="checkFactorId"
+      />
     </div>
   );
 };

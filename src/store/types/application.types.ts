@@ -14,12 +14,14 @@ export type DataKeyType<Type extends object = {}> = {
   sortable?: boolean;
 };
 
-export type DataKeyReactTable<Keys> = {
-  Header: string;
-  accessor: keyof Keys;
-  textAlign?: 'center' | 'start' | 'end';
-  width?: number;
-};
+export interface DataTableType {
+  [key: string]: any;
+}
+
+export interface ColumnsTable<Object extends DataTableType> {
+  title: string;
+  dataKey: keyof Object;
+}
 
 export type TSelectValue<ValueType extends number | string> = {
   label: string;
