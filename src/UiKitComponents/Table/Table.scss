@@ -1,7 +1,12 @@
 .table-wrapper {
   .ui.table.table-ui {
+    position: relative;
     border-collapse: separate;
-    border-spacing: 0 5px;
+    border-spacing: 0 2px;
+    table-layout: fixed;
+    max-height: 546px;
+
+    width: 100%;
     thead {
       background: transparent;
       tr {
@@ -9,18 +14,29 @@
         .header-cell {
           background: transparent;
           border: none;
-
           font-weight: 500;
           font-size: 12px;
           line-height: 158%;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #60788b;
+          &:first-child {
+            padding-left: 20px;
+          }
+          &-sorted {
+            cursor: pointer;
+            span {
+              display: inline-block;
+              margin-left: 10px;
+            }
+          }
         }
       }
     }
     tbody {
+      position: relative;
       tr {
+        transition: all 0.5s ease;
         height: 48px;
         &:nth-child(odd) {
           background: #edf6ff;
@@ -30,6 +46,9 @@
           background: #d6e8fc;
         }
         td {
+          table-layout: fixed;
+          overflow: hidden;
+          position: relative;
           border: none;
           font-weight: 500;
           font-size: 16px;
@@ -37,7 +56,6 @@
           letter-spacing: 0.005em;
           font-feature-settings: 'tnum' on, 'lnum' on;
           color: #374957;
-
           .checkbox {
             overflow: hidden;
             label {
@@ -56,13 +74,36 @@
               }
             }
           }
+          &:first-child {
+            padding-left: 20px !important;
+          }
         }
+        .checkbox-cell {
+          padding-bottom: 8px;
+          padding-right: 0;
+
+          &-help-box {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+      .row-isDragging {
+        opacity: 0.5;
+      }
+      .row-isDragOver {
+        box-shadow: rgba(67, 71, 85, 0.27) 0 0 0.25em, rgba(90, 125, 188, 0.05) 0 0.25em 1em;
+        transform: scale(1.001);
       }
     }
   }
   .pagination-wrapper {
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
     .ui.pagination {
       .item {
         border-radius: 5px !important;

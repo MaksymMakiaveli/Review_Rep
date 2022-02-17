@@ -1,45 +1,76 @@
-import React, { useState } from 'react';
-import { Table as TableSemantic } from 'semantic-ui-react';
-import { ColumnsTable, DataTableType } from '@Types/application.types';
-import TableHeader from './TableHeader';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import React, { useReducer } from 'react';
+import { ColumnsTable, ObjectKeysString } from '@Types/application.types';
+import { Pagination, Table as TableSemantic } from 'semantic-ui-react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import Header from './Header';
+import BodyTable from './Body';
 import './Table.scss';
-import TableBody from './TableBody';
+import { usePagination } from '@hooks';
+import { tableReducer } from './table.reducer';
 
-interface TableProps<Object extends DataTableType = any> {
-  data: Object[];
-  columnsConfig: ColumnsTable<Object>[];
-  keyTable: keyof Object;
+interface TableProps<T = ObjectKeysString> {
+  data: T[];
+  columnsConfig: ColumnsTable<T>[];
+  keyTable: keyof T;
+  isDraggable?: boolean;
 }
-export type TableContextType<Object extends DataTableType> = TableProps<Object>;
 
-const PureTable = React.memo(TableSemantic);
+interface TableContextType<T = ObjectKeysString> extends TableProps<T> {}
 
-export const TableContext = React.createContext<TableContextType<any>>({} as TableContextType<any>);
+export const TableContext = React.createContext<TableContextType>(undefined!);
 
-const Table = <Object extends object>(props: TableProps<Object>) => {
-  const { data, columnsConfig, keyTable } = props;
-  const [valueContext] = useState({
-    data,
-    columnsConfig,
-    keyTable,
+function Table<T = ObjectKeysString>(props: TableProps<T>) {
+  const { data, columnsConfig, keyTable, isDraggable = false } = props;
+
+  const [{ sortedData, direction, column }, dispatch] = useReducer(tableReducer, {
+    sortedData: data,
+    column: null,
+    direction: undefined,
   });
 
-  const handleDragEnd = (result: DropResult) => {
-    console.log(result);
+  const { filteredData, totalPages, changePage } = usePagination(sortedData);
+
+  const sortedColumn = (columnName: typeof column) => {
+    return () => {
+      if (columnName) {
+        dispatch({ type: 'CHANGE_SORT', payload: columnName });
+      } else {
+        throw new Error();
+      }
+    };
   };
 
+  const StateContext: TableContextType<any> = {
+    data: filteredData,
+    columnsConfig,
+    keyTable,
+    isDraggable,
+  };
   return (
     <div className="table-wrapper">
-      <TableContext.Provider value={valueContext}>
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <PureTable className="table-ui" basic="very">
-            <TableHeader />
-            <TableBody />
-          </PureTable>
-        </DragDropContext>
+      <TableContext.Provider value={StateContext}>
+        <DndProvider backend={HTML5Backend}>
+          <TableSemantic className="table-ui" basic="very">
+            <Header column={column} direction={direction} sortedColumn={sortedColumn} />
+            <BodyTable />
+          </TableSemantic>
+        </DndProvider>
+        <div className="pagination-wrapper">
+          <Pagination
+            lastItem={null}
+            firstItem={null}
+            totalPages={totalPages}
+            secondary
+            siblingRange={1}
+            boundaryRange={0}
+            ellipsisItem={null}
+            onPageChange={changePage}
+          />
+        </div>
       </TableContext.Provider>
     </div>
   );
-};
+}
+
 export default Table;

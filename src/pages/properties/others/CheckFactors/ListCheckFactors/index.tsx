@@ -8,26 +8,22 @@ import { TCheckFactorTable } from '@Types/checkFactors.type';
 import { Table } from '@UiKitComponents';
 import { ColumnsTable } from '@Types/application.types';
 
-interface ListCheckFactorsProps {}
-
 const columns: ColumnsTable<TCheckFactorTable>[] = [
   {
     dataKey: 'checkFactorId',
     title: 'Check Factor ID',
-  },
-  {
-    dataKey: 'checkFactorCode',
-    title: 'Check Factor Code',
+    isSorted: true,
   },
   {
     dataKey: 'name',
     title: 'Check Factor Name',
+    isSorted: true,
   },
 ];
 
 const getCheckFactorState = (state: RootState) => state.CheckFactorReducer;
 
-const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
+const ListCheckFactors = () => {
   const { checkFactorList, loadingCheckFactor } = useSelector(getCheckFactorState);
 
   const memoizedData = useMemo(() => {
@@ -61,12 +57,7 @@ const ListCheckFactors: React.FC<ListCheckFactorsProps> = () => {
         textRedirectButton="New Check Factor"
       />
 
-      {/*<TableSemantic data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />*/}
-      <Table<TCheckFactorTable>
-        data={memoizedData}
-        columnsConfig={memoizedColumns}
-        keyTable="checkFactorId"
-      />
+      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />
     </div>
   );
 };

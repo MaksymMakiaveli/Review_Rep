@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { DataKeyType } from '@Types/application.types';
+import React, { useMemo } from 'react';
+import { ColumnsTable } from '@Types/application.types';
 import { RootState } from '@RootStateType';
 import { useSelector } from 'react-redux';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@TypeComponents/index';
-import { CustomTable } from '@UiKitComponents';
+import { Table } from '@UiKitComponents';
 import { TCostCenterTable } from '@Types/costCenters.type';
 
 interface ListConstCentersProps {}
 
-const dataKeyCostCenterList: DataKeyType<TCostCenterTable>[] = [
+const columnsCostCenter: ColumnsTable<TCostCenterTable>[] = [
   {
-    key: 'costCenterCode',
-    label: 'Cost Center Code',
-    align: 'left',
-    flexGrow: 1,
+    dataKey: 'costCenterCode',
+    title: 'Cost Center Code',
   },
   {
-    key: 'name',
-    label: 'Cost Center Name',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'name',
+    title: 'Cost Center Name',
+    isSorted: true,
   },
 ];
 
@@ -29,13 +25,18 @@ const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 
 const ListConstCenters: React.FC<ListConstCentersProps> = () => {
   const { costCentersList, loadingCostCenter } = useSelector(getCostCenterState);
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
 
-  const listForTable: TCostCenterTable[] = costCentersList.map((costCenter) => ({
-    costCenterCode: costCenter.costCenterCode,
-    costCenterId: costCenter.costCenterId,
-    name: costCenter.name,
-  }));
+  const memoizedData: TCostCenterTable[] = useMemo(
+    () =>
+      costCentersList.map((costCenter) => ({
+        costCenterCode: costCenter.costCenterCode,
+        costCenterId: costCenter.costCenterId,
+        name: costCenter.name,
+      })),
+    [costCentersList]
+  );
+
+  const memoizedColumns = useMemo(() => columnsCostCenter, []);
 
   if (loadingCostCenter) {
     return <Loader />;
@@ -54,16 +55,10 @@ const ListConstCenters: React.FC<ListConstCentersProps> = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions
-          checkedItemsList={checkedItemsList}
           pageCreatingUrl="CreateCostCenter"
           textRedirectButton="New Cost Center"
         />
-        <CustomTable
-          data={listForTable}
-          dataKey={dataKeyCostCenterList}
-          currentDataKey="costCenterId"
-          setCheckedItemsList={setCheckedItemsList}
-        />
+        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="costCenterId" />
       </div>
     </div>
   );

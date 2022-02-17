@@ -1,11 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { PaginationProps } from 'semantic-ui-react/dist/commonjs/addons/Pagination/Pagination';
 
-type HookProps<T extends object> = {
-  readonly data: T[];
-  readonly limitPage?: number;
-};
-
 type HookReturn<T extends object> = {
   readonly filteredData: T[];
   readonly totalPages: number;
@@ -15,7 +10,7 @@ type HookReturn<T extends object> = {
   ) => void;
 };
 
-function usePagination<T extends object>({ data, limitPage = 10 }: HookProps<T>): HookReturn<T> {
+function usePagination<T extends object>(data: T[], limitPage = 10): HookReturn<T> {
   const [limit] = useState(limitPage);
   const [activePage, setActivePage] = useState(1);
 
