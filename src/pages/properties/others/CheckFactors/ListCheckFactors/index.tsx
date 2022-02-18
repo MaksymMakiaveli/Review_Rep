@@ -32,7 +32,6 @@ const ListCheckFactors = () => {
         name: checkFactor.name,
         checkFactorCode: checkFactor.checkFactorCode,
         checkFactorId: checkFactor.checkFactorId,
-        isSelected: false,
       })
     );
   }, [checkFactorList]);

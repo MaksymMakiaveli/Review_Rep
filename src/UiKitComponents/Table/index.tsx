@@ -7,7 +7,7 @@ import BodyTable from './Body';
 import './Table.scss';
 import { usePagination } from '@hooks';
 import { tableReducer } from './table.reducer';
-import { TableCreateContext, TableProps } from './TableTypes';
+import { TableCreateContext, TableProps } from './TableTypes.type';
 
 export const TableContext = React.createContext<TableCreateContext>(undefined!);
 

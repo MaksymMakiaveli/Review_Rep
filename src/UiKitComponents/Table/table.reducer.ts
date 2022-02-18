@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash';
-import { TableProps } from './TableTypes';
+import { TableProps } from './TableTypes.type';
 
 export interface TableAction {
   type: 'CHANGE_SORT';
