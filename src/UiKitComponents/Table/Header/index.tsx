@@ -31,7 +31,7 @@ const Header = (props: HeaderProps) => {
           <Table.HeaderCell
             sorted={column === columns.dataKey ? direction : undefined}
             onClick={columns.isSorted && sortedColumn(columns.dataKey as string)}
-            key={columns.dataKey as string}
+            key={columns.dataKey.toString()}
             className={cl('header-cell', { 'header-cell-sorted': columns.isSorted })}
           >
             {columns.title}

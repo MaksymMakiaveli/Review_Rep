@@ -2,9 +2,7 @@ import React from 'react';
 import classes from './SearchInput.module.scss';
 import { Search } from '@common';
 
-interface SearchInputProps {}
-
-const SearchInput: React.FC<SearchInputProps> = () => {
+const SearchInput = () => {
   return (
     <div className={classes.searchInput}>
       <input type="text" placeholder="Search" />

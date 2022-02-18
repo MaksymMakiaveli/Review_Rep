@@ -2,9 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { PaginationProps } from 'semantic-ui-react/dist/commonjs/addons/Pagination/Pagination';
 
 type HookReturn<T extends object> = {
-  readonly filteredData: T[];
-  readonly totalPages: number;
-  readonly changePage: (
+  filteredData: T[];
+  totalPages: number;
+  changePage: (
     event: React.MouseEvent<HTMLAnchorElement>,
     paginationProps: PaginationProps
   ) => void;

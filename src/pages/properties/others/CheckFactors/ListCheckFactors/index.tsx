@@ -57,7 +57,12 @@ const ListCheckFactors = () => {
         textRedirectButton="New Check Factor"
       />
 
-      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />
+      <Table
+        data={memoizedData}
+        columnsConfig={memoizedColumns}
+        keyTable="checkFactorId"
+        isDraggable
+      />
     </div>
   );
 };

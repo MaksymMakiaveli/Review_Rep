@@ -1,16 +1,11 @@
 import React, { useContext, useRef } from 'react';
-import { ObjectKeysString } from '@Types/application.types';
 import { TableContext } from '../index';
 import { useDrag, useDrop } from 'react-dnd';
 import cl from 'classnames';
 
-interface BodyRowProps<Object extends ObjectKeysString = any> {
-  item: Object;
+interface BodyRowProps<T = any> {
+  item: T;
 }
-
-type ItemDropObject = {
-  itemId: number;
-};
 
 const BodyRow = (props: BodyRowProps) => {
   const { item } = props;
@@ -21,23 +16,22 @@ const BodyRow = (props: BodyRowProps) => {
     accept: 'table-row',
     drop: (items) => {
       return {
-        focusDropItem: item[keyTable],
-        draggedItemId: items.itemId,
+        focusItem: { ...item },
+        draggingItem: { ...items },
       };
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
-      droppedItemId: item[keyTable],
     }),
-    canDrop: (items: ItemDropObject) => {
-      return items.itemId !== item[keyTable];
+    canDrop: (draggingItem: typeof item) => {
+      return draggingItem[keyTable] !== item[keyTable];
     },
   });
 
   const [{ isDragging }, drag] = useDrag({
     type: 'table-row',
-    item: { itemId: item[keyTable] },
+    item: { ...item },
     end: (item, monitor) => {
       console.log(monitor.getDropResult());
     },
@@ -57,7 +51,7 @@ const BodyRow = (props: BodyRowProps) => {
     <>
       <tr ref={rowRef} className={cl(dragOverClassName, draggingClassName)}>
         {columnsConfig.map((column) => (
-          <td key={column.dataKey as string}>{item[column.dataKey]}</td>
+          <td key={column.dataKey.toString()}>{item[column.dataKey]}</td>
         ))}
       </tr>
     </>

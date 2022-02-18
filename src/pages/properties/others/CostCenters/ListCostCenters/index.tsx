@@ -26,13 +26,15 @@ const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 const ListConstCenters: React.FC<ListConstCentersProps> = () => {
   const { costCentersList, loadingCostCenter } = useSelector(getCostCenterState);
 
-  const memoizedData: TCostCenterTable[] = useMemo(
+  const memoizedData = useMemo(
     () =>
-      costCentersList.map((costCenter) => ({
-        costCenterCode: costCenter.costCenterCode,
-        costCenterId: costCenter.costCenterId,
-        name: costCenter.name,
-      })),
+      costCentersList.map(
+        (costCenter): TCostCenterTable => ({
+          costCenterCode: costCenter.costCenterCode,
+          costCenterId: costCenter.costCenterId,
+          name: costCenter.name,
+        })
+      ),
     [costCentersList]
   );
 

@@ -41,15 +41,17 @@ const ListContracts = () => {
   const { contracts, loadingContract } = useSelector(getContractState);
 
   const memoizedData = useMemo(
-    (): TContractTable[] =>
-      contracts.map((contract) => ({
-        contractId: contract.contractId,
-        name: contract.name,
-        price: contract.price,
-        partnerId: contract.partnerId,
-        endDate: contract.endDate.split('T').splice(0, 1).join(''),
-        currencyName: contract.currencyName,
-      })),
+    () =>
+      contracts.map(
+        (contract): TContractTable => ({
+          contractId: contract.contractId,
+          name: contract.name,
+          price: contract.price,
+          partnerId: contract.partnerId,
+          endDate: contract.endDate.split('T').splice(0, 1).join(''),
+          currencyName: contract.currencyName,
+        })
+      ),
     [contracts]
   );
   const memoizedColumns = useMemo(() => columnsContract, []);

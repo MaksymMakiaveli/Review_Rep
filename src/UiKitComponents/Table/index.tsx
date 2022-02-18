@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { ColumnsTable, ObjectKeysString } from '@Types/application.types';
 import { Pagination, Table as TableSemantic } from 'semantic-ui-react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -8,30 +7,22 @@ import BodyTable from './Body';
 import './Table.scss';
 import { usePagination } from '@hooks';
 import { tableReducer } from './table.reducer';
+import { TableCreateContext, TableProps } from './TableTypes';
 
-interface TableProps<T = ObjectKeysString> {
-  data: T[];
-  columnsConfig: ColumnsTable<T>[];
-  keyTable: keyof T;
-  isDraggable?: boolean;
-}
+export const TableContext = React.createContext<TableCreateContext>(undefined!);
 
-interface TableContextType<T = ObjectKeysString> extends TableProps<T> {}
-
-export const TableContext = React.createContext<TableContextType>(undefined!);
-
-function Table<T = ObjectKeysString>(props: TableProps<T>) {
+function Table<T extends object>(props: TableProps<T>) {
   const { data, columnsConfig, keyTable, isDraggable = false } = props;
 
-  const [{ sortedData, direction, column }, dispatch] = useReducer(tableReducer, {
-    sortedData: data,
+  const [state, dispatch] = useReducer(tableReducer, {
+    data,
     column: null,
     direction: undefined,
   });
 
-  const { filteredData, totalPages, changePage } = usePagination(sortedData);
+  const { filteredData, totalPages, changePage } = usePagination(state.data);
 
-  const sortedColumn = (columnName: typeof column) => {
+  const sortedColumn = (columnName: typeof state.column) => {
     return () => {
       if (columnName) {
         dispatch({ type: 'CHANGE_SORT', payload: columnName });
@@ -41,7 +32,7 @@ function Table<T = ObjectKeysString>(props: TableProps<T>) {
     };
   };
 
-  const StateContext: TableContextType<any> = {
+  const StateContext: TableCreateContext = {
     data: filteredData,
     columnsConfig,
     keyTable,
@@ -52,7 +43,7 @@ function Table<T = ObjectKeysString>(props: TableProps<T>) {
       <TableContext.Provider value={StateContext}>
         <DndProvider backend={HTML5Backend}>
           <TableSemantic className="table-ui" basic="very">
-            <Header column={column} direction={direction} sortedColumn={sortedColumn} />
+            <Header column={state.column} direction={state.direction} sortedColumn={sortedColumn} />
             <BodyTable />
           </TableSemantic>
         </DndProvider>

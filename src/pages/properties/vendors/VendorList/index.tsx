@@ -35,9 +35,9 @@ const getVendorState = (state: RootState) => state.VendorReducer;
 const VendorList: React.FC<VendorListProps> = () => {
   const { vendorList, loadingVendor } = useSelector(getVendorState);
 
-  const memoizedDataVendorList: TVendorTable[] = useMemo(
+  const memoizedData = useMemo(
     () =>
-      vendorList.map((vendor) => {
+      vendorList.map((vendor): TVendorTable => {
         const cityName = vendor.city ? vendor.city.name : '';
         return {
           name: vendor.name,
@@ -49,6 +49,8 @@ const VendorList: React.FC<VendorListProps> = () => {
       }),
     [vendorList]
   );
+  const memoizedColumns = useMemo(() => columnsVendorTable, []);
+
   if (loadingVendor) {
     return <Loader />;
   }
@@ -62,15 +64,9 @@ const VendorList: React.FC<VendorListProps> = () => {
   }
 
   return (
-    <div>
-      <div className="padding_wrapper_table-page">
-        <TableHeaderActions pageCreatingUrl="/Vendors/newVendor" textRedirectButton="New Vendor" />
-        <Table
-          data={memoizedDataVendorList}
-          columnsConfig={columnsVendorTable}
-          keyTable="partnerId"
-        />
-      </div>
+    <div className="padding_wrapper_table-page">
+      <TableHeaderActions pageCreatingUrl="/Vendors/newVendor" textRedirectButton="New Vendor" />
+      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="partnerId" />
     </div>
   );
 };

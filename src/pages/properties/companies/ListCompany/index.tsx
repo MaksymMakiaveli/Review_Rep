@@ -19,14 +19,16 @@ const getCompanyState = (state: RootState) => state.CompanyReducer;
 const ListCompany = () => {
   const { companyList, loadingCompany } = useSelector(getCompanyState);
 
-  const memoizedData: TCompanyTable[] = useMemo(
+  const memoizedData = useMemo(
     () =>
-      companyList.map((company) => ({
-        address: company.address,
-        companyCode: company.companyCode,
-        companyId: company.companyId,
-        name: company.name,
-      })),
+      companyList.map(
+        (company): TCompanyTable => ({
+          address: company.address,
+          companyCode: company.companyCode,
+          companyId: company.companyId,
+          name: company.name,
+        })
+      ),
     [companyList]
   );
   const memoizedColumns = useMemo(() => columnsCompany, []);

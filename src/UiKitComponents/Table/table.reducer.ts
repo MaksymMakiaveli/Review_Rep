@@ -1,33 +1,29 @@
-import { ObjectKeysString } from '@Types/application.types';
 import { sortBy } from 'lodash';
+import { TableProps } from './TableTypes';
 
 export interface TableAction {
   type: 'CHANGE_SORT';
   payload: string;
 }
 
-export interface TableState<T = ObjectKeysString> {
-  sortedData: T[];
+export interface TableState extends Pick<TableProps, 'data'> {
   direction: 'descending' | 'ascending' | undefined;
   column: string | null;
 }
 
-export const tableReducer = <T extends ObjectKeysString>(
-  state: TableState<T>,
-  action: TableAction
-): TableState<T> => {
+export const tableReducer = (state: TableState, action: TableAction): TableState => {
   switch (action.type) {
     case 'CHANGE_SORT':
       if (state.column === action.payload) {
         return {
           ...state,
-          sortedData: state.sortedData.slice().reverse(),
+          data: state.data.slice().reverse(),
           direction: state.direction === 'ascending' ? 'descending' : 'ascending',
         };
       }
       return {
         column: action.payload,
-        sortedData: sortBy(state.sortedData, [action.payload]),
+        data: sortBy(state.data, [action.payload]),
         direction: 'ascending',
       };
     default:
