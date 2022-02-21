@@ -1,7 +1,11 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { TableContext } from '../index';
 import { useDrag, useDrop } from 'react-dnd';
 import cl from 'classnames';
+import { useNavigate } from 'react-router-dom';
+import { Table } from 'semantic-ui-react';
+import { useToggle } from '@hooks';
+import { DropArrow } from '@common';
 
 interface BodyRowProps<T = any> {
   item: T;
@@ -11,6 +15,9 @@ const BodyRow = (props: BodyRowProps) => {
   const { item } = props;
   const { columnsConfig, keyTable, isDraggable = false } = useContext(TableContext);
   const rowRef = useRef(null);
+  const navigation = useNavigate();
+  const [openRow, setOpenRow] = useToggle();
+  const [visibleIconDrop] = useState(false);
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'table-row',
@@ -42,6 +49,7 @@ const BodyRow = (props: BodyRowProps) => {
       return isDraggable;
     },
   });
+  const redirectToPreviewPage = () => navigation(`${item[keyTable]}`);
 
   const dragOverClassName = isOver && canDrop ? 'row-isDragOver' : '';
   const draggingClassName = isDragging ? 'row-isDragging' : '';
@@ -50,8 +58,25 @@ const BodyRow = (props: BodyRowProps) => {
   return (
     <>
       <tr ref={rowRef} className={cl(dragOverClassName, draggingClassName)}>
+        <Table.Cell collapsing>
+          <div className="content">
+            <span>
+              {visibleIconDrop ? (
+                <button onClick={setOpenRow} style={{ background: 'transparent' }}>
+                  <span className={cl('drop-arrow', { 'open-drop-arrow': openRow })}>
+                    <DropArrow color="blue" />
+                  </span>
+                </button>
+              ) : null}
+            </span>
+          </div>
+        </Table.Cell>
         {columnsConfig.map((column) => (
-          <td key={column.dataKey.toString()}>{item[column.dataKey]}</td>
+          <td key={column.dataKey.toString()}>
+            <div className="content" onClick={redirectToPreviewPage}>
+              <span>{item[column.dataKey]}</span>
+            </div>
+          </td>
         ))}
       </tr>
     </>
