@@ -17,8 +17,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
   const [openModal, setOpenModal] = useToggle();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  console.log(currentSite);
+  const parentSite = currentSite.parentSite ? currentSite.parentSite.name : '';
 
   const deleteSites = () => {
     if(currentSite) {
@@ -51,7 +50,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
           />
           <PreviewField 
             label="Parent site" 
-            description={currentSite.parentSiteId} 
+            description={parentSite} 
           />
         </InputContainer>
         <Divider margin="40px 0 20px 0" />

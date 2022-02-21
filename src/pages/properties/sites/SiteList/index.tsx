@@ -72,8 +72,6 @@ const SiteList: React.FC<SiteListProps> = () => {
   if (loadingSite) {
     return <Loader />;
   }
-
-  console.log(siteList);
   
   if (siteList && !siteList.length) {
     return (

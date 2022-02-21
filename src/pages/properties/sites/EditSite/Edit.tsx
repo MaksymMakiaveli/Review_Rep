@@ -26,6 +26,7 @@ const Edit: React.FC<EditProps> = (props) => {
   const { citiesList, countriesList } = useGetCityAndCountry();
   const loadingDefinition = useSelector(getLoadingDefinition);
   const { siteList, loadingSite } = useSelector(getSiteState);
+  const parentSite = currentSite.parentSite ? currentSite.parentSite.name : '';
   const dispatch = useDispatch();
   const {
     register,
@@ -54,7 +55,7 @@ const Edit: React.FC<EditProps> = (props) => {
   const parentDefaultValue = useMemo(
     () => ({
       value: currentSite.parentSiteId,
-      label: 'currentSite.parentSite.name',
+      label: parentSite,
     }),
     []
   );  

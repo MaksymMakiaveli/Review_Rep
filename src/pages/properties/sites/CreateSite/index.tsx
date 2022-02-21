@@ -46,7 +46,6 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
       countryId: site.countryId.value,
       parentSiteId: site.parentSiteId.value,
     };
-    console.log(newSite);
     dispatch(postNewSite(newSite));
   };
 
