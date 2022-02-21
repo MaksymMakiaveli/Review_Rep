@@ -1,0 +1,63 @@
+@import '../../styles/variables';
+
+.sidebar-accordion {
+  position: relative;
+  width: 100%;
+  color: #fff;
+  overflow: hidden;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+  }
+  &__label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    text-align: left;
+    padding-left: 10px;
+    height: 36px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #f7f7f7;
+    &::after {
+      content: '';
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      width: 24px;
+      height: 24px;
+      background-image: url('../../assets/icons/SideBarNavigationArrow.svg');
+      fill: #fff;
+      background-repeat: no-repeat;
+      line-height: 3;
+      text-align: center;
+      -webkit-transition: all 0.35s;
+      -o-transition: all 0.35s;
+      transition: all 0.35s;
+    }
+    svg {
+      margin-right: 8px;
+    }
+  }
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0 0 0 40px;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 0.65s;
+    -o-transition: max-height 0.65s;
+    transition: max-height 0.65s;
+  }
+  &__input:checked ~ &__content {
+    max-height: 100vh;
+  }
+  &__input:checked + &__label::after {
+    transform: rotate(180deg);
+  }
+}

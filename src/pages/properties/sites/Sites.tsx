@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SiteList from './SiteList';
 import CreateSite from './CreateSite';
 import EditSite from './EditSite';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetSiteList } from '@Actions/site.action';
 
-interface SitesProps {}
+const getSiteState = (state: RootState) => state.SiteReducer;
 
-const Sites: React.FC<SitesProps> = () => {
+const Sites = () => {
+  const dispatch = useDispatch();
+  const { siteList } = useSelector(getSiteState);
+
+  useEffect(() => {
+    if (!siteList.length) {
+      dispatch(GetSiteList());
+    }
+  }, []);
+
   return (
     <>
       <Routes>

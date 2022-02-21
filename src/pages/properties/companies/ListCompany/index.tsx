@@ -1,57 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetCompanyList } from '@Actions/company.action';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { CustomTable } from '@UiKitComponents';
+import { Table } from '@UiKitComponents';
 import { Loader } from '@common';
-import { DataKeyType } from '@Types/application.types';
+import { ColumnsTable } from '@Types/application.types';
+import { TCompanyTable } from '@Types/company.types';
 
-interface ListCompanyProps {}
-
-const dataKeyCompanyList: DataKeyType[] = [
-  {
-    key: 'companyId',
-    label: 'Company Id',
-    align: 'left',
-    width: 110,
-    sortable: true,
-  },
-  {
-    key: 'name',
-    label: 'Company Name',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
-  },
-
-  {
-    key: 'companyCode',
-    label: 'Company Code',
-    align: 'left',
-    flexGrow: 1,
-  },
-  {
-    key: 'address',
-    label: 'Address',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
-  },
+const columnsCompany: ColumnsTable<TCompanyTable>[] = [
+  { dataKey: 'companyId', title: 'Company Id', isSorted: true },
+  { dataKey: 'name', title: 'Company Name', isSorted: true },
+  { dataKey: 'companyCode', title: 'Company Code' },
+  { dataKey: 'address', title: 'Address', isSorted: true },
 ];
 
 const getCompanyState = (state: RootState) => state.CompanyReducer;
 
-const ListCompany: React.FC<ListCompanyProps> = () => {
+const ListCompany = () => {
   const { companyList, loadingCompany } = useSelector(getCompanyState);
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!companyList.length) {
-      dispatch(GetCompanyList());
-    }
-  }, [companyList]);
+  const memoizedData = useMemo(
+    () =>
+      companyList.map(
+        (company): TCompanyTable => ({
+          address: company.address,
+          companyCode: company.companyCode,
+          companyId: company.companyId,
+          name: company.name,
+        })
+      ),
+    [companyList]
+  );
+  const memoizedColumns = useMemo(() => columnsCompany, []);
 
   if (loadingCompany) {
     return <Loader />;
@@ -70,16 +50,10 @@ const ListCompany: React.FC<ListCompanyProps> = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions
-          checkedItemsList={checkedItemsList}
           pageCreatingUrl="/Companies/newCompany"
           textRedirectButton="New Company"
         />
-        <CustomTable
-          data={companyList}
-          dataKey={dataKeyCompanyList}
-          currentDataKey="companyId"
-          setCheckedItemsList={setCheckedItemsList}
-        />
+        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="companyId" />
       </div>
     </div>
   );

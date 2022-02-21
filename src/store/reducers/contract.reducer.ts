@@ -26,7 +26,7 @@ export const ContractReducer = (state = initialState, action: ContractActions): 
     case concatActions(GET_CONTRACTS_LIST, SUCCESS):
       return {
         ...state,
-        contracts: [...state.contracts, ...action.response.resultObject],
+        contracts: action.response.resultObject,
         loadingContract: false,
       };
     case GET_ONE_CONTRACT:

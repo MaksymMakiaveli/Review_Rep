@@ -45,6 +45,12 @@ export type Site = {
   users: any[];
 };
 
+export interface TSiteTable
+  extends Required<Pick<Site, 'name' | 'siteCode' | 'barcode' | 'siteId'>> {
+  cityName: City['name'];
+  countryName: Country['name'];
+}
+
 export type TCreateSite = {
   siteCode: string;
   siteId: number;

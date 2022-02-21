@@ -23,7 +23,6 @@ function App() {
     <div className="container">
       <div className="app_wrapper">
         <Sidebar />
-        {/*<SidebarRS />*/}
         <div className="content_wrapper">
           <Header />
           <section className="contents">
