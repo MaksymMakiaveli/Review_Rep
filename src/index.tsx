@@ -12,10 +12,12 @@ import { CustomRouter } from '@components';
 import customHistory from './config/history';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <CustomRouter history={customHistory}>
-      <App />
-    </CustomRouter>
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <CustomRouter history={customHistory}>
+        <App />
+      </CustomRouter>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );

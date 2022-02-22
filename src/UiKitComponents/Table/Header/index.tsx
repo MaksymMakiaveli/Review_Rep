@@ -27,7 +27,6 @@ const Header = (props: HeaderProps) => {
   return (
     <thead className="table-ui__header">
       <tr>
-        <Table.HeaderCell className="header-cell" />
         {columnsConfig.map((columns) => (
           <Table.HeaderCell
             sorted={column === columns.dataKey ? direction : undefined}

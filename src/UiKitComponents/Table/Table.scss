@@ -22,10 +22,7 @@
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #60788b;
-          &:first-child {
-            padding: 0 !important;
-            width: 30px !important;
-          }
+
           &-sorted {
             cursor: pointer;
             span {
@@ -70,14 +67,6 @@
               letter-spacing: 0.005em;
               font-feature-settings: 'tnum' on, 'lnum' on;
               color: #374957;
-              .drop-arrow {
-                transition: transform 0.3s ease;
-                display: inline-block;
-                transform: rotate(-90deg);
-              }
-              .open-drop-arrow {
-                transform: rotate(0deg);
-              }
             }
           }
         }
