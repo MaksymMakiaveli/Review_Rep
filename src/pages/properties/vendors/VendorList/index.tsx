@@ -1,68 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetVendorList } from '@Actions/vendor.action';
-import { VendorState } from '@Types/vendor.types';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { TVendorTable } from '@Types/vendor.types';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { CustomTable } from '@UiKitComponents';
+import { Table } from '@UiKitComponents';
 import { Loader } from '@common';
-import { DataKeyType } from '@Types/application.types';
-import classes from './VendorList.module.scss';
+import { ColumnsTable } from '@Types/application.types';
 
 interface VendorListProps {}
 
-const dataKeyVendorList: DataKeyType[] = [
+const columnsVendorTable: ColumnsTable<TVendorTable>[] = [
   {
-    key: 'name',
-    label: 'Vendor Name',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'name',
+    title: 'Vendor Name',
+    isSorted: true,
   },
   {
-    key: 'taxNumber',
-    label: 'TXN',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'taxNumber',
+    title: 'TXN',
   },
   {
-    key: 'phone',
-    label: 'Phone',
-    align: 'left',
-    flexGrow: 1,
+    dataKey: 'phone',
+    title: 'Phone',
   },
   {
-    key: 'city.name',
-    label: 'CITY',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'cityName',
+    title: 'CITY',
+    isSorted: true,
   },
 ];
 
 const getVendorState = (state: RootState) => state.VendorReducer;
 
 const VendorList: React.FC<VendorListProps> = () => {
-  const { vendorList, loadingVendor } = useSelector<RootState, VendorState>(
-    getVendorState
-  );
+  const { vendorList, loadingVendor } = useSelector(getVendorState);
 
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>(
-    []
+  const memoizedData = useMemo(
+    () =>
+      vendorList.map((vendor): TVendorTable => {
+        const cityName = vendor.city ? vendor.city.name : '';
+        return {
+          name: vendor.name,
+          cityName: cityName,
+          phone: vendor.phone,
+          taxNumber: vendor.taxNumber,
+          partnerId: vendor.partnerId,
+        };
+      }),
+    [vendorList]
   );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!vendorList.length) {
-      dispatch(GetVendorList());
-    }
-  }, [vendorList]);
+  const memoizedColumns = useMemo(() => columnsVendorTable, []);
 
   if (loadingVendor) {
     return <Loader />;
   }
-
   if (vendorList && !vendorList.length) {
     return (
       <EmptyPage textButton="Vendor" redirectPath="newVendor">
@@ -73,20 +64,9 @@ const VendorList: React.FC<VendorListProps> = () => {
   }
 
   return (
-    <div className={classes.vendorList}>
-      <div className={classes.vendorList_wrapper}>
-        <TableHeaderActions
-          checkedItemsList={checkedItemsList}
-          pageCreatingUrl="/Vendors/newVendor"
-          textRedirectButton="New Vendor"
-        />
-        <CustomTable
-          data={vendorList}
-          dataKey={dataKeyVendorList}
-          currentDataKey="partnerId"
-          setCheckedItemsList={setCheckedItemsList}
-        />
-      </div>
+    <div className="padding_wrapper_table-page">
+      <TableHeaderActions pageCreatingUrl="/Vendors/newVendor" textRedirectButton="New Vendor" />
+      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="partnerId" />
     </div>
   );
 };

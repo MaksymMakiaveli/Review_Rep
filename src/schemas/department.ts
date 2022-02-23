@@ -10,7 +10,8 @@ export const schemaDepartment = yup.object({
     .required('This field is required')
     .min(1, 'Department code must be max 4 characters')
     .max(4, 'Department code must be max 4 characters'),
-  siteId: yup
-    .number()
-    .truncate(),
+  siteId: yup.object({
+    label: yup.string(),
+    value: yup.number().required('Please selct a location'),
+  })
 });

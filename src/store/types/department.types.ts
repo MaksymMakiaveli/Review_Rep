@@ -10,9 +10,11 @@ import {
 } from '../actionTypes';
 
 import { TSelectValue } from '@Types/application.types';
+import { Site } from './site.types';
 
 
 export type Department = {
+  childDepartment: Department[],
   companyId: number,
   departmentId: number;
   siteId: number;
@@ -21,11 +23,11 @@ export type Department = {
   // createdDate: string,
   creatorId: number,
   description: string,
-  Location: any;
+  site: Site;
   isValid: boolean;
   modifiedDate: string;
   modifiedId: number;
-  parentDepartment: object[];
+  parentDepartment: Department;
   parentDepartmentId: number;
 //TODO: как узнаем тип массива изменить any
   inverseParentDepartment: any[]
@@ -34,9 +36,15 @@ export type Department = {
   users: any[]
 };
 
+export interface TDepartmentTable
+  extends Required<Pick<Department, 'name' | 'departmentCode' | 'departmentId'>> {
+  parentName: Department['name'];
+  siteName: Site['name'];
+}
+
 export type NewDepartment = {
   departmentId: number;
-  parentDepartmentId: number;
+  parentDepartmentId: number | undefined;
   siteId: number;
   departmentCode: string;
   name: string;
@@ -48,8 +56,9 @@ export type NewDepartment = {
   isActive: boolean;
 };
 
-export type TFormCreateDepartment = Omit<NewDepartment,'parentDepartmentId'> & {
+export type TFormCreateDepartment = Omit<NewDepartment,'parentDepartmentId' | 'siteId'> & {
   parentDepartmentId: TSelectValue<number>;
+  siteId: TSelectValue<number>;
 };
 
 export type PutDepartment = NewDepartment & Pick<Department, 'departmentId'>;

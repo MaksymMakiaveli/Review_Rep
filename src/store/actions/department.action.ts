@@ -40,7 +40,7 @@ export const updateDepartment = (department: PutDepartment): DepartmentActions =
   type: PUT_DEPARTMENT,
   api: {
     url: '/Department/UpdateDepartment',
-    method: 'PUT',
+    method: 'POST',
     data: {
       ...department
     }

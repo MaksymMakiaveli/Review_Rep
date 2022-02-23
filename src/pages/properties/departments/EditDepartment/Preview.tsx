@@ -10,7 +10,6 @@ import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAc
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentDepartment: Department;
-  
 }
 
 const Preview: React.FC<PreviewProps> = (props) => {
@@ -18,6 +17,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
   const [openModal, setOpenModal] = useToggle();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const siteName = currentDepartment.site ? currentDepartment.site.name : '';
 
   const deleteDepartments = () => {
     if (currentDepartment) {
@@ -39,13 +39,13 @@ const Preview: React.FC<PreviewProps> = (props) => {
         <PreviewField label="Department name" description={currentDepartment.name} />
         <PreviewField
           label="Parent Department"
-          description={currentDepartment.parentDepartmentId}
+          description={''}
         />
         <PreviewField
           label="Department code"
           description={currentDepartment.departmentCode}
         />
-        <PreviewField label="Location" description={currentDepartment.siteId} />
+        <PreviewField label="Location" description={siteName} />
       </InputContainer>
     </div>
     <ModalDelete

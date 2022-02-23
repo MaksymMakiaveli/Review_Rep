@@ -4,7 +4,8 @@ import { Department, TFormCreateDepartment } from '@Types/department.types';
 import { RootState } from '@RootStateType';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateDepartment, GetDepartmentList } from '@Actions/department.action';
+import { updateDepartment } from '@Actions/department.action';
+import { GetSiteList } from '@Actions/site.action';
 import { schemaDepartment } from '@schema/department';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,14 +16,18 @@ interface EditProps {
 }
 
 const getDepartmentState = (state: RootState) => state.DepartmentReducer;
+const getSiteState = (state: RootState) => state.SiteReducer;
 
 const Edit: React.FC<EditProps> = (props) => {
   const { currentDepartment, backToPreview } = props;
   const { departmentList, loadingDepartment } = useSelector(
     getDepartmentState
   );
+  const { siteList, loadingSite } = useSelector(getSiteState);
   const dispatch = useDispatch();
   const parentId = currentDepartment.parentDepartmentId;
+  const siteId = currentDepartment.siteId;
+  const siteName = currentDepartment.site ? currentDepartment.site.name : '';
   const {
     register,
     formState: { errors },
@@ -36,22 +41,31 @@ const Edit: React.FC<EditProps> = (props) => {
   const parentDefaultValue = useMemo(
     () => ({
       value: parentId,
-      label: 'parentId',
+      label: '',
+    }),
+    []
+  );
+
+  const siteDefaultValue = useMemo(
+    () => ({
+      value: siteId,
+      label: siteName,
     }),
     []
   );
 
   useEffect(() => {
-    if (!departmentList.length) {
-      dispatch(GetDepartmentList());
+    if (!siteList.length) {
+      dispatch(GetSiteList());
     }
-  }, [departmentList]);
+  }, []);
 
   const onSubmit = (department: TFormCreateDepartment) => {
     const newDepartment = {
       ...department,
       parentDepartmentId: department.parentDepartmentId.value,
       departmentId: currentDepartment.departmentId,
+      siteId: department.siteId.value,
     };
     dispatch(updateDepartment(newDepartment));
   };
@@ -101,14 +115,21 @@ const Edit: React.FC<EditProps> = (props) => {
                   required
                   {...register('departmentCode')}
                 />
-                <TextField
-                  errorText={errors.siteId?.message}
-                  id="Location"
-                  placeholder="Location"
+                <Select
+                  errorText={errors.siteId?.value?.message}
                   label="Location"
-                  defaultValue={currentDepartment.siteId}
+                  id="Location"
+                  name="siteId"
+                  defaultValue={siteDefaultValue}
+                  control={memoizedControl}
+                  placeholder="Choose location"
+                  options={siteList}
+                  optionValue="siteId"
+                  optionLabel="name"
+                  isDisabled={loadingSite}
+                  isLoading={loadingSite}
+                  required
                   isActive
-                  {...register('siteId', { valueAsNumber: true })}
                 />
                 </InputContainer>
               </div>

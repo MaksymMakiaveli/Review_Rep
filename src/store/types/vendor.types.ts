@@ -39,6 +39,13 @@ export type Vendor = {
   nonCurrAssetsPartner: any[];
 };
 
+
+export interface TVendorTable
+  extends Required<Pick<Vendor, 'name' | 'phone' | 'taxNumber' | 'partnerId'>> {
+  cityName: City['name'];
+}
+
+
 export type TCreateVendor = {
   partnerCode: string;
   name: string;
@@ -94,8 +101,7 @@ export interface PostNewVendorFail
   extends BaseAction<Concat<typeof POST_NEW_VENDOR, typeof FAIL>> {}
 
 export interface UpdateVendor extends BaseAction<typeof PUT_VENDOR> {}
-export interface UpdateVendorSuccess
-  extends BaseAction<Concat<typeof PUT_VENDOR, typeof SUCCESS>> {
+export interface UpdateVendorSuccess extends BaseAction<Concat<typeof PUT_VENDOR, typeof SUCCESS>> {
   response: {
     resultObject: Vendor;
   };

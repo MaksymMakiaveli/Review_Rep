@@ -26,7 +26,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
       };
       dispatch(deleteContractById(contractId));
     }
-    setOpenModal(!open);
+    setOpenModal(!openModal);
     navigate('/Contracts');
   };
 

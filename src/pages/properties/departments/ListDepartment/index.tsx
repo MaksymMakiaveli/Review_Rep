@@ -1,43 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetDepartmentList } from '@Actions/department.action';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { TDepartmentTable } from '@Types/department.types';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { CustomTable } from '@UiKitComponents';
+import { Table } from '@UiKitComponents';
 import { Loader } from '@common';
-import { DataKeyType } from '@Types/application.types';
+import { ColumnsTable } from '@Types/application.types';
 
 interface ListDepartmentProps {}
 
-const dataKeyDepartmentList: DataKeyType[] = [
+const columnsDepartmentTable: ColumnsTable<TDepartmentTable>[] = [
   {
-    key: 'departmentCode',
-    label: 'DEPARTMENT CODE',
-    align: 'left',
-    width: 110,
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'departmentCode',
+    title: 'DEPARTMENT CODE',
+    isSorted: true,
   },
   {
-    key: 'name',
-    label: 'DEPARTMENT NAME',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
-  },
-
-  {
-    key: 'parentDepartment.name',
-    label: 'PARENT DEPARTMENT',
-    align: 'left',
-    flexGrow: 1,
+    dataKey: 'name',
+    title: 'DEPARTMENT NAME',
+    isSorted: true,
   },
   {
-    key: 'siteId',
-    label: 'LOCATION',
-    align: 'left',
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'parentName',
+    title: 'PARENT DEPARTMENT',
+  },
+  {
+    dataKey: 'siteName',
+    title: 'LOCATION',
+    isSorted: true,
   },
 ];
 
@@ -45,20 +35,25 @@ const getDepartmentState = (state: RootState) => state.DepartmentReducer;
 
 const ListDepartment: React.FC<ListDepartmentProps> = () => {
   const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>(
-    []
-  );
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!departmentList.length) {
-      dispatch(GetDepartmentList());
-    }
-  }, [departmentList]);  
-
-  console.log(departmentList);
   
-
+  const memoizedData = useMemo(
+    () =>
+    departmentList.map((department): TDepartmentTable => {
+        const parentName = department.parentDepartment ? department.parentDepartment.name : '';
+        const siteName = department.site ? department.site.name : '';
+        
+        return {
+          name: department.name,
+          departmentCode: department.departmentCode,
+          parentName: parentName,
+          siteName: siteName,
+          departmentId: department.departmentId,
+        };
+      }),
+    [departmentList]
+  );
+  const memoizedColumns = useMemo(() => columnsDepartmentTable, []);
+  
   if (loadingDepartment) {
     return <Loader />;
   }
@@ -76,15 +71,14 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions
-          checkedItemsList={checkedItemsList}
           pageCreatingUrl="/Departments/newDepartment"
           textRedirectButton="New Department"
         />
-        <CustomTable
-          data={departmentList}
-          dataKey={dataKeyDepartmentList}
-          currentDataKey="departmentId"
-          setCheckedItemsList={setCheckedItemsList}
+        <Table
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          keyTable="departmentId"
+          isDraggable
         />
       </div>
     </div>

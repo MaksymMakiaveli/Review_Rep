@@ -2,8 +2,9 @@ import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@RootStateType';
 import { TextField, Select } from '@UiKitComponents';
-import { DepartmentState, TFormCreateDepartment } from '@Types/department.types';
-import { GetDepartmentList, postNewDepartment } from '@Actions/department.action';
+import { TFormCreateDepartment } from '@Types/department.types';
+import { postNewDepartment } from '@Actions/department.action';
+import { GetSiteList } from '@Actions/site.action';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { useBackHistory } from '@hooks';
@@ -14,11 +15,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 interface CreateDepartmentProps {}
 
 const getDepartmentState = (state: RootState) => state.DepartmentReducer;
+const getSiteState = (state: RootState) => state.SiteReducer;
 
 const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
-  const { departmentList, loadingDepartment } = useSelector<RootState, DepartmentState>(
-    getDepartmentState
-  );
+  const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
+  const { siteList, loadingSite } = useSelector(getSiteState);
+
   const dispatch = useDispatch();
   const backHistory = useBackHistory();
 
@@ -34,20 +36,20 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
   const memoizedControl = useMemo(() => control, []);
 
   const onSubmit = (department: TFormCreateDepartment) => {
-    const newDepartmen = {
+    const newDepartment = {
       ...department,
-      parentDepartmentId: department.parentDepartmentId.value
+      parentDepartmentId: department.parentDepartmentId ? department.parentDepartmentId.value : undefined,
+      siteId: department.siteId.value,
     };
-    console.log(newDepartmen);
     
-    dispatch(postNewDepartment(newDepartmen));
+    dispatch(postNewDepartment(newDepartment));
   };
 
   useEffect(() => {
-    if (!departmentList.length) {
-      dispatch(GetDepartmentList());
+    if (!siteList.length) {
+      dispatch(GetSiteList());
     }
-  }, [departmentList]);
+  }, []);
 
   if (loadingDepartment) {
     return <Loader />;
@@ -93,12 +95,19 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
                     required
                     {...register('departmentCode')}
                   />
-                  <TextField
-                    errorText={errors.siteId?.message}
-                    id="Location"
-                    placeholder="Location"
+                  <Select
+                    errorText={errors.siteId?.value?.message}
                     label="Location"
-                    {...register('siteId')}
+                    id="Location"
+                    name="siteId"
+                    control={memoizedControl}
+                    placeholder="Choose location"
+                    options={siteList}
+                    optionValue="siteId"
+                    optionLabel="name"
+                    isDisabled={loadingSite}
+                    isLoading={loadingSite}
+                    required
                   />
                   </InputContainer>
                 </div>
