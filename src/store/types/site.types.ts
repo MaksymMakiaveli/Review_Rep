@@ -54,7 +54,7 @@ export interface TSiteTable
 export type TCreateSite = {
   siteCode: string;
   siteId: number;
-  parentSiteId: number;
+  parentSiteId?: number;
   companyId: number;
   name: string;
   barcode: string;
@@ -91,8 +91,7 @@ export interface GetSiteListSuccess
 }
 
 export interface GetOneSite extends BaseAction<typeof GET_ONE_SITE> {}
-export interface GetOneSiteSuccess
-  extends BaseAction<Concat<typeof GET_ONE_SITE, typeof SUCCESS>> {
+export interface GetOneSiteSuccess extends BaseAction<Concat<typeof GET_ONE_SITE, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     resultObject: Site[];
@@ -106,20 +105,17 @@ export interface PostNewSiteSuccess
     resultObject: Site;
   };
 }
-export interface PostNewSiteFail
-  extends BaseAction<Concat<typeof POST_NEW_SITE, typeof FAIL>> {}
+export interface PostNewSiteFail extends BaseAction<Concat<typeof POST_NEW_SITE, typeof FAIL>> {}
 
 export interface UpdateSite extends BaseAction<typeof PUT_SITE> {}
-export interface UpdateSiteSuccess
-  extends BaseAction<Concat<typeof PUT_SITE, typeof SUCCESS>> {
+export interface UpdateSiteSuccess extends BaseAction<Concat<typeof PUT_SITE, typeof SUCCESS>> {
   response: {
     resultObject: Site;
   };
 }
 
 export interface DeleteSite extends BaseAction<typeof DELETE_SITE> {}
-export interface DeleteSiteSuccess
-  extends BaseAction<Concat<typeof DELETE_SITE, typeof SUCCESS>> {
+export interface DeleteSiteSuccess extends BaseAction<Concat<typeof DELETE_SITE, typeof SUCCESS>> {
   response: {
     resultStatus: boolean;
     languageKeyword: string;

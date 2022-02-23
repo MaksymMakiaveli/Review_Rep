@@ -40,11 +40,12 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
   const memoizedControl = useMemo(() => control, []);
 
   const onSubmit = (site: TFormCreateSite) => {
+    console.log(site);
     const newSite = {
       ...site,
       cityId: site.cityId.value,
       countryId: site.countryId.value,
-      parentSiteId: site.parentSiteId?.value,
+      parentSiteId: site.parentSiteId ? site.parentSiteId.value : undefined,
     };
     dispatch(postNewSite(newSite));
   };
@@ -157,7 +158,7 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
                   placeholder="Area"
                   label="Area"
                   {...register('area')}
-                /> 
+                />
               </InputContainer>
               <InputContainer>
                 <TextField

@@ -13,35 +13,25 @@ const columnsSiteTable: ColumnsTable<TSiteTable>[] = [
   {
     dataKey: 'name',
     title: 'SITE NAME',
-    // align: 'left',
-    // flexGrow: 1,
     isSorted: true,
   },
   {
     dataKey: 'siteCode',
     title: 'SITE CODE',
-    // align: 'left',
-    // flexGrow: 1,
     isSorted: true,
   },
   {
     dataKey: 'barcode',
     title: 'SITE BARCODE',
-    // align: 'left',
-    // flexGrow: 1,
   },
   {
     dataKey: 'countryName',
     title: 'COUNTRY',
-    // align: 'left',
-    // flexGrow: 1,
     isSorted: true,
   },
   {
     dataKey: 'cityName',
     title: 'CITY',
-    // align: 'left',
-    // flexGrow: 1,
     isSorted: true,
   },
 ];
@@ -53,7 +43,7 @@ const SiteList: React.FC<SiteListProps> = () => {
 
   const memoizedData = useMemo(
     () =>
-    siteList.map((site): TSiteTable => {
+      siteList.map((site): TSiteTable => {
         const cityName = site.city ? site.city.name : '';
         const countryName = site.city ? site.city.country.name : '';
         return {
@@ -72,8 +62,8 @@ const SiteList: React.FC<SiteListProps> = () => {
   if (loadingSite) {
     return <Loader />;
   }
-  
-  if (siteList && !siteList.length) {
+
+  if (!siteList.length) {
     return (
       <EmptyPage textButton="Site" redirectPath="newSite">
         <h5>You don`t have site yet</h5>
@@ -89,12 +79,7 @@ const SiteList: React.FC<SiteListProps> = () => {
           pageCreatingUrl="/Locations/newLocation"
           textRedirectButton="New Site"
         />
-        <Table
-          data={memoizedData}
-          columnsConfig={memoizedColumns}
-          keyTable="siteId"
-          isDraggable
-        />
+        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="siteId" isDraggable />
       </div>
     </div>
   );

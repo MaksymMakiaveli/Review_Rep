@@ -27,13 +27,25 @@ const ListCheckFactors = () => {
   const { checkFactorList, loadingCheckFactor } = useSelector(getCheckFactorState);
 
   const memoizedData = useMemo(() => {
-    return checkFactorList.map(
-      (checkFactor): TCheckFactorTable => ({
+    return checkFactorList.map((checkFactor): TCheckFactorTable => {
+      const newCheckFactor = {
         name: checkFactor.name,
         checkFactorCode: checkFactor.checkFactorCode,
         checkFactorId: checkFactor.checkFactorId,
-      })
-    );
+        children: null,
+      };
+      return {
+        ...newCheckFactor,
+        children: [
+          {
+            ...newCheckFactor,
+            checkFactorId: Math.floor(
+              newCheckFactor.checkFactorId + (checkFactor.checkFactorId * 10) / 0.5
+            ),
+          },
+        ],
+      };
+    });
   }, [checkFactorList]);
   const memoizedColumns = useMemo(() => columns, []);
 
