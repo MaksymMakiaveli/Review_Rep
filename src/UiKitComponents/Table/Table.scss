@@ -41,11 +41,6 @@
       tr {
         transition: all 0.5s ease;
         max-height: 48px;
-        //&:not(.child-row) ~ &:nth-child(odd) {
-        //  .content {
-        //    background: #edf6ff;
-        //  }
-        //}
         td {
           padding: 0;
           table-layout: fixed;
@@ -57,7 +52,7 @@
           .content {
             overflow: hidden;
             height: 48px;
-            padding: 0.78571429em 0.78571429em;
+            padding: 0.7em 0.7em;
             transition: background-color 0.3s ease;
 
             .icon-collapsing {
@@ -79,15 +74,20 @@
           }
         }
       }
-      & + .row:nth-child(odd) {
+      .parent-row-striped {
         .content {
           background: #edf6ff;
         }
       }
-      .collapsing-row {
+      .child-row-striped {
+        .content {
+          background: #edf6ff;
+        }
+      }
+      .children-row-hidden {
         display: none;
       }
-      .collapsing-row-open {
+      .children-row-show {
         display: table-row;
       }
       .row-isDragging {

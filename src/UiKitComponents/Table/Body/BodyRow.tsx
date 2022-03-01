@@ -1,23 +1,23 @@
-import React, { RefObject, useContext, useEffect, useRef, useState } from 'react';
-import { TableContext } from '../index';
+import React, { useContext, useRef } from 'react';
+import { useToggle } from '@hooks';
 import { useDrag, useDrop } from 'react-dnd';
-import cl from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import { TableContext } from '../index';
+import cl from 'classnames';
 import { Collapsing } from '@common';
 import ChildrenBodyRow from './ChildrenBodyRow';
 
 interface BodyRowProps<T = any> {
   item: T;
-  setNodeListParentRow: (tableRow: RefObject<HTMLTableRowElement>[]) => void;
-  classForChildren?: string[];
+  stripedClassName: string;
 }
 
 const BodyRow = (props: BodyRowProps) => {
-  const { item, classForChildren, setNodeListParentRow } = props;
+  const { item, stripedClassName } = props;
 
   const rowRef = useRef(null);
 
-  const [collapsing, setCollapsing] = useState(false);
+  const [collapsing, toggleCollapsing] = useToggle(false);
 
   const { columnsConfig, keyTable, isDraggable = false } = useContext(TableContext);
 
@@ -38,11 +38,7 @@ const BodyRow = (props: BodyRowProps) => {
     canDrop: (draggingItem: typeof item) => {
       if (draggingItem[keyTable] === item[keyTable]) {
         return false;
-      } else if (draggingItem.parentId === item[keyTable]) {
-        return false;
-      } else {
-        return true;
-      }
+      } else return draggingItem.parentId !== item[keyTable];
     },
   });
 
@@ -60,37 +56,23 @@ const BodyRow = (props: BodyRowProps) => {
     },
   });
 
-  useEffect(() => {
-    setNodeListParentRow([rowRef]);
-  }, []);
-
   const redirectToPreviewPage = () => navigation(`${item[keyTable]}`);
-  const handleExpandableRow = () => {
-    setCollapsing(!collapsing);
-  };
+
+  const checkedChildren = item?.children && item?.children.length;
 
   const dragOverClassName = isOver && canDrop ? 'row-isDragOver' : '';
   const draggingClassName = isDragging ? 'row-isDragging' : '';
-  const classChildren = classForChildren ? classForChildren : [''];
-
-  const checkedChildren = item?.children && item?.children.length;
-  const checkedIsParent = item?.parentId === null ? 'parent-row' : '';
+  const collapsingClassName = collapsing ? 'children-row-show' : 'children-row-hidden';
 
   drag(drop(rowRef));
   return (
     <>
       <tr
         ref={rowRef}
-        className={cl(
-          dragOverClassName,
-          draggingClassName,
-          ...classChildren,
-          checkedIsParent,
-          'row'
-        )}
+        className={cl(dragOverClassName, draggingClassName, 'parent-row', stripedClassName)}
       >
         <td style={{ cursor: checkedChildren ? 'pointer' : 'default' }}>
-          <div className="content" onClick={handleExpandableRow}>
+          <div className="content" onClick={toggleCollapsing}>
             {checkedChildren ? (
               <span className={cl('icon-collapsing', { 'icon-collapsing-active': collapsing })}>
                 <Collapsing />
@@ -107,20 +89,15 @@ const BodyRow = (props: BodyRowProps) => {
         ))}
       </tr>
       {checkedChildren
-        ? item.children.map((child: any) => {
-            const classOpening =
-              item[keyTable] === child?.parentId && collapsing ? 'collapsing-row-open' : '';
-
+        ? item.children.map((child: any, index: number) => {
+            const stripedChildrenClassName = index % 2 !== 0 ? 'child-row-striped' : '';
             return (
               <ChildrenBodyRow
                 itemChild={child}
                 key={child[keyTable]}
-                classForChildren={[
-                  'collapsing-row',
-                  `child-id-${child[keyTable]}`,
-                  'child-row',
-                  classOpening,
-                ]}
+                classForChildren={[collapsingClassName, stripedChildrenClassName]}
+                closedParent={collapsing}
+                indentForChildren={10}
               />
             );
           })
