@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { TDepartmentTable } from '@Types/department.types';
+import { Department, TDepartmentTable } from '@Types/department.types';
 import { RootState } from '@RootStateType';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { Table } from '@UiKitComponents';
@@ -35,25 +35,25 @@ const getDepartmentState = (state: RootState) => state.DepartmentReducer;
 
 const ListDepartment: React.FC<ListDepartmentProps> = () => {
   const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
-  
-  const memoizedData = useMemo(
-    () =>
-    departmentList.map((department): TDepartmentTable => {
-        const parentName = department.parentDepartment ? department.parentDepartment.name : '';
-        const siteName = department.site ? department.site.name : '';
-        
-        return {
-          name: department.name,
-          departmentCode: department.departmentCode,
-          parentName: parentName,
-          siteName: siteName,
-          departmentId: department.departmentId,
-        };
-      }),
-    [departmentList]
-  );
+
+  const handleData = (dep: Department[]) => {
+    return dep.map((department): TDepartmentTable => {
+      const parentName = department.parentDepartment ? department.parentDepartment.name : '';
+      const siteName = department.site ? department.site.name : '';
+      return {
+        name: department.name,
+        departmentCode: department.departmentCode,
+        parentName: parentName,
+        siteName: siteName,
+        departmentId: department.departmentId,
+        parentId: department.parentDepartmentId,
+        children: handleData(department.childDepartment),
+      };
+    });
+  };
+  const memoizedData = useMemo(() => handleData(departmentList), [departmentList]);
   const memoizedColumns = useMemo(() => columnsDepartmentTable, []);
-  
+
   if (loadingDepartment) {
     return <Loader />;
   }
@@ -61,11 +61,11 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
   if (departmentList && !departmentList.length) {
     return (
       <EmptyPage textButton="Department" redirectPath="newDepartment">
-        <h5>You don`t have departmens yet</h5>
+        <h5>You don`t have departments yet</h5>
         <h5>Click the button and create a new department</h5>
       </EmptyPage>
     );
-  }    
+  }
 
   return (
     <div>

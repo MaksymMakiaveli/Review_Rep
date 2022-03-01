@@ -1,45 +1,46 @@
 import { BaseAction, Concat } from './index';
-import { 
-  FAIL, 
+import {
+  FAIL,
   SUCCESS,
   DELETE_DEPARTMENT,
   GET_DEPARTMENT_LIST,
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
-  PUT_DEPARTMENT, 
+  PUT_DEPARTMENT,
 } from '../actionTypes';
 
 import { TSelectValue } from '@Types/application.types';
 import { Site } from './site.types';
 
-
 export type Department = {
-  childDepartment: Department[],
-  companyId: number,
+  childDepartment: Department[];
+  companyId: number;
   departmentId: number;
   siteId: number;
   departmentCode: string;
   name: string;
   // createdDate: string,
-  creatorId: number,
-  description: string,
+  creatorId: number;
+  description: string;
   site: Site;
   isValid: boolean;
   modifiedDate: string;
   modifiedId: number;
   parentDepartment: Department;
   parentDepartmentId: number;
-//TODO: как узнаем тип массива изменить any
-  inverseParentDepartment: any[]
-  nonCurrAssets: any[]
-  suppliesLogs: any[]
-  users: any[]
+  //TODO: как узнаем тип массива изменить any
+  inverseParentDepartment: any[];
+  nonCurrAssets: any[];
+  suppliesLogs: any[];
+  users: any[];
 };
 
 export interface TDepartmentTable
   extends Required<Pick<Department, 'name' | 'departmentCode' | 'departmentId'>> {
   parentName: Department['name'];
   siteName: Site['name'];
+  children: TDepartmentTable[];
+  parentId: Department['parentDepartmentId'];
 }
 
 export type NewDepartment = {
@@ -56,7 +57,7 @@ export type NewDepartment = {
   isActive: boolean;
 };
 
-export type TFormCreateDepartment = Omit<NewDepartment,'parentDepartmentId' | 'siteId'> & {
+export type TFormCreateDepartment = Omit<NewDepartment, 'parentDepartmentId' | 'siteId'> & {
   parentDepartmentId: TSelectValue<number>;
   siteId: TSelectValue<number>;
 };
@@ -81,10 +82,10 @@ export interface GetDepartmentListSuccess
 export interface GetOneDepartment extends BaseAction<typeof GET_ONE_DEPARTMENT> {}
 export interface GetOneDepartmentSuccess
   extends BaseAction<Concat<typeof GET_ONE_DEPARTMENT, typeof SUCCESS>> {
-    response: {
-      resultStatus: boolean;
-      resultObject: Department[];
-    };
+  response: {
+    resultStatus: boolean;
+    resultObject: Department[];
+  };
 }
 
 export interface PostNewDepartment extends BaseAction<typeof POST_NEW_DEPARTMENT> {}
@@ -114,7 +115,6 @@ export interface DeleteDepartmentSuccess
     resultObject: [];
   };
 }
-
 
 export type DepartmentActions =
   | GetDepartmentList

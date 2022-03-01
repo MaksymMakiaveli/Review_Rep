@@ -36,14 +36,6 @@ const ListCheckFactors = () => {
       };
       return {
         ...newCheckFactor,
-        children: [
-          {
-            ...newCheckFactor,
-            checkFactorId: Math.floor(
-              newCheckFactor.checkFactorId + (checkFactor.checkFactorId * 10) / 0.5
-            ),
-          },
-        ],
       };
     });
   }, [checkFactorList]);

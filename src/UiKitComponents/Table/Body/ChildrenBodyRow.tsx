@@ -1,25 +1,23 @@
-import React, { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { TableContext } from '../index';
 import { useDrag, useDrop } from 'react-dnd';
 import cl from 'classnames';
-import { useNavigate } from 'react-router-dom';
 import { Collapsing } from '@common';
-import ChildrenBodyRow from './ChildrenBodyRow';
+import { useNavigate } from 'react-router-dom';
 
-interface BodyRowProps<T = any> {
-  item: T;
-  setNodeListParentRow: (tableRow: RefObject<HTMLTableRowElement>[]) => void;
+interface ChildrenBodyRowProps<T = any> {
+  itemChild: T;
   classForChildren?: string[];
 }
 
-const BodyRow = (props: BodyRowProps) => {
-  const { item, classForChildren, setNodeListParentRow } = props;
+const ChildrenBodyRow = (props: ChildrenBodyRowProps) => {
+  const { itemChild, classForChildren } = props;
 
   const rowRef = useRef(null);
 
-  const [collapsing, setCollapsing] = useState(false);
-
   const { columnsConfig, keyTable, isDraggable = false } = useContext(TableContext);
+
+  const [collapsing, setCollapsing] = useState(false);
 
   const navigation = useNavigate();
 
@@ -27,7 +25,7 @@ const BodyRow = (props: BodyRowProps) => {
     accept: 'table-row',
     drop: (draggingItem) => {
       return {
-        focusItem: { ...item },
+        focusItem: { ...itemChild },
         draggingItem: { ...draggingItem },
       };
     },
@@ -35,10 +33,10 @@ const BodyRow = (props: BodyRowProps) => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
-    canDrop: (draggingItem: typeof item) => {
-      if (draggingItem[keyTable] === item[keyTable]) {
+    canDrop: (draggingItem: typeof itemChild) => {
+      if (draggingItem[keyTable] === itemChild[keyTable]) {
         return false;
-      } else if (draggingItem.parentId === item[keyTable]) {
+      } else if (draggingItem.parentId === itemChild[keyTable]) {
         return false;
       } else {
         return true;
@@ -48,7 +46,7 @@ const BodyRow = (props: BodyRowProps) => {
 
   const [{ isDragging }, drag] = useDrag({
     type: 'table-row',
-    item: { ...item },
+    item: { ...itemChild },
     end: (item, monitor) => {
       console.log(monitor.getDropResult());
     },
@@ -60,11 +58,7 @@ const BodyRow = (props: BodyRowProps) => {
     },
   });
 
-  useEffect(() => {
-    setNodeListParentRow([rowRef]);
-  }, []);
-
-  const redirectToPreviewPage = () => navigation(`${item[keyTable]}`);
+  const redirectToPreviewPage = () => navigation(`${itemChild[keyTable]}`);
   const handleExpandableRow = () => {
     setCollapsing(!collapsing);
   };
@@ -73,22 +67,12 @@ const BodyRow = (props: BodyRowProps) => {
   const draggingClassName = isDragging ? 'row-isDragging' : '';
   const classChildren = classForChildren ? classForChildren : [''];
 
-  const checkedChildren = item?.children && item?.children.length;
-  const checkedIsParent = item?.parentId === null ? 'parent-row' : '';
+  const checkedChildren = itemChild?.children && itemChild?.children.length;
 
   drag(drop(rowRef));
   return (
     <>
-      <tr
-        ref={rowRef}
-        className={cl(
-          dragOverClassName,
-          draggingClassName,
-          ...classChildren,
-          checkedIsParent,
-          'row'
-        )}
-      >
+      <tr ref={rowRef} className={cl(dragOverClassName, draggingClassName, ...classChildren)}>
         <td style={{ cursor: checkedChildren ? 'pointer' : 'default' }}>
           <div className="content" onClick={handleExpandableRow}>
             {checkedChildren ? (
@@ -99,18 +83,17 @@ const BodyRow = (props: BodyRowProps) => {
           </div>
         </td>
         {columnsConfig.map((column, index) => (
-          <td key={`${index}-id${item[keyTable]}`}>
+          <td key={`${index}-id${itemChild[keyTable]}`}>
             <div className="content" onClick={redirectToPreviewPage}>
-              <span>{item[column.dataKey]}</span>
+              <span>{itemChild[column.dataKey]}</span>
             </div>
           </td>
         ))}
       </tr>
       {checkedChildren
-        ? item.children.map((child: any) => {
+        ? itemChild.children.map((child: any) => {
             const classOpening =
-              item[keyTable] === child?.parentId && collapsing ? 'collapsing-row-open' : '';
-
+              itemChild[keyTable] === child?.parentId && collapsing ? 'collapsing-row-open' : '';
             return (
               <ChildrenBodyRow
                 itemChild={child}
@@ -129,4 +112,4 @@ const BodyRow = (props: BodyRowProps) => {
   );
 };
 
-export default React.memo(BodyRow);
+export default ChildrenBodyRow;

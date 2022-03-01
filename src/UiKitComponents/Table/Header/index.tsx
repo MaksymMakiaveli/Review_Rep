@@ -27,6 +27,7 @@ const Header = (props: HeaderProps) => {
   return (
     <thead className="table-ui__header">
       <tr>
+        <th className="header-cell expandable-header-cell" />
         {columnsConfig.map((columns) => (
           <Table.HeaderCell
             sorted={column === columns.dataKey ? direction : undefined}
