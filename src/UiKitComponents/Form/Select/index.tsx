@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import ReactSelect from 'react-select';
-import { Controller } from 'react-hook-form';
-import InputContainer from '../../InputHelperBox';
+
 import { TSelectValue } from '@Types/application.types';
-import { SelectProps } from './SelectType';
 import cl from 'classnames';
+import { Controller } from 'react-hook-form';
+import ReactSelect from 'react-select';
+
+import InputContainer from '../../InputHelperBox';
+import { SelectProps } from './SelectType';
+
 import './Select.scss';
 
 const PureReactSelect = React.memo(ReactSelect);

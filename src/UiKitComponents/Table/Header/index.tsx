@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import { Table } from 'semantic-ui-react';
-import { TableContext } from '../index';
-import cl from 'classnames';
+
 import { Sorted } from '@common';
+import cl from 'classnames';
+import { Table } from 'semantic-ui-react';
+
+import { TableContext } from '../index';
 
 interface HeaderProps {
   column: string | null;

@@ -1,6 +1,7 @@
-import { CurrencyActions, CurrencyState } from '@Types/currency.type';
-import { GET_CURRENCY_LIST, SUCCESS } from '../actionTypes';
 import { concatActions } from '@helpers/functions';
+import { CurrencyActions, CurrencyState } from '@Types/currency.type';
+
+import { GET_CURRENCY_LIST, SUCCESS } from '../actionTypes';
 
 const initialState: CurrencyState = {
   currencyList: [],

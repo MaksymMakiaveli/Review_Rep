@@ -1,11 +1,12 @@
 import React from 'react';
-import { CostCenter } from '@Types/costCenters.type';
-import { useToggle } from '@hooks';
+
+import { deleteCostCenterById } from '@Actions/costCenter.action';
 import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
 import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { CostCenter } from '@Types/costCenters.type';
 import { ModalDelete } from '@UiKitComponents';
 import { useDispatch } from 'react-redux';
-import { deleteCostCenterById } from '@Actions/costCenter.action';
 import { useNavigate } from 'react-router-dom';
 
 interface EditProps extends Pick<HeaderEditActionProps, 'openEditPage'> {

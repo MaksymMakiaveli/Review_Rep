@@ -1,7 +1,9 @@
 import React from 'react';
-import classes from './HeaderEditAction.module.scss';
-import { Button } from '@UiKitComponents';
+
 import { TrashBasket } from '@common';
+import { Button } from '@UiKitComponents';
+
+import classes from './HeaderEditAction.module.scss';
 import HeaderEditActionProps from './HeaderEditAction.type';
 
 const HeaderEditAction: React.FC<HeaderEditActionProps> = (props) => {

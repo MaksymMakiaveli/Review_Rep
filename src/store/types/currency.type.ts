@@ -1,4 +1,5 @@
 import { BaseAction, Concat } from '@Types/index';
+
 import { GET_CURRENCY_LIST, SUCCESS } from '../actionTypes';
 
 export type Currency = {

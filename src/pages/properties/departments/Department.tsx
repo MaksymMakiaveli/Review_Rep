@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ListDepartment from './ListDepartment';
-import CreateDepartment from './CreateDepartment';
-import EditDepartment from './EditDepartment';
+
+import { GetDepartmentList } from '@Actions/department.action';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetDepartmentList } from '@Actions/department.action';
+import { Routes, Route } from 'react-router-dom';
+
+import CreateDepartment from './CreateDepartment';
+import EditDepartment from './EditDepartment';
+import ListDepartment from './ListDepartment';
 
 const getDepartmentState = (state: RootState) => state.DepartmentReducer;
 

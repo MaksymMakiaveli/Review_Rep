@@ -1,4 +1,5 @@
-import { BaseAction, Concat } from './index';
+import { TSelectValue } from '@Types/application.types';
+
 import {
   FAIL,
   SUCCESS,
@@ -8,8 +9,7 @@ import {
   POST_NEW_DEPARTMENT,
   PUT_DEPARTMENT,
 } from '../actionTypes';
-
-import { TSelectValue } from '@Types/application.types';
+import { BaseAction, Concat } from './index';
 import { Site } from './site.types';
 
 export type Department = {

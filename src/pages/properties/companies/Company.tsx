@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ListCompany from './ListCompany';
-import CreateCompany from './CreateCompany';
-import EditCompany from './EditCompany';
+
+import { GetCompanyList } from '@Actions/company.action';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetCompanyList } from '@Actions/company.action';
+import { Routes, Route } from 'react-router-dom';
+
+import CreateCompany from './CreateCompany';
+import EditCompany from './EditCompany';
+import ListCompany from './ListCompany';
 
 const getCompanyState = (state: RootState) => state.CompanyReducer;
 

@@ -1,7 +1,9 @@
 import React from 'react';
-import classes from './EmptyPage.module.scss';
-import { useNavigate } from 'react-router-dom';
+
 import { Button } from '@UiKitComponents';
+import { useNavigate } from 'react-router-dom';
+
+import classes from './EmptyPage.module.scss';
 
 interface EmptyPageProps {
   textButton: string;

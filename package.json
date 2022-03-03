@@ -41,7 +41,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix",
+    "lint": "eslint --fix ./src",
     "prettier": "prettier --write '**/*.{ts,js,css,html}'",
     "prepare": "husky install",
     "build-types": "tsc --pretty --noEmit"

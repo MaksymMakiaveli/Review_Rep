@@ -1,8 +1,10 @@
 import React from 'react';
-import classes from './ListHeaderActions.module.scss';
+
+import { Export, Import } from '@common';
 import { Button, SearchInput } from '@UiKitComponents';
 import { useNavigate } from 'react-router-dom';
-import { Export, Import } from '@common';
+
+import classes from './ListHeaderActions.module.scss';
 
 interface TableHeaderActionsProps {
   pageCreatingUrl: string;

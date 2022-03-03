@@ -1,9 +1,10 @@
 import React from 'react';
+
+import { HeaderSaveAction, InputContainer } from '@components';
 import { CheckFactory, TFormCreateCheckFactor } from '@Types/checkFactors.type';
+import { TextArea, TextField } from '@UiKitComponents';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { TextArea, TextField } from '@UiKitComponents';
 
 interface EditProps {
   currentCheckFactory: CheckFactory;

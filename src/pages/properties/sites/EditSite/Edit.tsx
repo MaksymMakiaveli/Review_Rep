@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Divider, TextField, TextArea, Select } from '@UiKitComponents';
-import { Site, TFormCreateSite, TUpdateSite } from '@Types/site.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { updateSite } from '@Actions/site.action';
-import { schemaSite } from '@schema/site';
-import { RootState } from '@RootStateType';
 import { GetSiteList } from '@Actions/site.action';
-import { useGetCityAndCountry } from '@hooks';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useGetCityAndCountry } from '@hooks';
+import { RootState } from '@RootStateType';
+import { schemaSite } from '@schema/site';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { Site, TFormCreateSite, TUpdateSite } from '@Types/site.types';
+import { Divider, TextField, TextArea, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentSite: Site;

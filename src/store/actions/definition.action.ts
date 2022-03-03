@@ -1,4 +1,5 @@
 import { DefinitionActions } from '@Types/definition.types';
+
 import { GET_CITIES_LIST, GET_COUNTRIES_LIST } from '../actionTypes';
 
 export const getCitiesList = (): DefinitionActions => ({

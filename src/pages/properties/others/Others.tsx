@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Routes, Route } from 'react-router-dom';
-import CostCenters from './CostCenters';
+
 import CheckFactors from './CheckFactors';
+import CostCenters from './CostCenters';
 
 const Others = () => {
   return (

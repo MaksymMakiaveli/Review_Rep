@@ -1,18 +1,19 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@RootStateType';
+
 import { getCitiesList, getCountriesList } from '@Actions/definition.action';
-import { TextField, Select, Divider } from '@UiKitComponents';
-import { TFormCreateVendor } from '@Types/vendor.types';
 import { postNewVendor } from '@Actions/vendor.action';
 import { Loader } from '@common';
-import { useBackHistory } from '@hooks';
-import { schemaVendor } from '@schema/vendor';
 import { HeaderSaveAction, InputContainer } from '@components';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useBackHistory } from '@hooks';
+import { RootState } from '@RootStateType';
+import { schemaVendor } from '@schema/vendor';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { TFormCreateVendor } from '@Types/vendor.types';
+import { TextField, Select, Divider } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateVendorProps {}
 

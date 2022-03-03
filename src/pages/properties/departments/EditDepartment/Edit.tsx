@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
-import { TextField, Select } from '@UiKitComponents';
-import { Department, TFormCreateDepartment } from '@Types/department.types';
-import { RootState } from '@RootStateType';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { updateDepartment } from '@Actions/department.action';
 import { GetSiteList } from '@Actions/site.action';
-import { schemaDepartment } from '@schema/department';
-import { useForm } from 'react-hook-form';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { RootState } from '@RootStateType';
+import { schemaDepartment } from '@schema/department';
+import { Department, TFormCreateDepartment } from '@Types/department.types';
+import { TextField, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentDepartment: Department;

@@ -1,6 +1,7 @@
 import { concatActions } from '@helpers/functions';
-import { GET_CITIES_LIST, GET_COUNTRIES_LIST, SUCCESS } from '../actionTypes';
 import { DefinitionActions, DefinitionState } from '@Types/definition.types';
+
+import { GET_CITIES_LIST, GET_COUNTRIES_LIST, SUCCESS } from '../actionTypes';
 
 const initialState: DefinitionState = {
   citiesList: [],

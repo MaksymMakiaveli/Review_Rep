@@ -1,4 +1,5 @@
 import { VendorActions, TCreateVendor, TUpdateVendor } from '@Types/vendor.types';
+
 import { DELETE_VENDOR, GET_VENDOR_LIST, GET_ONE_VENDOR, POST_NEW_VENDOR, PUT_VENDOR } from '../actionTypes';
 
 export const GetVendorList = (): VendorActions => ({

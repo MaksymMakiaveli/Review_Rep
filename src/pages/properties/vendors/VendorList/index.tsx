@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { TVendorTable } from '@Types/vendor.types';
-import { RootState } from '@RootStateType';
-import { EmptyPage, TableHeaderActions } from '@components';
-import { Table } from '@UiKitComponents';
+
 import { Loader } from '@common';
+import { EmptyPage, TableHeaderActions } from '@components';
+import { RootState } from '@RootStateType';
 import { ColumnsTable } from '@Types/application.types';
+import { TVendorTable } from '@Types/vendor.types';
+import { Table } from '@UiKitComponents';
+import { useSelector } from 'react-redux';
 
 interface VendorListProps {}
 

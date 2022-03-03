@@ -1,5 +1,5 @@
-import { DepartmentActions, DepartmentState } from '../types/department.types';
 import { concatActions } from '@helpers/functions';
+
 import { 
   FAIL, 
   SUCCESS,
@@ -9,6 +9,7 @@ import {
   POST_NEW_DEPARTMENT,
   PUT_DEPARTMENT, 
 } from '../actionTypes';
+import { DepartmentActions, DepartmentState } from '../types/department.types';
 
 const initialState: DepartmentState = {
   departmentList: [],

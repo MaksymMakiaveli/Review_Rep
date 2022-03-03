@@ -1,4 +1,3 @@
-import {DepartmentActions, NewDepartment, PutDepartment} from '../types/department.types';
 import {
   DELETE_DEPARTMENT,
   GET_DEPARTMENT_LIST,
@@ -6,6 +5,7 @@ import {
   POST_NEW_DEPARTMENT,
   PUT_DEPARTMENT,
 } from '../actionTypes';
+import {DepartmentActions, NewDepartment, PutDepartment} from '../types/department.types';
 
 export const GetDepartmentList = (): DepartmentActions => ({
   type: GET_DEPARTMENT_LIST,

@@ -1,4 +1,6 @@
-import { BaseAction, Concat } from './index';
+import { TSelectValue } from '@Types/application.types';
+import { City, Country } from '@Types/definition.types';
+
 import {
   DELETE_SITE,
   GET_SITE_LIST,
@@ -8,8 +10,7 @@ import {
   SUCCESS,
   FAIL,
 } from '../actionTypes';
-import { City, Country } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
+import { BaseAction, Concat } from './index';
 
 export type Site = {
   address: string;

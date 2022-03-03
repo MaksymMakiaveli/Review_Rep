@@ -1,13 +1,15 @@
 import React from 'react';
-import classes from '../Contract.module.scss';
-import { Contract } from '@Types/contract.types';
-import { HeaderEditAction, InputContainer, PreviewField } from '@components';
-import { Divider, ModalDelete } from '@UiKitComponents';
-import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
-import { useToggle } from '@hooks';
+
 import { deleteContractById } from '@Actions/contracts.action';
-import { useNavigate } from 'react-router-dom';
+import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
+import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { Contract } from '@Types/contract.types';
+import { Divider, ModalDelete } from '@UiKitComponents';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import classes from '../Contract.module.scss';
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentContract: Contract;

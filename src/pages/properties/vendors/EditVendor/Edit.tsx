@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Divider, TextField, Select } from '@UiKitComponents';
-import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateVendor } from '@Actions/vendor.action';
-import { schemaVendor } from '@schema/vendor';
-import { RootState } from '@RootStateType';
+
 import { getCitiesList, getCountriesList } from '@Actions/definition.action';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
+import { updateVendor } from '@Actions/vendor.action';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { RootState } from '@RootStateType';
+import { schemaVendor } from '@schema/vendor';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
+import { Divider, TextField, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentVendor: Vendor;

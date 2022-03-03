@@ -1,8 +1,9 @@
-import { RootState } from '@RootStateType';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+
 import { getCitiesList, getCountriesList } from '@Actions/definition.action';
+import { RootState } from '@RootStateType';
 import { City, Country } from '@Types/definition.types';
+import { useDispatch, useSelector } from 'react-redux';
 
 const getDefinitionState = (state: RootState) => state.DefinitionReducer;
 

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+
+import { getOneCostCenter } from '@Actions/costCenter.action';
+import { Loader } from '@common';
+import { useBackHistory, useToggle } from '@hooks';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useBackHistory, useToggle } from '@hooks';
-import { getOneCostCenter } from '@Actions/costCenter.action';
-import { Loader } from '@common';
+
 import Edit from './Edit';
 import Preview from './Preview';
 

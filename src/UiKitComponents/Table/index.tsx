@@ -1,11 +1,15 @@
 import React, { useReducer } from 'react';
-import { Pagination, Table as TableSemantic } from 'semantic-ui-react';
+
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Header from './Header';
+import { Pagination, Table as TableSemantic } from 'semantic-ui-react';
+
 import BodyTable from './Body';
+import Header from './Header';
+
 import './Table.scss';
 import { usePagination } from '@hooks';
+
 import { tableReducer } from './table.reducer';
 import { TableCreateContext, TableProps } from './TableTypes.type';
 

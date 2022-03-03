@@ -1,12 +1,13 @@
 import React from 'react';
-import { TextField, Divider } from '@UiKitComponents';
-import { Company, TFormCreateCompany, TUpdateCompany } from '@Types/company.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch } from 'react-redux';
+
 import { updateCompany } from '@Actions/company.action';
-import { schemaCompany } from '@schema/company';
-import { useForm } from 'react-hook-form';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { schemaCompany } from '@schema/company';
+import { Company, TFormCreateCompany, TUpdateCompany } from '@Types/company.types';
+import { TextField, Divider } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 interface EditProps {
   currentCompany: Company;

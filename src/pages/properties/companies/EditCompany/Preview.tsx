@@ -1,12 +1,13 @@
 import React from 'react';
-import { HeaderEditAction, InputContainer, PreviewField } from '@components';
-import { Divider, ModalDelete } from '@UiKitComponents';
-import { Company } from '@Types/company.types';
-import { useToggle } from '@hooks';
+
 import { deleteCompanies } from '@Actions/company.action';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
 import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { Company } from '@Types/company.types';
+import { Divider, ModalDelete } from '@UiKitComponents';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentCompany: Company;

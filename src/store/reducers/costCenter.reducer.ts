@@ -1,4 +1,6 @@
+import { concatActions } from '@helpers/functions';
 import { CostCenterActions, CostCenterState } from '@Types/costCenters.type';
+
 import {
   DELETE_COST_CENTER,
   GET_COST_CENTERS_LIST,
@@ -7,7 +9,6 @@ import {
   SUCCESS,
   UPDATE_COST_CENTER,
 } from '../actionTypes';
-import { concatActions } from '@helpers/functions';
 
 const initialState: CostCenterState = {
   costCentersList: [],

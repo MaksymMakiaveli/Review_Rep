@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './Sidebar.scss';
 import {
   Asset,
@@ -15,9 +16,10 @@ import {
   Vendors,
   WorkOrders,
 } from '@common';
-import { NavLink } from 'react-router-dom';
-import SidebarProps, { LinkListType } from './Sidebar.type';
 import { AccordionForSidebar } from '@UiKitComponents';
+import { NavLink } from 'react-router-dom';
+
+import SidebarProps, { LinkListType } from './Sidebar.type';
 
 const linkListDashboard: LinkListType[] = [
   {

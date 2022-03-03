@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@RootStateType';
-import { EmptyPage, TableHeaderActions } from '@components';
-import { Table } from '@UiKitComponents';
+
 import { Loader } from '@common';
+import { EmptyPage, TableHeaderActions } from '@components';
+import { RootState } from '@RootStateType';
 import { ColumnsTable } from '@Types/application.types';
 import { TCompanyTable } from '@Types/company.types';
+import { Table } from '@UiKitComponents';
+import { useSelector } from 'react-redux';
 
 const columnsCompany: ColumnsTable<TCompanyTable>[] = [
   { dataKey: 'companyId', title: 'Company Id', isSorted: true },

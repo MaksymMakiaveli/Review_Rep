@@ -1,13 +1,14 @@
 import React from 'react';
-import { RootState } from '@RootStateType';
-import { useDispatch, useSelector } from 'react-redux';
-import { useBackHistory } from '@hooks';
-import { useForm } from 'react-hook-form';
-import { TFormCreateCheckFactor } from '@Types/checkFactors.type';
+
+import { postNewCheckFactor } from '@Actions/checkFactors.action';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
+import { useBackHistory } from '@hooks';
+import { RootState } from '@RootStateType';
+import { TFormCreateCheckFactor } from '@Types/checkFactors.type';
 import { TextArea, TextField } from '@UiKitComponents';
-import { postNewCheckFactor } from '@Actions/checkFactors.action';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 const getCheckFactorState = (state: RootState) => state.CheckFactorReducer;
 

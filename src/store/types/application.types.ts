@@ -1,5 +1,5 @@
-import { BaseAction, Concat } from './index';
 import { FAIL, GET_TOKEN, SUCCESS } from '../actionTypes';
+import { BaseAction, Concat } from './index';
 
 export type PageMode = 'EDIT' | 'REVIEW' | null;
 

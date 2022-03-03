@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { RootState } from '@RootStateType';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { getCheckFactorsList } from '@Actions/checkFactors.action';
-import { Routes, Route } from 'react-router-dom';
-import ListCheckFactors from '@pages/properties/others/CheckFactors/ListCheckFactors';
 import CreateCheckFactor from '@pages/properties/others/CheckFactors/CreateCheckFactor';
 import EditCheckFactory from '@pages/properties/others/CheckFactors/EditCheckFactory';
+import ListCheckFactors from '@pages/properties/others/CheckFactors/ListCheckFactors';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 const getCheckFactorState = (state: RootState) => state.CheckFactorReducer;
 

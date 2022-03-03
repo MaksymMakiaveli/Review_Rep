@@ -1,5 +1,8 @@
+import { TSelectValue } from '@Types/application.types';
 import { Company } from '@Types/company.types';
 import { BaseAction, Concat } from '@Types/index';
+import { Vendor } from '@Types/vendor.types';
+
 import {
   DELETE_CONTRACT,
   FAIL,
@@ -8,8 +11,6 @@ import {
   POST_NEW_CONTRACT,
   SUCCESS,
 } from '../actionTypes';
-import { TSelectValue } from '@Types/application.types';
-import { Vendor } from '@Types/vendor.types';
 
 export type Contract = {
   contractCode: string;

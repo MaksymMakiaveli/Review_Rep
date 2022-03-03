@@ -1,10 +1,11 @@
 import React from 'react';
-import { HeaderEditAction, InputContainer, PreviewField } from '@components';
-import { Divider, ModalDelete } from '@UiKitComponents';
-import { Vendor } from '@Types/vendor.types';
-import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
-import { useToggle } from '@hooks';
+
 import { deleteVendor } from '@Actions/vendor.action';
+import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
+import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { Vendor } from '@Types/vendor.types';
+import { Divider, ModalDelete } from '@UiKitComponents';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

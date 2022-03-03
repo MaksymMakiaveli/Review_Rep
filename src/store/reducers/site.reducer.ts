@@ -1,5 +1,5 @@
-import { SiteActions, SiteState } from '../types/site.types';
 import { concatActions } from '@helpers/functions';
+
 import { 
   DELETE_SITE,
   GET_SITE_LIST, 
@@ -9,6 +9,7 @@ import {
   SUCCESS,
   FAIL 
 } from '../actionTypes';
+import { SiteActions, SiteState } from '../types/site.types';
 
 const initialState: SiteState = {
   siteList: [],
