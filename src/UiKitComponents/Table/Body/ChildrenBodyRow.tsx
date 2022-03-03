@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+
+import { Collapsing } from '@common';
+import { useToggle } from '@hooks';
+import cl from 'classnames';
 import { useDrag, useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
-import { useToggle } from '@hooks';
+
 import { TableContext } from '../index';
-import cl from 'classnames';
-import { Collapsing } from '@common';
+
 
 interface ChildrenBodyRowProps<T = any> {
   itemChild: T;
@@ -73,7 +76,6 @@ const ChildrenBodyRow = (props: ChildrenBodyRowProps) => {
   if (!closedParent && collapsing) {
     toggleCollapsing();
   }
-  console.log(indentChildren);
 
   drag(drop(rowRef));
   return (

@@ -1,19 +1,24 @@
 import React, { useContext, useRef } from 'react';
+
+import { Collapsing } from '@common';
 import { useToggle } from '@hooks';
+import cl from 'classnames';
 import { useDrag, useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
+
 import { TableContext } from '../index';
-import cl from 'classnames';
-import { Collapsing } from '@common';
 import ChildrenBodyRow from './ChildrenBodyRow';
 
 interface BodyRowProps<T = any> {
   item: T;
   stripedClassName: string;
+
+  selectedRows: number[];
+  handleSelectedRows: (id: number, checked: boolean) => void;
 }
 
 const BodyRow = (props: BodyRowProps) => {
-  const { item, stripedClassName } = props;
+  const { item, stripedClassName, selectedRows, handleSelectedRows } = props;
 
   const rowRef = useRef(null);
 
@@ -45,6 +50,7 @@ const BodyRow = (props: BodyRowProps) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'table-row',
     item: { ...item },
+
     end: (item, monitor) => {
       console.log(monitor.getDropResult());
     },
@@ -54,7 +60,16 @@ const BodyRow = (props: BodyRowProps) => {
     canDrag: () => {
       return isDraggable;
     },
+    isDragging: () => {
+      return selectedRows.includes(item[keyTable]);
+    },
   });
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleSelectedRows(item[keyTable], event.target.checked);
+  };
+
+  const valueCheckbox = selectedRows.some((id) => id === item[keyTable]);
 
   const redirectToPreviewPage = () => navigation(`${item[keyTable]}`);
 
@@ -78,6 +93,7 @@ const BodyRow = (props: BodyRowProps) => {
                 <Collapsing />
               </span>
             ) : null}
+            <input type="checkbox" checked={valueCheckbox} onChange={onChange} />
           </div>
         </td>
         {columnsConfig.map((column, index) => (

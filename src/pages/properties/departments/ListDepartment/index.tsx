@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { Department, TDepartmentTable } from '@Types/department.types';
-import { RootState } from '@RootStateType';
-import { EmptyPage, TableHeaderActions } from '@components';
-import { Table } from '@UiKitComponents';
+
 import { Loader } from '@common';
+import { EmptyPage, TableHeaderActions } from '@components';
+import { RootState } from '@RootStateType';
 import { ColumnsTable } from '@Types/application.types';
+import { Department, TDepartmentTable } from '@Types/department.types';
+import { Table } from '@UiKitComponents';
+import { useSelector } from 'react-redux';
 
 interface ListDepartmentProps {}
 
