@@ -6,6 +6,7 @@ import { ContractActions } from '@Types/contract.types';
 import { CurrencyActions } from '@Types/currency.type';
 import { TitleActions } from '@Types/title.types';
 import { CostCenterActions } from '@Types/costCenters.type';
+import { CheckFactorActions } from '@Types/checkFactors.type';
 
 export type ActionsTypes =
   | ApplicationActions
@@ -15,4 +16,6 @@ export type ActionsTypes =
   | ContractActions
   | CurrencyActions
   | TitleActions
-  | CostCenterActions;
+  | CostCenterActions
+  | CostCenterActions
+  | CheckFactorActions;

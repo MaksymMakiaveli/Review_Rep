@@ -37,6 +37,9 @@ export type Contract = {
   //TODO: как узнаем тип изменить any
   nonCurrAssetContracts: any;
 };
+export type TContractTable = Required<
+  Pick<Contract, 'name' | 'partnerId' | 'price' | 'currencyName' | 'endDate' | 'contractId'>
+>;
 export type TCreateContract = {
   contractCode: string;
   name: string;

@@ -4,7 +4,8 @@ interface DropArrowProps {
   color: 'white' | 'blue';
 }
 
-const DropArrow: React.FC<DropArrowProps> = ({ color }) => {
+const DropArrow: React.FC<DropArrowProps> = (props) => {
+  const { color, ...rest } = props;
   const colorArrow = color === 'white' ? '#fff' : '#374957';
 
   return (
@@ -14,6 +15,7 @@ const DropArrow: React.FC<DropArrowProps> = ({ color }) => {
       viewBox="0 0 13 7"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M6.5 6L1.5 1"
@@ -22,12 +24,7 @@ const DropArrow: React.FC<DropArrowProps> = ({ color }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M6.5 6L11.5 1"
-        stroke={colorArrow}
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="M6.5 6L11.5 1" stroke={colorArrow} strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 };

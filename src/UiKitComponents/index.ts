@@ -1,31 +1,29 @@
+import AccordionForSidebar from './AccordionForSidebar';
 import Button from './Button';
-import Divider from './Divider';
-import CustomTable from './CustomTable';
-import SearchInput from './SearchInput';
-import CheckboxCell from './CheckboxCell';
 import CustomCheckbox from './CustomCheckbox';
-import CustomCell from './CustomCell';
-import InputHelperBox from './InputHelperBox';
-import PreviewFile from './PreviewFile';
-import TextArea from './Form/TextArea';
+import Divider from './Divider';
 import FileInput from './Form/FileInput';
 import Select from './Form/Select';
+import TextArea from './Form/TextArea';
 import TextField from './Form/TextField';
+import InputHelperBox from './InputHelperBox';
 import ModalDelete from './Modals/ModalDelete';
+import PreviewFile from './PreviewFile';
+import SearchInput from './SearchInput';
+import Table from './Table';
 
 export {
+  AccordionForSidebar,
   Button,
-  Divider,
-  SearchInput,
-  CheckboxCell,
-  CustomTable,
   CustomCheckbox,
-  TextField,
-  Select,
-  CustomCell,
+  Divider,
   FileInput,
   InputHelperBox,
-  TextArea,
-  PreviewFile,
   ModalDelete,
+  PreviewFile,
+  SearchInput,
+  Select,
+  Table,
+  TextArea,
+  TextField,
 };

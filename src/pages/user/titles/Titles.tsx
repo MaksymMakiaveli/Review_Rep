@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import TitleList from '@pages/user/titles/TitleList';
 import CreateTitle from '@pages/user/titles/CreateTitle';
 import EditTitle from './EditTitle';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetTitleList } from '@Actions/title.action';
 
-interface TitlesProps {}
+const getTitleState = (state: RootState) => state.TitleReducer;
 
-const Titles: React.FC<TitlesProps> = () => {
+const Titles = () => {
+  const dispatch = useDispatch();
+  const { titleList } = useSelector(getTitleState);
+
+  useEffect(() => {
+    if (!titleList.length) {
+      dispatch(GetTitleList());
+    }
+  }, []);
+
   return (
     <>
       <Routes>

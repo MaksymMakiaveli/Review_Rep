@@ -1,10 +1,9 @@
-import { createBrowserHistory } from 'history';
 import { useCallback } from 'react';
+import customHistory from '../config/history';
 
 const useBackHistory = (): (() => void) => {
-  const history = createBrowserHistory();
   return useCallback(() => {
-    history.back();
+    customHistory.back();
   }, []);
 };
 

@@ -10,6 +10,8 @@ const Contract = React.lazy(() => import('@pages/properties/contracts/Contract')
 const Vendors = React.lazy(() => import('@pages/properties/vendors/Vendors'));
 const Others = React.lazy(() => import('@pages/properties/others/Others'));
 const Titles = React.lazy(() => import('@pages/user/titles/Titles'));
+const Departments = React.lazy(() => import('@pages/properties/departments/Department'));
+const Sites = React.lazy(() => import('@pages/properties/sites/Sites'));
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +25,6 @@ function App() {
     <div className="container">
       <div className="app_wrapper">
         <Sidebar />
-        {/*<SidebarRS />*/}
         <div className="content_wrapper">
           <Header />
           <section className="contents">
@@ -34,6 +35,8 @@ function App() {
                 <Route path="Vendors/*" element={<Vendors />} />
                 <Route path="Others/*" element={<Others />} />
                 <Route path="RoleAuthorization/*" element={<Titles />} />
+                <Route path="Departments/*" element={<Departments />} />
+                <Route path="Locations/*" element={<Sites />} />
               </Routes>
             </React.Suspense>
           </section>

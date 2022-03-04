@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetTitleList } from '@Actions/title.action';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { RootState } from '@RootStateType';
+import { TTitleTable } from '@Types/title.types';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { CustomTable } from '@UiKitComponents';
+import { Table } from '@UiKitComponents';
 import { Loader } from '@common';
-import { DataKeyType } from '@Types/application.types';
+import { ColumnsTable } from '@Types/application.types';
 
 interface ListTitleProps {}
 
-const dataKeyTitleList: DataKeyType[] = [
+const columnsTitleTable: ColumnsTable<TTitleTable>[] = [
   {
-    key: 'userTitleCode',
-    label: 'TITLE CODE',
-    align: 'left',
-    width: 110,
-    flexGrow: 1,
-    sortable: true,
+    dataKey: 'userTitleCode',
+    title: 'TITLE CODE',
+    isSorted: true,
   },
   {
-    key: 'title',
-    label: 'TITLE',
-    align: 'left',
-    flexGrow: 2.5,
-    sortable: true,
+    dataKey: 'title',
+    title: 'TITLE',
+    isSorted: true,
   },
 ];
 
@@ -31,20 +26,26 @@ const getTitleState = (state: RootState) => state.TitleReducer;
 
 const ListTitle: React.FC<ListTitleProps> = () => {
   const { titleList, loadingTitle } = useSelector(getTitleState);
-  const [checkedItemsList, setCheckedItemsList] = useState<number[] | string[]>([]);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!titleList.length) {
-      dispatch(GetTitleList());
-    }
-  }, [titleList]);
+  const memoizedData = useMemo(
+    () => 
+      titleList.map((title): TTitleTable => {
+        return {
+          title: title.title,
+          userTitleCode: title.userTitleCode,
+          userTitleId: title.userTitleId,
+        };
+      }),
+    [titleList]
+  )
+
+  const memoizedColumns = useMemo(() => columnsTitleTable, []);
 
   if (loadingTitle) {
     return <Loader />;
   }
   
-  if (titleList && !titleList.length) {
+  if (!titleList.length) {
     return (
       <EmptyPage textButton="Title" redirectPath="newTitle">
         <h5>You don`t have any titles yet.</h5>
@@ -57,15 +58,13 @@ const ListTitle: React.FC<ListTitleProps> = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions
-          checkedItemsList={checkedItemsList}
-          pageCreatingUrl="/Titles/newTitle"
+          pageCreatingUrl="/RoleAuthorization/newTitle"
           textRedirectButton="New Title"
         />
-        <CustomTable
-          data={titleList}
-          dataKey={dataKeyTitleList}
-          currentDataKey="userTitleId"
-          setCheckedItemsList={setCheckedItemsList}
+        <Table
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          keyTable="userTitleId"
         />
       </div>
     </div>

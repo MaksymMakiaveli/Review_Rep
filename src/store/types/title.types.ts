@@ -16,6 +16,9 @@ export type Title = {
   users: any[],
 };
 
+export interface TTitleTable
+  extends Required<Pick<Title, 'title' | 'userTitleCode' | 'userTitleId'>> {}
+
 export type TCreateTitle = {
   userTitleCode: string,
   title: string

@@ -22,6 +22,8 @@ import Export from './Export';
 import Import from './Import';
 import TrashBasket from './TrashBasket';
 import Upload from './Upload';
+import Sorted from './Sorted';
+import Collapsing from './Collapsing';
 
 export {
   Import,
@@ -48,4 +50,6 @@ export {
   FilterBtn,
   TrashBasket,
   Upload,
+  Sorted,
+  Collapsing,
 };

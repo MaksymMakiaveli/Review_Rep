@@ -11,17 +11,8 @@ const Header: React.FC<HeaderProps> = () => {
   const { pathname } = useLocation();
   const [title, setTitle] = useState<string>();
   const pathSlice = () => {
-    const findIndex = pathname.split('').reduce((a, e, i) => {
-      if (e === '/') {
-        a.push(i);
-      }
-      return a;
-    }, [] as number[]);
-    const filterStr = pathname
-      .split('')
-      .slice(findIndex[0] + 1, findIndex[1])
-      .join('');
-    setTitle(filterStr);
+    const path = pathname.split('/');
+    setTitle(path[1]);
   };
 
   useEffect(() => {

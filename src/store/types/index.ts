@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 export type Concat<S1 extends string, S2 extends string> = `${S1}${S2}`;
 
+
 export type Api<Data = undefined> = {
   url: string;
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
@@ -26,7 +27,8 @@ export interface BaseAction<Type> {
   data?: any;
 }
 
-export interface ResponseAsetlyApi<TypeResultObject> {
+export interface ResponseAsetlyApi<TypeResultObject extends any> {
   resultObject: TypeResultObject;
   resultStatus: boolean;
+  languageKeyword?: string;
 }

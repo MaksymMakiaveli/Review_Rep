@@ -3,14 +3,15 @@ import { FAIL, GET_TOKEN, SUCCESS } from '../actionTypes';
 
 export type PageMode = 'EDIT' | 'REVIEW' | null;
 
-export type DataKeyType = {
-  label: string;
-  key: string;
-  align?: 'center' | 'right' | 'left';
-  flexGrow?: number;
-  width?: number;
-  sortable?: boolean;
-};
+export interface ObjectKeysString {
+  [key: string]: any;
+}
+
+export interface ColumnsTable<T extends ObjectKeysString> {
+  title: string;
+  dataKey: keyof T;
+  isSorted?: boolean;
+}
 
 export type TSelectValue<ValueType extends number | string> = {
   label: string;
@@ -30,16 +31,14 @@ export interface ApplicationState {
   error: string | null;
 }
 export interface GetToken extends BaseAction<typeof GET_TOKEN> {}
-export interface GetTokenSuccess
-  extends BaseAction<Concat<typeof GET_TOKEN, typeof SUCCESS>> {
+export interface GetTokenSuccess extends BaseAction<Concat<typeof GET_TOKEN, typeof SUCCESS>> {
   response: {
     [key: string]: string | null;
     token: string;
   };
 }
 
-export interface GetTokenFail
-  extends BaseAction<Concat<typeof GET_TOKEN, typeof FAIL>> {
+export interface GetTokenFail extends BaseAction<Concat<typeof GET_TOKEN, typeof FAIL>> {
   error: {
     [key: string]: any;
     message: string;
