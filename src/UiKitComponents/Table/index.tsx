@@ -12,6 +12,7 @@ import { usePagination } from '@hooks';
 
 import { tableReducer } from './table.reducer';
 import { TableCreateContext, TableProps } from './TableTypes.type';
+import DragLayerRow from './Body/DragLayerRow';
 
 export const TableContext = React.createContext<TableCreateContext>(undefined!);
 
@@ -36,7 +37,7 @@ function Table<T extends object>(props: TableProps<T>) {
     };
   };
 
-  const StateContext: TableCreateContext = {
+  const StateContext = {
     data: filteredData,
     columnsConfig,
     keyTable,
@@ -46,6 +47,7 @@ function Table<T extends object>(props: TableProps<T>) {
     <div className="table-wrapper">
       <TableContext.Provider value={StateContext}>
         <DndProvider backend={HTML5Backend}>
+          <DragLayerRow />
           <TableSemantic className="table-ui" basic="very">
             <Header column={state.column} direction={state.direction} sortedColumn={sortedColumn} />
             <BodyTable />

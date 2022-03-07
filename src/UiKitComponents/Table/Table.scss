@@ -1,4 +1,5 @@
 .table-wrapper {
+  padding: 0 15px;
   .ui.table.table-ui {
     position: relative;
     border-collapse: separate;
@@ -39,6 +40,7 @@
     tbody {
       position: relative;
       tr {
+        position: relative;
         transition: all 0.5s ease;
         max-height: 48px;
         td {
@@ -48,6 +50,12 @@
           position: relative;
           border: none;
           white-space: nowrap;
+
+          .checkCell {
+            position: absolute;
+            left: 22px;
+            top: 5px;
+          }
 
           .content {
             overflow: hidden;

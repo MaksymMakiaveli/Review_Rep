@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { useDragLayer } from 'react-dnd';
+import { useDragLayer, XYCoord } from 'react-dnd';
 
-function getItemStyles(initialOffset: any, currentOffset: any) {
-  if (!initialOffset || !currentOffset) {
+function getItemStyles(currentOffset: XYCoord | null) {
+  if (!currentOffset) {
     return {
       display: 'none',
     };
   }
-  let { x, y } = currentOffset;
+  const { x, y } = currentOffset;
 
   const transform = `translate(${x}px, ${y}px)`;
   return {
@@ -18,20 +18,38 @@ function getItemStyles(initialOffset: any, currentOffset: any) {
 }
 
 const DragLayerRow = () => {
-  const { isDragging, initialOffset, currentOffset } = useDragLayer((monitor) => {
+  const { isDragging, currentOffset, item } = useDragLayer((monitor) => {
     return {
       isDragging: monitor.isDragging(),
-      initialOffset: monitor.getInitialSourceClientOffset(),
-      currentOffset: monitor.getSourceClientOffset(),
+      currentOffset: monitor.getClientOffset(),
       item: monitor.getItem(),
     };
   });
 
-  return isDragging && currentOffset ? (
-    <tr style={getItemStyles(currentOffset, initialOffset)}>
-      <td>DraggingItem</td>
-    </tr>
-  ) : null;
+  if (!isDragging) {
+    return null;
+  }
+
+  return (
+    <div
+      style={{
+        ...getItemStyles(currentOffset),
+        position: 'fixed',
+        pointerEvents: 'none',
+        zIndex: 100,
+        left: 0,
+        right: 0,
+        top: 0,
+        width: '30px',
+        height: '30px',
+        background: '#ccc',
+        borderRadius: '50%',
+        textAlign: 'center',
+      }}
+    >
+      <span>{item.length}</span>
+    </div>
+  );
 };
 
 export default DragLayerRow;
