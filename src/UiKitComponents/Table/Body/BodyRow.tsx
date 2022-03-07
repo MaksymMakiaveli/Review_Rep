@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { Collapsing } from '@common';
 import { useToggle } from '@hooks';
@@ -14,16 +14,15 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 interface BodyRowProps<T = any> {
   item: T;
   stripedClassName: string;
-  handleSelectedRow: (id: any, checked: boolean) => void;
+  handleSelectedRow: (item: any, checked: boolean) => void;
+  clearSelectedRows: () => void;
   selectedRows: any[];
 }
 
 const BodyRow = (props: BodyRowProps) => {
-  const { item, stripedClassName, selectedRows, handleSelectedRow } = props;
+  const { item, stripedClassName, selectedRows, handleSelectedRow, clearSelectedRows } = props;
 
   const rowRef = useRef(null);
-
-  const [checked, setChecked] = useState(false);
 
   const [collapsing, toggleCollapsing] = useToggle(false);
 
@@ -34,6 +33,7 @@ const BodyRow = (props: BodyRowProps) => {
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: 'table-row',
     drop: (draggingItem) => {
+      clearSelectedRows();
       return {
         focusItem: item,
         draggingItem: draggingItem,
@@ -43,17 +43,29 @@ const BodyRow = (props: BodyRowProps) => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
-    canDrop: (draggingItem: typeof item) => {
-      if (draggingItem[keyTable] === item[keyTable]) {
+    canDrop: (draggingItems: typeof item) => {
+      const equalsId = draggingItems.some(
+        (currentItem: any) => currentItem[keyTable] === item[keyTable]
+      );
+      const equalsParentId = draggingItems.some(
+        (currentItem: any) => currentItem.parentId !== item[keyTable]
+      );
+      if (equalsId) {
         return false;
-      } else return draggingItem.parentId !== item[keyTable];
+      } else return equalsParentId;
     },
   });
-  const choiceDragging = selectedRows.length ? selectedRows : [item];
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: 'table-row',
-    item: choiceDragging,
+    item: () => {
+      if (selectedRows.some((currentItem) => currentItem[keyTable] === item[keyTable])) {
+        return selectedRows;
+      } else {
+        handleSelectedRow(item, true);
+        return [...selectedRows, item];
+      }
+    },
 
     end: (item, monitor) => {
       const result = monitor.getDropResult();
@@ -62,7 +74,9 @@ const BodyRow = (props: BodyRowProps) => {
       }
     },
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+      isDragging:
+        selectedRows.some((currentItem) => currentItem[keyTable] === item[keyTable]) ||
+        monitor.isDragging(),
     }),
     canDrag: () => {
       return isDraggable;
@@ -76,11 +90,6 @@ const BodyRow = (props: BodyRowProps) => {
   }, []);
 
   const redirectToPreviewPage = () => navigation(`${item[keyTable]}`);
-
-  const handleChecked = (handleItem: any, isChecked: boolean) => {
-    setChecked(isChecked);
-    handleSelectedRow(handleItem, isChecked);
-  };
 
   const checkedChildren = item?.children && item?.children.length;
 
@@ -98,7 +107,13 @@ const BodyRow = (props: BodyRowProps) => {
         <td style={{ cursor: checkedChildren ? 'pointer' : 'default' }}>
           {isDraggable && (
             <div className="checkCell">
-              <CustomCheckbox value={item} onChange={handleChecked} checked={checked} />
+              <CustomCheckbox
+                value={item}
+                onChange={handleSelectedRow}
+                checked={selectedRows.some(
+                  (currentItem) => currentItem[keyTable] === item[keyTable]
+                )}
+              />
             </div>
           )}
           <div className="content" onClick={toggleCollapsing}>

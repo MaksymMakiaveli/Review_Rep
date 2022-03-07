@@ -139,4 +139,33 @@
       }
     }
   }
+  .drag-layer {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 35px;
+    height: 35px;
+    background: #06488c;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #074c94;
+      width: 70%;
+      height: 70%;
+      text-align: center;
+      border-radius: 50%;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    }
+  }
 }

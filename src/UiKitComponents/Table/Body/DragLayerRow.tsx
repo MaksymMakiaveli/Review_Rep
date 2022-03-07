@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useDragLayer, XYCoord } from 'react-dnd';
 
-function getItemStyles(currentOffset: XYCoord | null) {
+function getTransform(currentOffset: XYCoord | null) {
   if (!currentOffset) {
     return {
       display: 'none',
@@ -10,7 +10,7 @@ function getItemStyles(currentOffset: XYCoord | null) {
   }
   const { x, y } = currentOffset;
 
-  const transform = `translate(${x}px, ${y}px)`;
+  const transform = `translate(${x}px, ${y - 20}px)`;
   return {
     transform,
     WebkitTransform: transform,
@@ -32,19 +32,9 @@ const DragLayerRow = () => {
 
   return (
     <div
+      className="drag-layer"
       style={{
-        ...getItemStyles(currentOffset),
-        position: 'fixed',
-        pointerEvents: 'none',
-        zIndex: 100,
-        left: 0,
-        right: 0,
-        top: 0,
-        width: '30px',
-        height: '30px',
-        background: '#ccc',
-        borderRadius: '50%',
-        textAlign: 'center',
+        ...getTransform(currentOffset),
       }}
     >
       <span>{item.length}</span>

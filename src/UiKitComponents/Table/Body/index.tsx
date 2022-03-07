@@ -16,6 +16,10 @@ const BodyTable = () => {
     setSelectedRow(items);
   };
 
+  const clearSelectedRows = () => {
+    setSelectedRow([]);
+  };
+
   console.log(selectedRows);
 
   return (
@@ -29,6 +33,7 @@ const BodyTable = () => {
             stripedClassName={stripedClassName}
             handleSelectedRow={handleSelectedRow}
             selectedRows={selectedRows}
+            clearSelectedRows={clearSelectedRows}
           />
         );
       })}
