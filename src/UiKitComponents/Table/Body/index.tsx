@@ -20,8 +20,6 @@ const BodyTable = () => {
     setSelectedRow([]);
   };
 
-  console.log(selectedRows);
-
   return (
     <tbody className="table-ui__body">
       {data.map((item, index) => {

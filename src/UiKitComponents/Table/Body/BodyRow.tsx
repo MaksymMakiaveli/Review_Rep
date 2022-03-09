@@ -10,6 +10,7 @@ import { TableContext } from '../index';
 import ChildrenBodyRow from './ChildrenBodyRow';
 import { CustomCheckbox } from '@UiKitComponents';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { ResultDrop } from '../TableTypes.type';
 
 interface BodyRowProps<T = any> {
   item: T;
@@ -26,7 +27,7 @@ const BodyRow = (props: BodyRowProps) => {
 
   const [collapsing, toggleCollapsing] = useToggle(false);
 
-  const { columnsConfig, keyTable, isDraggable = false } = useContext(TableContext);
+  const { columnsConfig, keyTable, isDraggable = false, actionForDrag } = useContext(TableContext);
 
   const navigation = useNavigate();
 
@@ -47,12 +48,8 @@ const BodyRow = (props: BodyRowProps) => {
       const equalsId = draggingItems.some(
         (currentItem: any) => currentItem[keyTable] === item[keyTable]
       );
-      const equalsParentId = draggingItems.some(
-        (currentItem: any) => currentItem.parentId !== item[keyTable]
-      );
-      if (equalsId) {
-        return false;
-      } else return equalsParentId;
+
+      return !equalsId;
     },
   });
 
@@ -61,16 +58,18 @@ const BodyRow = (props: BodyRowProps) => {
     item: () => {
       if (selectedRows.some((currentItem) => currentItem[keyTable] === item[keyTable])) {
         return selectedRows;
-      } else {
+      } else if (selectedRows.length) {
         handleSelectedRow(item, true);
         return [...selectedRows, item];
+      } else {
+        return [item];
       }
     },
 
     end: (item, monitor) => {
-      const result = monitor.getDropResult();
+      const result: ResultDrop<any> | null = monitor.getDropResult();
       if (result) {
-        console.log(result);
+        actionForDrag && actionForDrag(result);
       }
     },
     collect: (monitor) => ({
@@ -133,15 +132,17 @@ const BodyRow = (props: BodyRowProps) => {
         ))}
       </tr>
       {checkedChildren
-        ? item.children.map((child: any, index: number) => {
-            const stripedChildrenClassName = index % 2 !== 0 ? 'child-row-striped' : '';
+        ? item.children.map((child: any) => {
             return (
               <ChildrenBodyRow
                 itemChild={child}
                 key={child[keyTable]}
-                classForChildren={[collapsingClassName, stripedChildrenClassName]}
+                classForChildren={[collapsingClassName]}
                 closedParent={collapsing}
                 indentForChildren={10}
+                selectedRows={selectedRows}
+                clearSelectedRows={clearSelectedRows}
+                handleSelectedRow={handleSelectedRow}
               />
             );
           })

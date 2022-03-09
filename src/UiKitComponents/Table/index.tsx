@@ -17,7 +17,7 @@ import DragLayerRow from './Body/DragLayerRow';
 export const TableContext = React.createContext<TableCreateContext>(undefined!);
 
 function Table<T extends object>(props: TableProps<T>) {
-  const { data, columnsConfig, keyTable, isDraggable = false } = props;
+  const { data, columnsConfig, keyTable, isDraggable = false, actionForDrag } = props;
 
   const [state, dispatch] = useReducer(tableReducer, {
     data,
@@ -42,6 +42,7 @@ function Table<T extends object>(props: TableProps<T>) {
     columnsConfig,
     keyTable,
     isDraggable,
+    actionForDrag,
   };
   return (
     <div className="table-wrapper">

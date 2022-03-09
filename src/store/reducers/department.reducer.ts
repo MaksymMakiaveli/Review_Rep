@@ -1,13 +1,14 @@
 import { concatActions } from '@helpers/functions';
 
-import { 
-  FAIL, 
+import {
+  FAIL,
   SUCCESS,
   DELETE_DEPARTMENT,
   GET_DEPARTMENT_LIST,
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
-  PUT_DEPARTMENT, 
+  PUT_DEPARTMENT,
+  CHANGE_PARENT_FOR_DEPARTMENTS,
 } from '../actionTypes';
 import { DepartmentActions, DepartmentState } from '../types/department.types';
 
@@ -77,6 +78,18 @@ export const DepartmentReducer = (
     case concatActions(DELETE_DEPARTMENT, SUCCESS):
       return {
         ...state,
+      };
+    case CHANGE_PARENT_FOR_DEPARTMENTS:
+      return {
+        ...state,
+        loadingDepartment: true,
+      };
+
+    case concatActions(CHANGE_PARENT_FOR_DEPARTMENTS, SUCCESS):
+      return {
+        ...state,
+        departmentList: action.response.resultObject,
+        loadingDepartment: false,
       };
     default:
       return {

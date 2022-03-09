@@ -6,7 +6,9 @@ import { RootState } from '@RootStateType';
 import { ColumnsTable } from '@Types/application.types';
 import { Department, TDepartmentTable } from '@Types/department.types';
 import { Table } from '@UiKitComponents';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ResultDrop } from '../../../../UiKitComponents/Table/TableTypes.type';
+import { changeParentForDepartments } from '@Actions/department.action';
 
 interface ListDepartmentProps {}
 
@@ -36,6 +38,7 @@ const getDepartmentState = (state: RootState) => state.DepartmentReducer;
 
 const ListDepartment: React.FC<ListDepartmentProps> = () => {
   const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
+  const dispatch = useDispatch();
 
   const handleData = (dep: Department[]) => {
     return dep.map((department): TDepartmentTable => {
@@ -68,6 +71,11 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
     );
   }
 
+  const changeParentIds = (result: ResultDrop<TDepartmentTable>) => {
+    const { draggingItem, focusItem } = result;
+    dispatch(changeParentForDepartments(draggingItem, focusItem));
+  };
+
   return (
     <div>
       <div className="padding_wrapper_table-page">
@@ -79,6 +87,7 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
           data={memoizedData}
           columnsConfig={memoizedColumns}
           keyTable="departmentId"
+          actionForDrag={changeParentIds}
           isDraggable
         />
       </div>
