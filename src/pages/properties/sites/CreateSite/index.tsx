@@ -1,31 +1,30 @@
 import React, { memo, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@RootStateType';
-import { TextField, TextArea, Select, Divider } from '@UiKitComponents';
-import { TFormCreateSite } from '@Types/site.types';
+
 import { postNewSite, GetSiteList } from '@Actions/site.action';
 import { Loader } from '@common';
-import { useBackHistory, useGetCityAndCountry } from '@hooks';
-import { schemaSite } from '@schema/site';
 import { HeaderSaveAction, InputContainer } from '@components';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useBackHistory, useGetCityAndCountry } from '@hooks';
+import { RootState } from '@RootStateType';
+import { schemaSite } from '@schema/site';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { TFormCreateSite } from '@Types/site.types';
+import { TextField, TextArea, Select, Divider } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateSiteProps {}
 
-const getLoadingSite = (state: RootState) => state.SiteReducer.loadingSite;
 const getLoadingDefinition = (state: RootState) => state.DefinitionReducer.loadingDefinition;
 const getSiteState = (state: RootState) => state.SiteReducer;
 
 const CreateSite: React.FC<CreateSiteProps> = () => {
   const dispatch = useDispatch();
   const backHistory = useBackHistory();
-  const loadingSite = useSelector(getLoadingSite);
   const loadingDefinition = useSelector(getLoadingDefinition);
   const { citiesList, countriesList } = useGetCityAndCountry();
-  const { siteList } = useSelector(getSiteState);
+  const { siteList, loadingSite } = useSelector(getSiteState);
   const [countryValue, setCountryValue] = useState<TSelectValue<number>>();
 
   const {

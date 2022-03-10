@@ -1,7 +1,8 @@
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../index';
-import axios from '../../config/axios';
 import { AxiosResponse } from 'axios';
+import { ThunkAction } from 'redux-thunk';
+
+import axios from '../../config/axios';
+import { RootState } from '../index';
 
 type Data = {
   [key: string]: string | null;

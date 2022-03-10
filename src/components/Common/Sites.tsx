@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Locations: React.FC = () => {
+const Sites: React.FC = () => {
   return (
     <svg
       width="24"
@@ -17,4 +17,4 @@ const Locations: React.FC = () => {
   );
 };
 
-export default Locations;
+export default Sites;

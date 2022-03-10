@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Divider, TextField, Select } from '@UiKitComponents';
-import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateVendor } from '@Actions/vendor.action';
-import { schemaVendor } from '@schema/vendor';
-import { RootState } from '@RootStateType';
+
 import { getCitiesList, getCountriesList } from '@Actions/definition.action';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
+import { updateVendor } from '@Actions/vendor.action';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { RootState } from '@RootStateType';
+import { schemaVendor } from '@schema/vendor';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
+import { Divider, TextField, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentVendor: Vendor;
@@ -94,6 +95,7 @@ const Edit: React.FC<EditProps> = (props) => {
               label="Vendor name"
               defaultValue={currentVendor.name}
               isActive
+              required
               {...register('name')}
             />
             <TextField
@@ -112,6 +114,7 @@ const Edit: React.FC<EditProps> = (props) => {
               label="Vendor code"
               defaultValue={currentVendor.partnerCode}
               isActive
+              required
               {...register('partnerCode')}
             />
             <TextField
@@ -121,6 +124,7 @@ const Edit: React.FC<EditProps> = (props) => {
               label="TXN"
               defaultValue={currentVendor.taxNumber}
               isActive
+              required
               {...register('taxNumber')}
             />
           </InputContainer>
@@ -128,6 +132,7 @@ const Edit: React.FC<EditProps> = (props) => {
           <div className="markup_helper-box">
             <InputContainer title="Location">
               <Select
+                errorText={errors.countryId?.value?.message}
                 options={countriesList}
                 defaultValue={countryDefaultValue}
                 label="Country"
@@ -141,9 +146,11 @@ const Edit: React.FC<EditProps> = (props) => {
                 isDisabled={loadingDefinition}
                 getSelectValue={getCountryValue}
                 isActive
+                required
               />
 
               <Select
+                errorText={errors.cityId?.value?.message}
                 options={filterCitiesList()}
                 defaultValue={cityDefaultValue}
                 name="cityId"
@@ -156,6 +163,7 @@ const Edit: React.FC<EditProps> = (props) => {
                 isLoading={loadingDefinition}
                 isDisabled={!filterCitiesList().length || loadingDefinition}
                 isActive
+                required
               />
 
               <TextField
@@ -165,6 +173,7 @@ const Edit: React.FC<EditProps> = (props) => {
                 label="Address"
                 defaultValue={currentVendor.address}
                 isActive
+                required
                 {...register('address')}
               />
             </InputContainer>
@@ -185,6 +194,7 @@ const Edit: React.FC<EditProps> = (props) => {
                 label="Phone number"
                 defaultValue={currentVendor.phone}
                 isActive
+                required
                 {...register('phone')}
               />
             </InputContainer>

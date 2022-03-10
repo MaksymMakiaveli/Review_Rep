@@ -1,9 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
-import classes from './Header.module.scss';
-import cl from 'classnames';
-import avatar from '@image/avatar.png';
+
 import { Bell, DropArrow, Info, Search } from '@common';
+import avatar from '@image/avatar.png';
+import cl from 'classnames';
 import { useLocation } from 'react-router-dom';
+
+import classes from './Header.module.scss';
 
 interface HeaderProps {}
 

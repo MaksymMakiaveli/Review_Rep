@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ListContracts from './ListContracts';
-import CreateContract from './CreateContract';
-import EditContract from './EditContract';
+
+import { getContractList } from '@Actions/contracts.action';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContractList } from '@Actions/contracts.action';
+import { Routes, Route } from 'react-router-dom';
+
+import CreateContract from './CreateContract';
+import EditContract from './EditContract';
+import ListContracts from './ListContracts';
 
 const getContractState = (state: RootState) => state.ContractReducer;
 

@@ -1,4 +1,6 @@
+import { concatActions } from '@helpers/functions';
 import { ContractActions, ContractState } from '@Types/contract.types';
+
 import {
   DELETE_CONTRACT,
   FAIL,
@@ -7,7 +9,6 @@ import {
   POST_NEW_CONTRACT,
   SUCCESS,
 } from '../actionTypes';
-import { concatActions } from '@helpers/functions';
 
 const initialState: ContractState = {
   contracts: [],

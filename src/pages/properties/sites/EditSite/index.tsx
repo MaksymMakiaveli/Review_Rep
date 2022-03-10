@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { GetOneSite } from '@Actions/site.action';
-import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { useToggle } from '@hooks';
-import Preview from '@pages/properties/sites/EditSite/Preview';
 import Edit from '@pages/properties/sites/EditSite/Edit';
+import Preview from '@pages/properties/sites/EditSite/Preview';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 type SiteParams = {
-  LocationID: string;
+  SiteID: string;
 };
 
 interface EditSiteProps {}
@@ -22,7 +23,7 @@ const EditSite: React.FC<EditSiteProps> = () => {
   const [modeEdit, setModeEdit] = useToggle();  
 
   const { currentSite, loadingSite } = useSelector(getSiteState);
-  const siteID = params.LocationID ? params.LocationID : '';
+  const siteID = params.SiteID ? params.SiteID : '';
 
   useEffect(() => {
     dispatch(GetOneSite(siteID));

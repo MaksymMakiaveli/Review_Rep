@@ -1,18 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import classes from '../Contract.module.scss';
-import { FileInput, TextField, Select, Divider, TextArea, PreviewFile } from '@UiKitComponents';
-import { TCreateContract, TFormCreateContract } from '@Types/contract.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { RootState } from '@RootStateType';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetVendorList } from '@Actions/vendor.action';
-import { getCurrencyList } from '@Actions/currency.action';
-import { schemaContract } from '@schema/contract';
-import { useBackHistory } from '@hooks';
+
 import { postNewContract } from '@Actions/contracts.action';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { getCurrencyList } from '@Actions/currency.action';
+import { GetVendorList } from '@Actions/vendor.action';
 import { Loader } from '@common';
+import { HeaderSaveAction, InputContainer } from '@components';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useBackHistory } from '@hooks';
+import { RootState } from '@RootStateType';
+import { TCreateContract, TFormCreateContract } from '@Types/contract.types';
+import { FileInput, TextField, Select, Divider, TextArea, PreviewFile } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { schemaContract } from '@schema/contract';
+
+import classes from '../Contract.module.scss';
 
 interface CreateContractProps {}
 

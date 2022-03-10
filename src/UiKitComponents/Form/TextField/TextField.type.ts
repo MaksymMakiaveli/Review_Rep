@@ -1,5 +1,6 @@
-import { InputHelperBoxProps } from '../../InputHelperBox/InputHelperBoxType';
 import { UseFormRegisterReturn } from 'react-hook-form';
+
+import { InputHelperBoxProps } from '../../InputHelperBox/InputHelperBoxType';
 
 interface TextFieldProps
   extends Omit<InputHelperBoxProps, 'children'>,

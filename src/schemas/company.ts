@@ -15,15 +15,17 @@ export const schemaCompany = yup.object({
   cityId: yup
     .object({
       label: yup.string(),
-      value: yup.number(),
-    })
-    .required('This field is required'),
+      value: yup
+        .number()
+        .required('Please select a city'),
+    }),
   countryId: yup
     .object({
       label: yup.string(),
-      value: yup.number(),
-    })
-    .required('This field is required'),
+      value: yup
+        .number()
+        .required('Please select a country'),
+    }),
   address: yup.string().required('This field is required'),
   contactName: yup
     .string()

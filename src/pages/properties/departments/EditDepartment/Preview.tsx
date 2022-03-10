@@ -1,12 +1,13 @@
 import React from 'react';
+
+import { deleteDepartment } from '@Actions/department.action';
 import { InputContainer, PreviewField, HeaderEditAction } from '@components';
-import { ModalDelete } from '@UiKitComponents';
+import { useToggle } from '@hooks';
+import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
 import { Department } from '@Types/department.types';
+import { ModalDelete } from '@UiKitComponents';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useToggle } from '@hooks';
-import { deleteDepartment } from '@Actions/department.action';
-import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentDepartment: Department;

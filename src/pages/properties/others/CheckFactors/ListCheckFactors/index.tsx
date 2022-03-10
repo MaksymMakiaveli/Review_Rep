@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
-import { RootState } from '@RootStateType';
-import { useSelector } from 'react-redux';
+
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
-
+import { RootState } from '@RootStateType';
+import { ColumnsTable } from '@Types/application.types';
 import { TCheckFactorTable } from '@Types/checkFactors.type';
 import { Table } from '@UiKitComponents';
-import { ColumnsTable } from '@Types/application.types';
+import { useSelector } from 'react-redux';
 
 const columns: ColumnsTable<TCheckFactorTable>[] = [
   {

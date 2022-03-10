@@ -1,10 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import ReactSelect from 'react-select';
-import { Controller } from 'react-hook-form';
-import InputContainer from '../../InputHelperBox';
+
 import { TSelectValue } from '@Types/application.types';
-import { SelectProps } from './SelectType';
 import cl from 'classnames';
+import { Controller } from 'react-hook-form';
+import ReactSelect from 'react-select';
+
+import InputContainer from '../../InputHelperBox';
+import { SelectProps } from './SelectType';
+
 import './Select.scss';
 
 const PureReactSelect = React.memo(ReactSelect);
@@ -30,7 +33,8 @@ const Select = <FieldType,>(props: SelectProps<FieldType>) => {
   } = props;
   const [valueSelect, setValueSelect] = useState<TSelectValue<number>>();
 
-  const selectError = errorText ? 'react-select-container__error' : '';
+  const correctErrorText = isDisabled ? '' : errorText;
+  const selectError = correctErrorText ? 'react-select-container__error' : '';
   const selectActive = isActive ? 'react-select-container__active' : '';
 
   const getOptions: TSelectValue<number>[] = useMemo(() => {
@@ -50,7 +54,7 @@ const Select = <FieldType,>(props: SelectProps<FieldType>) => {
     <PureInputContainer
       label={label}
       id={id}
-      errorText={errorText}
+      errorText={correctErrorText}
       required={required}
       disabled={isDisabled}
     >

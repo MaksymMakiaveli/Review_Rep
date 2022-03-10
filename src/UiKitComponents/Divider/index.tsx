@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+
 import classes from './Divider.module.scss';
 
 interface DividerProps {

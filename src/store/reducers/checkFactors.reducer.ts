@@ -1,4 +1,6 @@
+import { concatActions } from '@helpers/functions';
 import { CheckFactorActions, CheckFactorState } from '@Types/checkFactors.type';
+
 import {
   DELETE_CHECK_FACTORY,
   GET_CHECK_FACTORS_LIST,
@@ -6,7 +8,6 @@ import {
   POST_NEW_CHECK_FACTOR,
   SUCCESS,
 } from '../actionTypes';
-import { concatActions } from '@helpers/functions';
 
 const initialState: CheckFactorState = {
   checkFactorList: [],

@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './PreviewFiled.module.scss';
+
 import cl from "classnames";
+
+import classes from './PreviewFiled.module.scss';
 
 interface PreviewFieldProps {
   label: string;

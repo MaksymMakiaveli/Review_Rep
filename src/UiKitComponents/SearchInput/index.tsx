@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './SearchInput.module.scss';
+
 import { Search } from '@common';
+
+import classes from './SearchInput.module.scss';
 
 const SearchInput = () => {
   return (

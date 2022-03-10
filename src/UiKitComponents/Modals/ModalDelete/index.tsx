@@ -1,6 +1,7 @@
 import React from 'react';
-import { Modal } from 'rsuite';
+
 import { Button } from '@UiKitComponents';
+import { Modal } from 'rsuite';
 import './ModalDelete.scss';
 
 interface ModalDeleteProps {

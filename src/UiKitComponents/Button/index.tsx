@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './Button.module.scss';
+
 import cl from 'classnames';
+
+import classes from './Button.module.scss';
 import { ButtonProps } from './ButtonType';
 
 const Button: React.FC<ButtonProps> = (props) => {

@@ -1,5 +1,5 @@
-import { VendorActions, VendorState } from '../types/vendor.types';
 import { concatActions } from '@helpers/functions';
+
 import { 
   DELETE_VENDOR,
   FAIL, 
@@ -9,6 +9,7 @@ import {
   PUT_VENDOR,
   SUCCESS 
 } from '../actionTypes';
+import { VendorActions, VendorState } from '../types/vendor.types';
 
 const initialState: VendorState = {
   vendorList: [],

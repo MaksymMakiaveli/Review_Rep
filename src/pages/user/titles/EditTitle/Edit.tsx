@@ -39,30 +39,28 @@ const Edit: React.FC<EditProps> = (props) => {
         errors={errors}
         onCancelButton={backToPreview}
       />
-      <div className="form_box">
-        <InputContainer>
-          <TextField
-            errorText={errors.userTitleCode?.message}
-            id="TitleCode"
-            placeholder="Title Code"
-            label="Title Code"
-            defaultValue={currentTitle.userTitleCode}
-            isActive
-            required
-            {...register('userTitleCode')}
-          />
-          <TextField
-            errorText={errors.title?.message}
-            id="Title"
-            placeholder="Title"
-            label="Title"
-            defaultValue={currentTitle.title}
-            isActive
-            required
-            {...register('title')}
-          />
-        </InputContainer>
-      </div>
+      <InputContainer>
+        <TextField
+          errorText={errors.userTitleCode?.message}
+          id="TitleCode"
+          placeholder="Title Code"
+          label="Title Code"
+          defaultValue={currentTitle.userTitleCode}
+          isActive
+          required
+          {...register('userTitleCode')}
+        />
+        <TextField
+          errorText={errors.title?.message}
+          id="Title"
+          placeholder="Title"
+          label="Title"
+          defaultValue={currentTitle.title}
+          isActive
+          required
+          {...register('title')}
+        />
+      </InputContainer>
     </form>
   );
 };

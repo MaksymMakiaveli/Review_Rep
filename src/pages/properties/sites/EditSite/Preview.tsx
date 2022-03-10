@@ -1,12 +1,13 @@
 import React from 'react';
-import { HeaderEditAction, InputContainer, PreviewField } from '@components';
-import { Divider, ModalDelete } from '@UiKitComponents';
-import { Site } from '@Types/site.types';
-import { useToggle } from '@hooks';
+
 import { deleteSite } from '@Actions/site.action';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
 import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { Site } from '@Types/site.types';
+import { Divider, ModalDelete } from '@UiKitComponents';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentSite: Site;
@@ -24,7 +25,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
       dispatch(deleteSite([currentSite.siteId]));
     }
     setOpenModal(!open);
-    navigate('/Locations');
+    navigate('/Sites');
   }
 
   return (

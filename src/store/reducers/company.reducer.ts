@@ -1,5 +1,6 @@
-import { CompanyActions, CompanyState } from '@Types/company.types';
 import { concatActions } from '@helpers/functions';
+import { CompanyActions, CompanyState } from '@Types/company.types';
+
 import {
   DELETE_COMPANY,
   FAIL,

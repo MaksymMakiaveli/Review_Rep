@@ -1,15 +1,16 @@
 import React from 'react';
-import { useDragLayer } from 'react-dnd';
 
-function getItemStyles(initialOffset: any, currentOffset: any) {
-  if (!initialOffset || !currentOffset) {
+import { useDragLayer, XYCoord } from 'react-dnd';
+
+function getTransform(currentOffset: XYCoord | null) {
+  if (!currentOffset) {
     return {
       display: 'none',
     };
   }
-  let { x, y } = currentOffset;
+  const { x, y } = currentOffset;
 
-  const transform = `translate(${x}px, ${y}px)`;
+  const transform = `translate(${x}px, ${y - 20}px)`;
   return {
     transform,
     WebkitTransform: transform,
@@ -17,20 +18,28 @@ function getItemStyles(initialOffset: any, currentOffset: any) {
 }
 
 const DragLayerRow = () => {
-  const { isDragging, initialOffset, currentOffset } = useDragLayer((monitor) => {
+  const { isDragging, currentOffset, item } = useDragLayer((monitor) => {
     return {
       isDragging: monitor.isDragging(),
-      initialOffset: monitor.getInitialSourceClientOffset(),
-      currentOffset: monitor.getSourceClientOffset(),
+      currentOffset: monitor.getClientOffset(),
       item: monitor.getItem(),
     };
   });
 
-  return isDragging && currentOffset ? (
-    <tr style={getItemStyles(currentOffset, initialOffset)}>
-      <td>DraggingItem</td>
-    </tr>
-  ) : null;
+  if (!isDragging) {
+    return null;
+  }
+
+  return (
+    <div
+      className="drag-layer"
+      style={{
+        ...getTransform(currentOffset),
+      }}
+    >
+      <span>{item.length}</span>
+    </div>
+  );
 };
 
 export default DragLayerRow;

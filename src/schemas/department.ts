@@ -12,6 +12,8 @@ export const schemaDepartment = yup.object({
     .max(4, 'Department code must be max 4 characters'),
   siteId: yup.object({
     label: yup.string(),
-    value: yup.number().required('Please select a location'),
+    value: yup
+      .number()
+      .required('Please select a location'),
   })
 });

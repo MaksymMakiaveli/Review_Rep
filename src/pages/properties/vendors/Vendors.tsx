@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import VendorList from './VendorList';
-import CreateVendor from './CreateVendor';
-import EditVendor from './EditVendor';
+
+import { GetVendorList } from '@Actions/vendor.action';
 import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetVendorList } from '@Actions/vendor.action';
+import { Routes, Route } from 'react-router-dom';
+
+import CreateVendor from './CreateVendor';
+import EditVendor from './EditVendor';
+import VendorList from './VendorList';
 
 const getVendorState = (state: RootState) => state.VendorReducer;
 

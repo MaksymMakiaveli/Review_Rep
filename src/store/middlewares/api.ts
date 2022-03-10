@@ -1,10 +1,11 @@
-import { Dispatch, Middleware } from 'redux';
-import { ActionsTypes } from '../actions';
 import { concatActions } from '@helpers/functions';
-import { FAIL, SUCCESS } from '../actionTypes';
 import { AxiosError, AxiosResponse } from 'axios';
+import { Dispatch, Middleware } from 'redux';
+
 import axios from '../../config/axios';
 import customHistory from '../../config/history';
+import { ActionsTypes } from '../actions';
+import { FAIL, SUCCESS } from '../actionTypes';
 
 const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
   const { type } = action;

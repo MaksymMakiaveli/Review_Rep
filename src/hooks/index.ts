@@ -1,7 +1,15 @@
 import useBackHistory from './useBackHistory';
-import useToggle from './useToggle';
 import useGetCityAndCountry from './useGetCityAndCountry';
-import useSelectKeysTable from './useSelectKeysTable';
 import usePagination from './usePagination';
+import useSelectKeysTable from './useSelectKeysTable';
+import useToggle from './useToggle';
+import useDragTable from './useDragTable';
 
-export { useBackHistory, useToggle, useGetCityAndCountry, useSelectKeysTable, usePagination };
+export {
+  useDragTable,
+  useBackHistory,
+  useToggle,
+  useGetCityAndCountry,
+  useSelectKeysTable,
+  usePagination,
+};

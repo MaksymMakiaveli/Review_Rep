@@ -1,11 +1,12 @@
 import React from 'react';
-import { CheckFactory } from '@Types/checkFactors.type';
-import { useDispatch } from 'react-redux';
-import { useToggle } from '@hooks';
-import { HeaderEditAction, InputContainer, PreviewField } from '@components';
-import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
-import { ModalDelete } from '@UiKitComponents';
+
 import { deleteCheckFactoryById } from '@Actions/checkFactors.action';
+import { HeaderEditAction, InputContainer, PreviewField } from '@components';
+import { useToggle } from '@hooks';
+import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
+import { CheckFactory } from '@Types/checkFactors.type';
+import { ModalDelete } from '@UiKitComponents';
+import { useDispatch } from 'react-redux';
 
 interface PreviewProps extends Pick<HeaderEditActionProps, 'openEditPage'> {
   currentCheckFactory: CheckFactory;

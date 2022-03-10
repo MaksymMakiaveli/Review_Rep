@@ -32,12 +32,10 @@ const Preview: React.FC<PreviewProps> = (props) => {
         openEditPage={openEditPage}
         openDeleteModal={setOpenModal}
       />
-      <div className="form_box">
-        <InputContainer>
-          <PreviewField label="Title Code" description={currentTitle.userTitleCode} />
-          <PreviewField label="Title" description={currentTitle.title} />
-        </InputContainer>
-      </div>
+      <InputContainer>
+        <PreviewField label="Title Code" description={currentTitle.userTitleCode} />
+        <PreviewField label="Title" description={currentTitle.title} />
+      </InputContainer>
       <ModalDelete
         title="title"
         body="the title"

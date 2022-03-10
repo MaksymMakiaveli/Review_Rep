@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { GetOneVendor } from '@Actions/vendor.action';
-import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { useToggle } from '@hooks';
-import Preview from '@pages/properties/vendors/EditVendor/Preview';
 import Edit from '@pages/properties/vendors/EditVendor/Edit';
+import Preview from '@pages/properties/vendors/EditVendor/Preview';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 type VendorParams = {
   PartnerID: string;

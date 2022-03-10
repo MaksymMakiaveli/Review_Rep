@@ -1,5 +1,5 @@
-import { BaseAction, Concat } from './index';
 import { GET_CITIES_LIST, GET_COUNTRIES_LIST, SUCCESS } from '../actionTypes';
+import { BaseAction, Concat } from './index';
 
 export type Country = {
   countryId: number;

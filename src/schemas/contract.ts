@@ -7,7 +7,7 @@ export const schemaContract = yup.object({
   price: yup.string().required('This field is required'),
   partnerId: yup.object({
     label: yup.string(),
-    value: yup.number().required('This field is required'),
+    value: yup.number().required('Please select a partner'),
   }),
   currencyId: yup.object({
     label: yup.string(),

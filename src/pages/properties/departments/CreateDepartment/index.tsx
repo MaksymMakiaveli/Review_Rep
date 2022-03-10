@@ -1,16 +1,17 @@
 import React, { memo, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@RootStateType';
-import { TextField, Select } from '@UiKitComponents';
-import { TFormCreateDepartment } from '@Types/department.types';
+
 import { postNewDepartment } from '@Actions/department.action';
 import { GetSiteList } from '@Actions/site.action';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
-import { useBackHistory } from '@hooks';
-import { schemaDepartment } from '@schema/department';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useBackHistory } from '@hooks';
+import { RootState } from '@RootStateType';
+import { schemaDepartment } from '@schema/department';
+import { TFormCreateDepartment } from '@Types/department.types';
+import { TextField, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateDepartmentProps {}
 

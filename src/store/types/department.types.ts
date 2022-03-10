@@ -1,4 +1,5 @@
-import { BaseAction, Concat } from './index';
+import { TSelectValue } from '@Types/application.types';
+
 import {
   FAIL,
   SUCCESS,
@@ -7,9 +8,9 @@ import {
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
   PUT_DEPARTMENT,
+  CHANGE_PARENT_FOR_DEPARTMENTS,
 } from '../actionTypes';
-
-import { TSelectValue } from '@Types/application.types';
+import { BaseAction, Concat, ResponseAsetlyApi } from './index';
 import { Site } from './site.types';
 
 export type Department = {
@@ -116,6 +117,13 @@ export interface DeleteDepartmentSuccess
   };
 }
 
+export interface ChangeParentForDepartments
+  extends BaseAction<typeof CHANGE_PARENT_FOR_DEPARTMENTS> {}
+export interface ChangeParentForDepartmentsSuccess
+  extends BaseAction<Concat<typeof CHANGE_PARENT_FOR_DEPARTMENTS, typeof SUCCESS>> {
+  response: ResponseAsetlyApi<Department[]>;
+}
+
 export type DepartmentActions =
   | GetDepartmentList
   | GetDepartmentListSuccess
@@ -127,4 +135,6 @@ export type DepartmentActions =
   | UpdateDepartment
   | UpdateDepartmentSuccess
   | DeleteDepartment
-  | DeleteDepartmentSuccess;
+  | DeleteDepartmentSuccess
+  | ChangeParentForDepartments
+  | ChangeParentForDepartmentsSuccess;

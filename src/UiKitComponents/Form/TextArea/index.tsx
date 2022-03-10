@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+
 import { TextAreaProps } from './TextArea.type';
 import InputHelperBox from '../../InputHelperBox';
+
 import './TextArea.scss';
 import cl from 'classnames';
-
 import { Controller } from 'react-hook-form';
 
 const TextField = <TextFieldType,>(props: TextAreaProps<TextFieldType>) => {

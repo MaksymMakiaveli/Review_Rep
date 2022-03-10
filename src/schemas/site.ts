@@ -15,11 +15,11 @@ export const schemaSite = yup.object({
     .max(50, 'Max length 50 characters'),
   cityId: yup.object({
     label: yup.string(),
-    value: yup.number(),
+    value: yup.number().required('Please select a city'),
   }),
   countryId: yup.object({
     label: yup.string(),
-    value: yup.number(),
+    value: yup.number().required('Please select a country'),
   }),
   town: yup.string().max(100, 'Max length 100 characters'),
   area: yup.string().max(100, 'Max length 100 characters'),

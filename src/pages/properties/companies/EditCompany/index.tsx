@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { GetOneCompany } from '@Actions/company.action';
-import { RootState } from '@RootStateType';
 import { Loader } from '@common';
 import { useToggle } from '@hooks';
-import Preview from '@pages/properties/companies/EditCompany/Preview';
 import Edit from '@pages/properties/companies/EditCompany/Edit';
+import Preview from '@pages/properties/companies/EditCompany/Preview';
+import { RootState } from '@RootStateType';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 type CompanyParams = {
   CompanyID: string;

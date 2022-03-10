@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './HeaderSaveAction.module.scss';
+
 import { Button } from '@UiKitComponents';
+
+import classes from './HeaderSaveAction.module.scss';
 
 interface HeaderSaveActionProps {
   title: string;

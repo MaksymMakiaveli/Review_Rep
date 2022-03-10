@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { RootState } from '@RootStateType';
-import { useSelector } from 'react-redux';
+
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
-import { Table } from '@UiKitComponents';
+import { RootState } from '@RootStateType';
 import { ColumnsTable } from '@Types/application.types';
 import { TContractTable } from '@Types/contract.types';
+import { Table } from '@UiKitComponents';
+import { useSelector } from 'react-redux';
 
 const columnsContract: ColumnsTable<TContractTable>[] = [
   {

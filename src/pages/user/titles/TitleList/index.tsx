@@ -58,7 +58,7 @@ const ListTitle: React.FC<ListTitleProps> = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions
-          pageCreatingUrl="/RoleAuthorization/newTitle"
+          pageCreatingUrl="/Titles/newTitle"
           textRedirectButton="New Title"
         />
         <Table

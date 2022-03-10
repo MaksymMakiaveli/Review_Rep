@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Checkbox } from 'rsuite';
 import { CheckboxProps } from 'rsuite/esm/Checkbox/Checkbox';
 import './CustomCheckbox.scss';

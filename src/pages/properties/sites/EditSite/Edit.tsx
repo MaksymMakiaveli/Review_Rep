@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Divider, TextField, TextArea, Select } from '@UiKitComponents';
-import { Site, TFormCreateSite, TUpdateSite } from '@Types/site.types';
-import { HeaderSaveAction, InputContainer } from '@components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useMemo } from 'react';
+
 import { updateSite } from '@Actions/site.action';
-import { schemaSite } from '@schema/site';
-import { RootState } from '@RootStateType';
-import { GetSiteList } from '@Actions/site.action';
-import { useGetCityAndCountry } from '@hooks';
-import { City } from '@Types/definition.types';
-import { TSelectValue } from '@Types/application.types';
-import { useForm } from 'react-hook-form';
+import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useGetCityAndCountry } from '@hooks';
+import { RootState } from '@RootStateType';
+import { schemaSite } from '@schema/site';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { Site, TFormCreateSite, TUpdateSite } from '@Types/site.types';
+import { Divider, TextField, TextArea, Select } from '@UiKitComponents';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentSite: Site;
@@ -69,12 +69,6 @@ const Edit: React.FC<EditProps> = (props) => {
   const filterCity = (): City[] => {
     return citiesList.filter((city) => city.countryId === countryValue?.value);
   };
-
-  useEffect(() => {
-    if (!siteList.length) {
-      dispatch(GetSiteList());
-    }
-  }, [siteList]);
 
   const onSubmit = (site: TFormCreateSite) => {
     const newSite: TUpdateSite = {
@@ -143,6 +137,7 @@ const Edit: React.FC<EditProps> = (props) => {
             <div className="markup_helper-box">
               <InputContainer title="Location">
                 <Select
+                  errorText={errors.countryId?.value?.message}
                   options={countriesList}
                   defaultValue={countryDefaultValue}
                   label="Country"
@@ -156,8 +151,10 @@ const Edit: React.FC<EditProps> = (props) => {
                   isDisabled={loadingDefinition}
                   getSelectValue={getCountryValue}
                   isActive
+                  required
                 />
                 <Select
+                  errorText={errors.cityId?.value?.message}
                   options={filterCity()}
                   defaultValue={cityDefaultValue}
                   name="cityId"
@@ -170,6 +167,7 @@ const Edit: React.FC<EditProps> = (props) => {
                   isLoading={loadingDefinition}
                   isDisabled={!filterCity().length || loadingDefinition}
                   isActive
+                  required
                 />
 
                 <TextField

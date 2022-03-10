@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+
 import { GetToken } from '@Actions/application.action';
-import { Route, Routes } from 'react-router-dom';
-import { Header, Sidebar } from '@components';
 import { Loader } from '@common';
+import { Header, Sidebar } from '@components';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 
 const Company = React.lazy(() => import('@pages/properties/companies/Company'));
 const Contract = React.lazy(() => import('@pages/properties/contracts/Contract'));
@@ -34,9 +35,9 @@ function App() {
                 <Route path="Contracts/*" element={<Contract />} />
                 <Route path="Vendors/*" element={<Vendors />} />
                 <Route path="Others/*" element={<Others />} />
-                <Route path="RoleAuthorization/*" element={<Titles />} />
+                <Route path="Titles/*" element={<Titles />} />
                 <Route path="Departments/*" element={<Departments />} />
-                <Route path="Locations/*" element={<Sites />} />
+                <Route path="Sites/*" element={<Sites />} />
               </Routes>
             </React.Suspense>
           </section>

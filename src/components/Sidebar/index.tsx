@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './Sidebar.scss';
 import {
   Asset,
@@ -8,16 +9,17 @@ import {
   Dashboard,
   Departments,
   HideBar,
-  Locations,
+  Sites,
   Logo,
   Other,
   Supplies,
   Vendors,
   WorkOrders,
 } from '@common';
-import { NavLink } from 'react-router-dom';
-import SidebarProps, { LinkListType } from './Sidebar.type';
 import { AccordionForSidebar } from '@UiKitComponents';
+import { NavLink } from 'react-router-dom';
+
+import SidebarProps, { LinkListType } from './Sidebar.type';
 
 const linkListDashboard: LinkListType[] = [
   {
@@ -65,9 +67,9 @@ const linkListProperties: LinkListType[] = [
     icon: <Departments />,
   },
   {
-    title: 'Locations',
-    link: 'Locations',
-    icon: <Locations />,
+    title: 'Sites',
+    link: 'Sites',
+    icon: <Sites />,
   },
   {
     title: 'Others',
@@ -97,8 +99,8 @@ const linkListUser: LinkListType[] = [
     icon: <Dashboard />,
   },
   {
-    title: 'Role Autorization',
-    link: 'RoleAuthorization',
+    title: 'Titles',
+    link: 'Titles',
     icon: <Dashboard />,
   },
 ];

@@ -39,26 +39,24 @@ const CreateTitle: React.FC<CreateTitleProps> = () => {
       <div className="padding_wrapper_page">
         <form onSubmit={handleSubmit(onSubmit)}>
           <HeaderSaveAction title="New Title" errors={errors} onCancelButton={backHistory} />
-          <div className="form_box">
-            <InputContainer>
-              <TextField
-                errorText={errors.userTitleCode?.message}
-                id="TitleCode"
-                placeholder="Title Code"
-                label="Title Code"
-                required
-                {...register('userTitleCode')}
-              />
-              <TextField
-                errorText={errors.title?.message}
-                id="Title"
-                placeholder="Title"
-                label="Title"
-                required
-                {...register('title')}
-              />
-            </InputContainer>
-            </div>
+          <InputContainer>
+            <TextField
+              errorText={errors.userTitleCode?.message}
+              id="TitleCode"
+              placeholder="Title Code"
+              label="Title Code"
+              required
+              {...register('userTitleCode')}
+            />
+            <TextField
+              errorText={errors.title?.message}
+              id="Title"
+              placeholder="Title"
+              label="Title"
+              required
+              {...register('title')}
+            />
+          </InputContainer>
         </form>
       </div>
     </div>

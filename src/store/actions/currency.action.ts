@@ -1,4 +1,5 @@
 import { CurrencyActions } from '@Types/currency.type';
+
 import { GET_CURRENCY_LIST } from '../actionTypes';
 
 export const getCurrencyList = (): CurrencyActions => ({
