@@ -6,7 +6,7 @@ import {
   GET_SITE_LIST,
   GET_ONE_SITE,
   POST_NEW_SITE,
-  PUT_SITE,
+  UPDATE_SITE,
   SUCCESS,
   FAIL,
 } from '../actionTypes';
@@ -108,8 +108,8 @@ export interface PostNewSiteSuccess
 }
 export interface PostNewSiteFail extends BaseAction<Concat<typeof POST_NEW_SITE, typeof FAIL>> {}
 
-export interface UpdateSite extends BaseAction<typeof PUT_SITE> {}
-export interface UpdateSiteSuccess extends BaseAction<Concat<typeof PUT_SITE, typeof SUCCESS>> {
+export interface UpdateSite extends BaseAction<typeof UPDATE_SITE> {}
+export interface UpdateSiteSuccess extends BaseAction<Concat<typeof UPDATE_SITE, typeof SUCCESS>> {
   response: {
     resultObject: Site;
   };

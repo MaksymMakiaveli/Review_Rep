@@ -11,6 +11,7 @@ import ModalDelete from './Modals/ModalDelete';
 import PreviewFile from './PreviewFile';
 import SearchInput from './SearchInput';
 import Table from './Table';
+import Toaster from './Toaster';
 
 export {
   AccordionForSidebar,
@@ -26,4 +27,5 @@ export {
   Table,
   TextArea,
   TextField,
+  Toaster,
 };

@@ -1,4 +1,4 @@
-import { concatActions } from '@helpers/functions';
+import { concatActions, filteringByRemovedId } from '@helpers/functions';
 import { CheckFactorActions, CheckFactorState } from '@Types/checkFactors.type';
 
 import {
@@ -59,9 +59,9 @@ export const CheckFactorReducer = (
         loadingCheckFactor: true,
       };
     case concatActions(DELETE_CHECK_FACTORY, SUCCESS):
-      const newCheckFactorList = state.checkFactorList.filter(
-        (checkFactor) => !action.data.checkFactorId.includes(checkFactor.checkFactorId)
-      );
+      const list = state.checkFactorList;
+      const ids = action.data.checkFactorId;
+      const newCheckFactorList = filteringByRemovedId(list, ids, 'checkFactorId');
       return {
         ...state,
         checkFactorList: newCheckFactorList,

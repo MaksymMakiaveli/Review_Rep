@@ -20,6 +20,7 @@ const Company = () => {
       dispatch(GetCompanyList());
     }
   }, [companyList]);
+
   return (
     <>
       <Routes>

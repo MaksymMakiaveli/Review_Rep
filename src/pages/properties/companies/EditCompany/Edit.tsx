@@ -1,40 +1,76 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { updateCompany } from '@Actions/company.action';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaCompany } from '@schema/company';
 import { Company, TFormCreateCompany, TUpdateCompany } from '@Types/company.types';
-import { TextField, Divider } from '@UiKitComponents';
+import { TextField, Divider, Select } from '@UiKitComponents';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { TSelectValue } from '@Types/application.types';
+import { City } from '@Types/definition.types';
+import { useGetCityAndCountry } from '@hooks';
+import { Loader } from '@common';
 
 interface EditProps {
   currentCompany: Company;
-  backToPreview: (modeEdit: boolean) => void;
+  backToPreview: () => void;
 }
 
 const Edit: React.FC<EditProps> = (props) => {
   const { currentCompany, backToPreview } = props;
+  const { citiesList, countriesList, loadingDefinition } = useGetCityAndCountry();
   const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    control,
   } = useForm<TFormCreateCompany>({
     resolver: yupResolver(schemaCompany),
   });
 
+  const memoizedControl = useMemo(() => control, []);
+
+  const countryDefaultValue = useMemo(
+    () => ({
+      value: currentCompany.city.countryId,
+      label: currentCompany.city.country.name,
+    }),
+    []
+  );
+  const cityDefaultValue = useMemo(
+    () => ({
+      value: currentCompany.city.cityId,
+      label: currentCompany.city.name,
+    }),
+    []
+  );
+
+  const [countryValue, setCountryValue] = useState<TSelectValue<number>>(countryDefaultValue);
+
+  const getCountryValue = (country: TSelectValue<number>) => {
+    setCountryValue(country);
+  };
+
+  const filterCitiesList = (): City[] => {
+    return citiesList.filter((city) => city.countryId === countryValue.value);
+  };
+
   const onSubmit = (company: TFormCreateCompany) => {
-    console.log(company);
     const newCompany: TUpdateCompany = {
       ...company,
       companyId: currentCompany.companyId,
       cityId: company.cityId.value,
       countryId: company.countryId.value,
     };
-    dispatch(updateCompany(newCompany));
+    dispatch(updateCompany(newCompany, backToPreview));
   };
+
+  if (loadingDefinition) {
+    return <Loader />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,6 +123,38 @@ const Edit: React.FC<EditProps> = (props) => {
         <Divider margin="40px 0 20px 0" />
         <div className="markup_helper-box">
           <InputContainer title="Location">
+            <Select
+              errorText={errors.countryId?.value?.message}
+              options={countriesList}
+              defaultValue={countryDefaultValue}
+              label="Country"
+              id="Country"
+              name="countryId"
+              control={memoizedControl}
+              placeholder="Choose country"
+              optionValue="countryId"
+              optionLabel="name"
+              isDisabled={loadingDefinition}
+              getSelectValue={getCountryValue}
+              isActive
+              required
+            />
+
+            <Select
+              errorText={errors.cityId?.value?.message}
+              options={filterCitiesList()}
+              defaultValue={cityDefaultValue}
+              name="cityId"
+              control={memoizedControl}
+              label="City"
+              id="City"
+              placeholder="Choose city"
+              optionValue="cityId"
+              optionLabel="name"
+              isDisabled={!filterCitiesList().length}
+              isActive
+              required
+            />
             <TextField
               errorText={errors.address?.message}
               id="Address"

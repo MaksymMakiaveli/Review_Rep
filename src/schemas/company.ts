@@ -12,24 +12,15 @@ export const schemaCompany = yup.object({
     .string()
     .matches(/^[0-9]*$/, 'TXN must be a number')
     .required('This field is required'),
-  cityId: yup
-    .object({
-      label: yup.string(),
-      value: yup
-        .number()
-        .required('Please select a city'),
-    }),
-  countryId: yup
-    .object({
-      label: yup.string(),
-      value: yup
-        .number()
-        .required('Please select a country'),
-    }),
+  cityId: yup.object({
+    label: yup.string(),
+    value: yup.number().required('Please select a city'),
+  }),
+  countryId: yup.object({
+    label: yup.string(),
+    value: yup.number().required('Please select a country'),
+  }),
   address: yup.string().required('This field is required'),
-  contactName: yup
-    .string()
-    .required('This field is required')
-    .email('Email is not valid'),
+  contactName: yup.string().email('Email is not valid'),
   phone: yup.string().required('This field is required'),
 });

@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'rsuite/dist/rsuite.min.css';
 import 'semantic-ui-css/semantic.min.css';
 import './styles/global.scss';

@@ -4,7 +4,7 @@ import {
   GET_DEPARTMENT_LIST,
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
-  PUT_DEPARTMENT,
+  UPDATE_DEPARTMENT,
   SUCCESS,
 } from '../actionTypes';
 import {
@@ -50,7 +50,7 @@ export const postNewDepartment = (newDepartment: NewDepartment): DepartmentActio
 });
 
 export const updateDepartment = (department: PutDepartment): DepartmentActions => ({
-  type: PUT_DEPARTMENT,
+  type: UPDATE_DEPARTMENT,
   api: {
     url: '/Department/UpdateDepartment',
     method: 'POST',

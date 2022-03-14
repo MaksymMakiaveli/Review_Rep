@@ -13,6 +13,11 @@ export type Redirect = {
   path: string;
 };
 
+export type ShowToaster = {
+  description: string;
+  type: 'success' | 'info' | 'warn' | 'error';
+};
+
 export type ResponseApi<T> = {
   resultObject: T;
   resultStatus: boolean;
@@ -21,13 +26,13 @@ export type ResponseApi<T> = {
 export interface BaseAction<Type> {
   type: Type;
   api?: AxiosRequestConfig;
-  apiKey?: true | string;
   redirect?: Redirect;
+  showToaster?: ShowToaster;
   data?: any;
 }
 
 export interface ResponseAsetlyApi<TypeResultObject> {
   resultObject: TypeResultObject;
   resultStatus: boolean;
-  languageKeyword?: string;
+  languageKeyword: string;
 }

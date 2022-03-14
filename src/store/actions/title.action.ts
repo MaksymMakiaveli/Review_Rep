@@ -1,9 +1,11 @@
 import { TitleActions, TCreateTitle, TUpdateTitle } from '@Types/title.types';
-import { DELETE_TITLE,
-         GET_TITLE_LIST,
-         GET_ONE_TITLE, 
-         POST_NEW_TITLE, 
-         PUT_TITLE } from '../actionTypes';
+import {
+  DELETE_TITLE,
+  GET_TITLE_LIST,
+  GET_ONE_TITLE,
+  POST_NEW_TITLE,
+  UPDATE_TITLE,
+} from '../actionTypes';
 
 export const GetTitleList = (): TitleActions => ({
   type: GET_TITLE_LIST,
@@ -34,7 +36,7 @@ export const postNewTitle = (newTitle: TCreateTitle): TitleActions => ({
 });
 
 export const updateTitle = (title: TUpdateTitle): TitleActions => ({
-  type: PUT_TITLE,
+  type: UPDATE_TITLE,
   api: {
     url: '/UserTitle/UpdateTitle',
     method: 'POST',

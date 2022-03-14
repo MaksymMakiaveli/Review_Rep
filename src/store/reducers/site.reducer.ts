@@ -1,13 +1,13 @@
 import { concatActions } from '@helpers/functions';
 
-import { 
+import {
   DELETE_SITE,
-  GET_SITE_LIST, 
+  GET_SITE_LIST,
   GET_ONE_SITE,
-  POST_NEW_SITE, 
-  PUT_SITE,
+  POST_NEW_SITE,
+  UPDATE_SITE,
   SUCCESS,
-  FAIL 
+  FAIL,
 } from '../actionTypes';
 import { SiteActions, SiteState } from '../types/site.types';
 
@@ -17,10 +17,7 @@ const initialState: SiteState = {
   loadingSite: false,
 };
 
-export const SiteReducer = (
-  state = initialState,
-  action: SiteActions
-): SiteState => {
+export const SiteReducer = (state = initialState, action: SiteActions): SiteState => {
   switch (action.type) {
     case GET_SITE_LIST:
       return {
@@ -60,12 +57,12 @@ export const SiteReducer = (
         ...state,
         loadingSite: false,
       };
-    case PUT_SITE:
+    case UPDATE_SITE:
       return {
         ...state,
         loadingSite: true,
       };
-    case concatActions(PUT_SITE, SUCCESS):
+    case concatActions(UPDATE_SITE, SUCCESS):
       return {
         ...state,
         loadingSite: false,

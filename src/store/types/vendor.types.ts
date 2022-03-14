@@ -6,11 +6,11 @@ import {
   GET_VENDOR_LIST,
   GET_ONE_VENDOR,
   POST_NEW_VENDOR,
-  PUT_VENDOR,
+  UPDATE_VENDOR,
   SUCCESS,
   FAIL,
 } from '../actionTypes';
-import { BaseAction, Concat } from './index';
+import { BaseAction, Concat, ResponseAsetlyApi } from './index';
 
 export type Vendor = {
   partnerId: number;
@@ -40,12 +40,10 @@ export type Vendor = {
   nonCurrAssetsPartner: any[];
 };
 
-
 export interface TVendorTable
   extends Required<Pick<Vendor, 'name' | 'phone' | 'taxNumber' | 'partnerId'>> {
   cityName: City['name'];
 }
-
 
 export type TCreateVendor = {
   partnerCode: string;
@@ -101,20 +99,19 @@ export interface PostNewVendorSuccess
 export interface PostNewVendorFail
   extends BaseAction<Concat<typeof POST_NEW_VENDOR, typeof FAIL>> {}
 
-export interface UpdateVendor extends BaseAction<typeof PUT_VENDOR> {}
-export interface UpdateVendorSuccess extends BaseAction<Concat<typeof PUT_VENDOR, typeof SUCCESS>> {
-  response: {
-    resultObject: Vendor;
-  };
+export interface UpdateVendor extends BaseAction<typeof UPDATE_VENDOR> {}
+export interface UpdateVendorSuccess
+  extends BaseAction<Concat<typeof UPDATE_VENDOR, typeof SUCCESS>> {
+  response: ResponseAsetlyApi<Vendor>;
 }
+export interface UpdateVendorFail extends BaseAction<Concat<typeof UPDATE_VENDOR, typeof FAIL>> {}
 
 export interface DeleteVendor extends BaseAction<typeof DELETE_VENDOR> {}
 export interface DeleteVendorSuccess
   extends BaseAction<Concat<typeof DELETE_VENDOR, typeof SUCCESS>> {
-  response: {
-    resultStatus: boolean;
-    languageKeyword: string;
-    resultObject: [];
+  response: ResponseAsetlyApi<null>;
+  data: {
+    partnerIds: number[];
   };
 }
 
@@ -128,5 +125,6 @@ export type VendorActions =
   | PostNewVendorFail
   | UpdateVendor
   | UpdateVendorSuccess
+  | UpdateVendorFail
   | DeleteVendor
   | DeleteVendorSuccess;

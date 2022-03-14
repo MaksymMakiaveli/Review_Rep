@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { deleteCompanies } from '@Actions/company.action';
+import { deleteCompaniesById } from '@Actions/company.action';
 import { HeaderEditAction, InputContainer, PreviewField } from '@components';
 import { useToggle } from '@hooks';
 import HeaderEditActionProps from '@TypeComponents/HeaderEditAction/HeaderEditAction.type';
@@ -21,7 +21,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
 
   const deleteCompany = () => {
     if (currentCompany) {
-      dispatch(deleteCompanies([currentCompany.companyId]));
+      dispatch(deleteCompaniesById([currentCompany.companyId]));
     }
     setOpenModal(!open);
     navigate('/Companies');
@@ -43,8 +43,8 @@ const Preview: React.FC<PreviewProps> = (props) => {
         <Divider margin="40px 0 20px 0" />
         <div className="markup_helper-box">
           <InputContainer title="Location">
-            <PreviewField label="Country" description={currentCompany.city.name} />
-            <PreviewField label="City" description={currentCompany.city.country?.name} />
+            <PreviewField label="Country" description={currentCompany.city.country?.name} />
+            <PreviewField label="City" description={currentCompany.city.name} />
             <PreviewField label="Address" description={currentCompany.address} />
           </InputContainer>
           <InputContainer title="Contacts">

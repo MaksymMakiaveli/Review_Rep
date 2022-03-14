@@ -6,7 +6,7 @@ import {
   GET_TITLE_LIST,
   GET_ONE_TITLE,
   POST_NEW_TITLE,
-  PUT_TITLE,
+  UPDATE_TITLE,
   SUCCESS,
 } from '../actionTypes';
 
@@ -16,10 +16,7 @@ const initialState: TitleState = {
   loadingTitle: false,
 };
 
-export const TitleReducer = (
-  state = initialState,
-  action: TitleActions
-): TitleState => {
+export const TitleReducer = (state = initialState, action: TitleActions): TitleState => {
   switch (action.type) {
     case GET_TITLE_LIST:
       return {
@@ -59,12 +56,12 @@ export const TitleReducer = (
         ...state,
         loadingTitle: false,
       };
-    case PUT_TITLE:
+    case UPDATE_TITLE:
       return {
         ...state,
         loadingTitle: true,
       };
-    case concatActions(PUT_TITLE, SUCCESS):
+    case concatActions(UPDATE_TITLE, SUCCESS):
       return {
         ...state,
         loadingTitle: false,

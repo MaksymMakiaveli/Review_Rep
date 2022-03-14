@@ -23,7 +23,7 @@ const Preview: React.FC<PreviewProps> = (props) => {
 
   const deleteVendors = () => {
     if (currentVendor) {
-      dispatch(deleteVendor([currentVendor.partnerId]));
+      dispatch(deleteVendor([currentVendor.partnerId], currentVendor.name));
     }
     setOpenModal(!open);
     navigate('/Vendors');

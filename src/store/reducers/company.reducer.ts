@@ -1,4 +1,4 @@
-import { concatActions } from '@helpers/functions';
+import { concatActions, filteringByRemovedId, mappedAfterUpdate } from '@helpers/functions';
 import { CompanyActions, CompanyState } from '@Types/company.types';
 
 import {
@@ -7,7 +7,7 @@ import {
   GET_COMPANY_LIST,
   GET_ONE_COMPANY,
   POST_NEW_COMPANY,
-  PUT_COMPANY,
+  UPDATE_COMPANY,
   SUCCESS,
 } from '../actionTypes';
 
@@ -17,10 +17,7 @@ const initialState: CompanyState = {
   loadingCompany: false,
 };
 
-export const CompanyReducer = (
-  state = initialState,
-  action: CompanyActions
-): CompanyState => {
+export const CompanyReducer = (state = initialState, action: CompanyActions): CompanyState => {
   switch (action.type) {
     case GET_COMPANY_LIST:
       return {
@@ -60,12 +57,23 @@ export const CompanyReducer = (
         ...state,
         loadingCompany: false,
       };
-    case PUT_COMPANY:
+    case UPDATE_COMPANY:
       return {
         ...state,
         loadingCompany: true,
       };
-    case concatActions(PUT_COMPANY, SUCCESS):
+    case concatActions(UPDATE_COMPANY, SUCCESS):
+      return {
+        ...state,
+        loadingCompany: false,
+        currentCompany: action.response.resultObject,
+        companyList: mappedAfterUpdate(
+          state.companyList,
+          action.response.resultObject,
+          'companyId'
+        ),
+      };
+    case concatActions(UPDATE_COMPANY, FAIL):
       return {
         ...state,
         loadingCompany: false,
@@ -73,10 +81,15 @@ export const CompanyReducer = (
     case DELETE_COMPANY:
       return {
         ...state,
+        loadingCompany: true,
       };
     case concatActions(DELETE_COMPANY, SUCCESS):
+      const list = state.companyList;
+      const ids = action.data.companyIds;
       return {
         ...state,
+        loadingCompany: false,
+        companyList: filteringByRemovedId(list, ids, 'companyId'),
       };
     default:
       return {

@@ -1,12 +1,20 @@
-import { CompanyActions, TUpdateCompany, TCreateCompany } from '@Types/company.types';
+import { CompanyActions, TUpdateCompany, TCreateCompany, Company } from '@Types/company.types';
 
 import {
   DELETE_COMPANY,
+  FAIL,
   GET_COMPANY_LIST,
   GET_ONE_COMPANY,
   POST_NEW_COMPANY,
-  PUT_COMPANY,
+  SUCCESS,
+  UPDATE_COMPANY,
 } from '../actionTypes';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '@RootStateType';
+import axios from '../../config/axios';
+import { ResponseAsetlyApi } from '@Types/index';
+import { concatActions, handleErrorAndShowToast } from '@helpers/functions';
+import { toast } from 'react-toastify';
 
 export const GetCompanyList = (): CompanyActions => ({
   type: GET_COMPANY_LIST,
@@ -26,28 +34,47 @@ export const GetOneCompany = (id: string | number): CompanyActions => ({
 
 export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
   type: POST_NEW_COMPANY,
-
   api: {
-    url: '/Company/AddFirm',
+    url: '/Company/AddCompany',
     method: 'POST',
     data: {
       ...newCompany,
     },
   },
-});
-
-export const updateCompany = (company: TUpdateCompany): CompanyActions => ({
-  type: PUT_COMPANY,
-  api: {
-    url: `/Company/UpdateFirm`,
-    method: 'PUT',
-    data: {
-      ...company,
-    },
+  showToaster: {
+    description: `${newCompany.name} is created`,
+    type: 'success',
+  },
+  redirect: {
+    path: '/Companies',
   },
 });
 
-export const deleteCompanies = (companyIds: number[]): CompanyActions => ({
+export const updateCompany =
+  (
+    company: TUpdateCompany,
+    backToPreview: () => void
+  ): ThunkAction<any, RootState, any, CompanyActions> =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_COMPANY });
+      const id = company.companyId;
+      const updateCompany = await axios.post('/Company/UpdateFirm', company);
+      const responseUpdated: ResponseAsetlyApi<null> = updateCompany.data;
+      if (responseUpdated.resultStatus) {
+        const updatedCompany = await axios.get(`/Company/GetCompanyById/${id}`);
+        const response: ResponseAsetlyApi<Company> = updatedCompany.data;
+        dispatch({ type: concatActions(UPDATE_COMPANY, SUCCESS), response });
+        backToPreview();
+        toast.success(`${response.resultObject.name} is updated`);
+      }
+    } catch (error: any) {
+      handleErrorAndShowToast(error);
+      dispatch({ type: concatActions(UPDATE_COMPANY, FAIL) });
+    }
+  };
+
+export const deleteCompaniesById = (companyIds: number[], name?: string): CompanyActions => ({
   type: DELETE_COMPANY,
   api: {
     url: `/Company/RemoveByIdList`,
@@ -55,5 +82,10 @@ export const deleteCompanies = (companyIds: number[]): CompanyActions => ({
     data: {
       CompanyIds: companyIds,
     },
+  },
+  data: { companyIds },
+  showToaster: {
+    type: 'success',
+    description: `${name} is deleted`,
   },
 });

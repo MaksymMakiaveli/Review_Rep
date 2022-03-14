@@ -7,7 +7,7 @@ import {
   GET_COMPANY_LIST,
   GET_ONE_COMPANY,
   POST_NEW_COMPANY,
-  PUT_COMPANY,
+  UPDATE_COMPANY,
   SUCCESS,
 } from '../actionTypes';
 import { BaseAction, Concat } from './index';
@@ -38,7 +38,8 @@ export type Company = {
   userAuthorizedCompanies: any[];
 };
 
-export interface TCompanyTable extends Required<Pick<Company, 'companyId' | 'name' | 'companyCode' | 'address'>> {}
+export interface TCompanyTable
+  extends Required<Pick<Company, 'companyId' | 'name' | 'companyCode' | 'address'>> {}
 
 export type TCreateCompany = {
   companyCode: string;
@@ -52,10 +53,7 @@ export type TCreateCompany = {
   taxOffice?: string;
 };
 
-export type TFormCreateCompany = Omit<
-  TCreateCompany,
-  'countryId' | 'cityId'
-> & {
+export type TFormCreateCompany = Omit<TCreateCompany, 'countryId' | 'cityId'> & {
   countryId: TSelectValue<number>;
   cityId: TSelectValue<number>;
 };
@@ -96,13 +94,14 @@ export interface PostNewCompanySuccess
 export interface PostNewCompanyFail
   extends BaseAction<Concat<typeof POST_NEW_COMPANY, typeof FAIL>> {}
 
-export interface UpdateCompany extends BaseAction<typeof PUT_COMPANY> {}
+export interface UpdateCompany extends BaseAction<typeof UPDATE_COMPANY> {}
 export interface UpdateCompanySuccess
-  extends BaseAction<Concat<typeof PUT_COMPANY, typeof SUCCESS>> {
+  extends BaseAction<Concat<typeof UPDATE_COMPANY, typeof SUCCESS>> {
   response: {
     resultObject: Company;
   };
 }
+export interface UpdateCompanyFail extends BaseAction<Concat<typeof UPDATE_COMPANY, typeof FAIL>> {}
 
 export interface DeleteCompany extends BaseAction<typeof DELETE_COMPANY> {}
 export interface DeleteCompanySuccess
@@ -112,6 +111,7 @@ export interface DeleteCompanySuccess
     languageKeyword: string;
     resultObject: [];
   };
+  data: { companyIds: number[] };
 }
 
 export type CompanyActions =
@@ -124,5 +124,6 @@ export type CompanyActions =
   | PostNewCompanyFail
   | UpdateCompany
   | UpdateCompanySuccess
+  | UpdateCompanyFail
   | DeleteCompany
   | DeleteCompanySuccess;

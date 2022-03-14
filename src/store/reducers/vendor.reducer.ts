@@ -1,15 +1,15 @@
-import { concatActions } from '@helpers/functions';
+import { concatActions, filteringByRemovedId, mappedAfterUpdate } from '@helpers/functions';
 
-import { 
+import {
   DELETE_VENDOR,
-  FAIL, 
-  GET_VENDOR_LIST, 
+  FAIL,
+  GET_VENDOR_LIST,
   GET_ONE_VENDOR,
-  POST_NEW_VENDOR, 
-  PUT_VENDOR,
-  SUCCESS 
+  POST_NEW_VENDOR,
+  UPDATE_VENDOR,
+  SUCCESS,
 } from '../actionTypes';
-import { VendorActions, VendorState } from '../types/vendor.types';
+import { VendorActions, VendorState } from '@Types/vendor.types';
 
 const initialState: VendorState = {
   vendorList: [],
@@ -17,10 +17,7 @@ const initialState: VendorState = {
   loadingVendor: false,
 };
 
-export const VendorReducer = (
-  state = initialState,
-  action: VendorActions
-): VendorState => {
+export const VendorReducer = (state = initialState, action: VendorActions): VendorState => {
   switch (action.type) {
     case GET_VENDOR_LIST:
       return {
@@ -60,12 +57,19 @@ export const VendorReducer = (
         ...state,
         loadingVendor: false,
       };
-    case PUT_VENDOR:
+    case UPDATE_VENDOR:
       return {
         ...state,
         loadingVendor: true,
       };
-    case concatActions(PUT_VENDOR, SUCCESS):
+    case concatActions(UPDATE_VENDOR, SUCCESS):
+      return {
+        ...state,
+        loadingVendor: false,
+        currentVendor: action.response.resultObject,
+        vendorList: mappedAfterUpdate(state.vendorList, action.response.resultObject, 'partnerId'),
+      };
+    case concatActions(UPDATE_VENDOR, FAIL):
       return {
         ...state,
         loadingVendor: false,
@@ -73,10 +77,15 @@ export const VendorReducer = (
     case DELETE_VENDOR:
       return {
         ...state,
+        loadingVendor: true,
       };
     case concatActions(DELETE_VENDOR, SUCCESS):
+      const list = state.vendorList;
+      const ids = action.data.partnerIds;
       return {
         ...state,
+        loadingVendor: false,
+        vendorList: filteringByRemovedId(list, ids, 'partnerId'),
       };
     default:
       return {

@@ -7,7 +7,7 @@ import {
   GET_DEPARTMENT_LIST,
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
-  PUT_DEPARTMENT,
+  UPDATE_DEPARTMENT,
   CHANGE_PARENT_FOR_DEPARTMENTS,
 } from '../actionTypes';
 import { DepartmentActions, DepartmentState } from '../types/department.types';
@@ -61,12 +61,12 @@ export const DepartmentReducer = (
         ...state,
         loadingDepartment: false,
       };
-    case PUT_DEPARTMENT:
+    case UPDATE_DEPARTMENT:
       return {
         ...state,
         loadingDepartment: true,
       };
-    case concatActions(PUT_DEPARTMENT, SUCCESS):
+    case concatActions(UPDATE_DEPARTMENT, SUCCESS):
       return {
         ...state,
         loadingDepartment: false,

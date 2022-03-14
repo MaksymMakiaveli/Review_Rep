@@ -1,28 +1,26 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 
-import { getCitiesList, getCountriesList } from '@Actions/definition.action';
 import { updateVendor } from '@Actions/vendor.action';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { RootState } from '@RootStateType';
 import { schemaVendor } from '@schema/vendor';
 import { TSelectValue } from '@Types/application.types';
 import { City } from '@Types/definition.types';
 import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
 import { Divider, TextField, Select } from '@UiKitComponents';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useGetCityAndCountry } from '@hooks';
+import { Loader } from '@common';
 
 interface EditProps {
   currentVendor: Vendor;
-  backToPreview: (modeEdit: boolean) => void;
+  backToPreview: () => void;
 }
-
-const getDefinitionState = (state: RootState) => state.DefinitionReducer;
 
 const Edit: React.FC<EditProps> = (props) => {
   const { currentVendor, backToPreview } = props;
-  const { loadingDefinition, countriesList, citiesList } = useSelector(getDefinitionState);
+  const { loadingDefinition, countriesList, citiesList } = useGetCityAndCountry();
   const dispatch = useDispatch();
   const {
     register,
@@ -59,15 +57,6 @@ const Edit: React.FC<EditProps> = (props) => {
     return citiesList.filter((city) => city.countryId === countryValue.value);
   };
 
-  useEffect(() => {
-    if (!countriesList.length && !loadingDefinition) {
-      dispatch(getCountriesList());
-    }
-    if (!citiesList.length && !loadingDefinition) {
-      dispatch(getCitiesList());
-    }
-  }, []);
-
   const onSubmit = (vendor: TFormCreateVendor) => {
     const NewVendor: TUpdateVendor = {
       ...vendor,
@@ -75,8 +64,12 @@ const Edit: React.FC<EditProps> = (props) => {
       cityId: vendor.cityId.value,
       partnerId: currentVendor.partnerId,
     };
-    dispatch(updateVendor(NewVendor));
+    dispatch(updateVendor(NewVendor, backToPreview));
   };
+
+  if (loadingDefinition) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -142,8 +135,6 @@ const Edit: React.FC<EditProps> = (props) => {
                 placeholder="Choose country"
                 optionValue="countryId"
                 optionLabel="name"
-                isLoading={loadingDefinition}
-                isDisabled={loadingDefinition}
                 getSelectValue={getCountryValue}
                 isActive
                 required
@@ -160,8 +151,7 @@ const Edit: React.FC<EditProps> = (props) => {
                 placeholder="Choose city"
                 optionValue="cityId"
                 optionLabel="name"
-                isLoading={loadingDefinition}
-                isDisabled={!filterCitiesList().length || loadingDefinition}
+                isDisabled={!filterCitiesList().length}
                 isActive
                 required
               />

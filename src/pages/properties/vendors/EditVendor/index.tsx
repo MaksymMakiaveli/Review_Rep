@@ -29,9 +29,6 @@ const EditVendor: React.FC<EditVendorProps> = () => {
     dispatch(GetOneVendor(partnerID));
   }, []);
 
-  console.log(params);
-  
-
   if (loadingVendor || !currentVendor) {
     return <Loader />;
   }

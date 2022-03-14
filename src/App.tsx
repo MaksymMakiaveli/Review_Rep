@@ -5,6 +5,7 @@ import { Loader } from '@common';
 import { Header, Sidebar } from '@components';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import { Toaster } from '@UiKitComponents';
 
 const Company = React.lazy(() => import('@pages/properties/companies/Company'));
 const Contract = React.lazy(() => import('@pages/properties/contracts/Contract'));
@@ -43,6 +44,7 @@ function App() {
           </section>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

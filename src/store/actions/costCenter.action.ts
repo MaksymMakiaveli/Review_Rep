@@ -19,7 +19,6 @@ import {
   UPDATE_COST_CENTER,
 } from '../actionTypes';
 
-
 export const getCostCentersList = (): CostCenterActions => ({
   type: GET_COST_CENTERS_LIST,
   api: {
@@ -37,6 +36,10 @@ export const postNewCostCenter = (costCenter: TCreateCostCenter): CostCenterActi
   },
   redirect: {
     path: '/Others/CostCenters',
+  },
+  showToaster: {
+    type: 'success',
+    description: 'Cost Center is created',
   },
 });
 
@@ -58,16 +61,11 @@ export const deleteCostCenterById = (costCenterIds: {
     data: costCenterIds,
   },
   data: costCenterIds,
+  showToaster: {
+    type: 'success',
+    description: 'Cost Center is deleted',
+  },
 });
-
-// export const updateCostCenter = (costCenter: TUpdateCostCenter): CostCenterActions => ({
-//   type: UPDATE_COST_CENTER,
-//   api: {
-//     url: '/CostCenter/UpdateCostCenter',
-//     method: 'PUT',
-//     data: costCenter,
-//   },
-// });
 
 export const updateCostCenter =
   (
@@ -79,9 +77,7 @@ export const updateCostCenter =
       const costCenterId = costCenter.costCenterId;
       dispatch({ type: UPDATE_COST_CENTER });
       const updateCostCenter = await axios.post('/CostCenter/UpdateCostCenter', costCenter);
-      const responseUpdated: Required<
-        Pick<ResponseAsetlyApi<CostCenter>, 'resultStatus' | 'languageKeyword'>
-      > = await updateCostCenter.data;
+      const responseUpdated: ResponseAsetlyApi<CostCenter> = await updateCostCenter.data;
       if (responseUpdated.resultStatus) {
         const updatedCostCenter = await axios.get(`/CostCenter/GetCostCenterById/${costCenterId}`);
         const response: ResponseAsetlyApi<CostCenter> = await updatedCostCenter.data;

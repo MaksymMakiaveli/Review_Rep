@@ -7,7 +7,7 @@ import {
   GET_DEPARTMENT_LIST,
   GET_ONE_DEPARTMENT,
   POST_NEW_DEPARTMENT,
-  PUT_DEPARTMENT,
+  UPDATE_DEPARTMENT,
   CHANGE_PARENT_FOR_DEPARTMENTS,
 } from '../actionTypes';
 import { BaseAction, Concat, ResponseAsetlyApi } from './index';
@@ -99,9 +99,9 @@ export interface PostNewDepartmentSuccess
 export interface PostNewDepartmentFail
   extends BaseAction<Concat<typeof POST_NEW_DEPARTMENT, typeof FAIL>> {}
 
-export interface UpdateDepartment extends BaseAction<typeof PUT_DEPARTMENT> {}
+export interface UpdateDepartment extends BaseAction<typeof UPDATE_DEPARTMENT> {}
 export interface UpdateDepartmentSuccess
-  extends BaseAction<Concat<typeof PUT_DEPARTMENT, typeof SUCCESS>> {
+  extends BaseAction<Concat<typeof UPDATE_DEPARTMENT, typeof SUCCESS>> {
   response: {
     resultObject: Department;
   };

@@ -1,4 +1,4 @@
-import { concatActions } from '@helpers/functions';
+import { concatActions, filteringByRemovedId } from '@helpers/functions';
 import { CostCenterActions, CostCenterState } from '@Types/costCenters.type';
 
 import {
@@ -60,9 +60,9 @@ export const CostCenterReducer = (
         loadingCostCenter: true,
       };
     case concatActions(DELETE_COST_CENTER, SUCCESS):
-      const newCostCenterList = state.costCentersList.filter(
-        (costCenter) => !action.data.costCenterIds.includes(costCenter.costCenterId)
-      );
+      const list = state.costCentersList;
+      const ids = action.data.costCenterIds;
+      const newCostCenterList = filteringByRemovedId(list, ids, 'costCenterId');
       return {
         ...state,
         costCentersList: newCostCenterList,

@@ -5,13 +5,16 @@ import { RootState } from '@RootStateType';
 import { City, Country } from '@Types/definition.types';
 import { useDispatch, useSelector } from 'react-redux';
 
-const getDefinitionState = (state: RootState) => state.DefinitionReducer;
-
-const useGetCityAndCountry = (): {
+interface Return {
   citiesList: City[];
   countriesList: Country[];
-} => {
-  const { citiesList, countriesList } = useSelector(getDefinitionState);
+  loadingDefinition: boolean;
+}
+
+const getDefinitionState = (state: RootState) => state.DefinitionReducer;
+
+const useGetCityAndCountry = (): Return => {
+  const { citiesList, countriesList, loadingDefinition } = useSelector(getDefinitionState);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,13 +22,14 @@ const useGetCityAndCountry = (): {
       dispatch(getCitiesList());
     }
   }, []);
+
   useEffect(() => {
     if (!countriesList.length) {
       dispatch(getCountriesList());
     }
   }, []);
 
-  return { citiesList, countriesList };
+  return { citiesList, countriesList, loadingDefinition };
 };
 
 export default useGetCityAndCountry;
