@@ -30,7 +30,6 @@ const useDragTable = (setting: Props): Return => {
   const [collectedDrop, dropRef] = useDrop({
     accept: acceptType,
     drop: (draggingItems) => {
-      console.log('drop');
       return {
         focusItem: currentItem,
         draggingItems,

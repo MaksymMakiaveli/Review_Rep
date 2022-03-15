@@ -1,0 +1,110 @@
+:root {
+  /* Default */
+  --max-width: 1968px;
+  --color-default: #000;
+  --ff-default: 'Inter', sans-serif;
+  --fz-default: 16px;
+  --fw-default: 400;
+  --transition-default: all 0.5s ease;
+
+  /* Font-size */
+  // Typography
+  --fz-h1: 96px;
+  --fz-h2: 60px;
+  --fz-h3: 48px;
+  --fz-h4: 34px;
+  --fz-h5: 28px;
+  --fz-h6: 24px;
+  --fz-subtitle-1: 16px;
+  --fz-subtitle-2: 14px;
+  --fz-body-1: 16px;
+  --fz-body-2: 14px;
+  --fz-button: 16px;
+  --fz-caption: 12px;
+  --fz-overline-1: 10px;
+  --fz-overline-2: 12px;
+  --fz-label: 12px;
+  // Menu
+  --fz-title-default: 16px;
+  --fz-title-active: 16px;
+  --fz-subtitle-default: 15px;
+  --fz-subtitle-active: 15px;
+  // Fields
+  --fz-field-placeholder: 16px;
+  --fz-field-title: 12px;
+  --fz-field-description: 12px;
+
+  /* Colors */
+  // Main
+  --color-main-blue: #032f5c;
+  --color-main-default: #264f7a;
+  --color-main-grey-bg: #f6f6f6;
+  --color-main-white: #fff;
+  --color-main-divider: #374957;
+  // Typography
+  --color-menuItem-default: #032f5c;
+  --color-menuItem-active: #fff;
+  --color-text-primary: #374957;
+  --color-title: #032f5c;
+  --color-disable: #60788b;
+  //Button
+  --color-button-icon-default: #032f5c;
+  --color-button-icon-disabled: #fff;
+
+  --color-button-primary-default: #032f5c;
+  --color-button-primary-active: #001c37;
+  --color-button-primary-hover: #00458a;
+  --color-button-primary-disabled: #d2d2d2;
+  --color-button-primary-pressed: #97d5ff;
+  --color-button-primary-text: #ffffff;
+  --color-button-icon-primary: #ffffff;
+
+  --color-button-secondary-default: #e3effd;
+  --color-button-secondary-active: #4798e9;
+  --color-button-secondary-hover: #4798e9;
+  --color-button-secondary-disabled: #d2d2d2;
+  --color-button-secondary-pressed: #97d5ff;
+  --color-button-secondary-text: #032f5c;
+  --color-button-secondary-text-disabled: #fff;
+  --color-button-secondary-text-focus: #fff;
+  --color-button-secondary-icon-focus: #fff;
+  --color-button-secondary-icon-disabled: #fff;
+
+  --color-button-outline-default: #032f5c;
+  --color-button-outline-active: #4798e9;
+  --color-button-outline-hover: #00458a;
+  --color-button-outline-disabled: #d2d2d2;
+  --color-button-outline-pressed: #97d5ff;
+  --color-button-outline-text: #032f5c;
+  --color-button-outline-fill: #ffffff;
+
+  --color-button-unbordered-hover: #00458a;
+  --color-button-unbordered-disabled: #d2d2d2;
+  --color-button-unbordered-pressed: #97d5ff;
+  --color-button-unbordered-text-default: #032f5c;
+  --color-button-unbordered-text-active: #4798e9;
+
+  --color-button-iconButton-default: #fff;
+  --color-button-iconButton-icon: #032f5c;
+
+  /* Form */
+  --color-form-default: #697288;
+  --color-form-fill: #374957;
+  --color-form-focus: #032f5c;
+  --color-form-error: #d10000;
+  --color-form-disabled: #bdbdbd;
+  --color-form-background-1: #edf6ff;
+  --color-form-background-2: #fff;
+
+  // Modal
+  --color-modal-background: #032f5c;
+
+  // Notification
+  --color-notification-success: #3c853a;
+  --color-notification-info: #4798e9;
+  --color-notification-warning: #d9aa00;
+  --color-notification-error: #d10000;
+
+  //List
+  --color-list-hover-background: #ddeeff;
+}

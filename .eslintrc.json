@@ -9,7 +9,7 @@
     }
   },
   "rules": {
-    "no-unused-vars": "error",
+    "no-unused-vars": "off",
     "react/prop-types": "off",
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": "off",

@@ -10,6 +10,7 @@ import { TableContext } from '../index';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { CustomCheckbox } from '@UiKitComponents';
 import { ResultDrop } from '../TableTypes.type';
+import { ItemTypes } from '../ItemTypes';
 
 interface ChildrenBodyRowProps<T = any> {
   itemChild: T;
@@ -43,7 +44,7 @@ const ChildrenBodyRow = (props: ChildrenBodyRowProps) => {
   const navigation = useNavigate();
 
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept: 'table-row',
+    accept: ItemTypes.ROW,
     drop: (draggingItem) => {
       clearSelectedRows();
       return {
@@ -65,7 +66,7 @@ const ChildrenBodyRow = (props: ChildrenBodyRowProps) => {
   });
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: 'table-row',
+    type: ItemTypes.ROW,
     item: () => {
       if (selectedRows.some((currentItem) => currentItem[keyTable] === itemChild[keyTable])) {
         return selectedRows;

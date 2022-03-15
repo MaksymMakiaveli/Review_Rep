@@ -16,14 +16,12 @@ export const tableReducer = (state: TableState, action: TableAction): TableState
   switch (action.type) {
     case 'CHANGE_SORT':
       if (state.column === action.payload) {
-        console.log('if', action.payload);
         return {
           ...state,
           data: state.data.slice().reverse(),
           direction: state.direction === 'ascending' ? 'descending' : 'ascending',
         };
       }
-      console.log('without if', action.payload);
       return {
         column: action.payload,
         data: sortBy(state.data, [action.payload]),

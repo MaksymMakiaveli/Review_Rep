@@ -13,7 +13,7 @@ const HeaderEditAction: React.FC<HeaderEditActionProps> = (props) => {
     <div className={classes.header_box}>
       <h5>{title}</h5>
       <div className={classes.button_box}>
-        <Button variant="secondary" iconElement={<TrashBasket />} onClick={openDeleteModal}>
+        <Button variant="secondary" icon={<TrashBasket />} onClick={openDeleteModal}>
           Delete
         </Button>
         <Button variant="primary" type="button" onClick={openEditPage}>

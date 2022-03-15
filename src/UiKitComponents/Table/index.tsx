@@ -36,7 +36,6 @@ function Table<T extends object>(props: TableProps<T>) {
       }
     };
   };
-
   const StateContext = {
     data: filteredData,
     columnsConfig,
@@ -49,7 +48,7 @@ function Table<T extends object>(props: TableProps<T>) {
       <TableContext.Provider value={StateContext}>
         <DndProvider backend={HTML5Backend}>
           <DragLayerRow />
-          <TableSemantic className="table-ui" basic="very">
+          <TableSemantic className="table-ui" basic="very" compact="very">
             <Header column={state.column} direction={state.direction} sortedColumn={sortedColumn} />
             <BodyTable />
           </TableSemantic>

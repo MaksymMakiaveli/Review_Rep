@@ -11,6 +11,7 @@ import ChildrenBodyRow from './ChildrenBodyRow';
 import { CustomCheckbox } from '@UiKitComponents';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { ResultDrop } from '../TableTypes.type';
+import { ItemTypes } from '../ItemTypes';
 
 interface BodyRowProps<T = any> {
   item: T;
@@ -32,12 +33,13 @@ const BodyRow = (props: BodyRowProps) => {
   const navigation = useNavigate();
 
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept: 'table-row',
+    accept: ItemTypes.ROW,
     drop: (draggingItem) => {
       clearSelectedRows();
       return {
         focusItem: item,
         draggingItem: draggingItem,
+        area: 'ROW',
       };
     },
     collect: (monitor) => ({
@@ -54,7 +56,7 @@ const BodyRow = (props: BodyRowProps) => {
   });
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: 'table-row',
+    type: ItemTypes.ROW,
     item: () => {
       if (selectedRows.some((currentItem) => currentItem[keyTable] === item[keyTable])) {
         return selectedRows;
@@ -68,6 +70,7 @@ const BodyRow = (props: BodyRowProps) => {
 
     end: (item, monitor) => {
       const result: ResultDrop<any> | null = monitor.getDropResult();
+      console.log('result', result, monitor.getItem());
       if (result) {
         actionForDrag && actionForDrag(result);
       }

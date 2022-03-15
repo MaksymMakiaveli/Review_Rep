@@ -3,17 +3,20 @@
   .ui.table.table-ui {
     position: relative;
     border-collapse: separate;
-    border-spacing: 0 2px;
+    border-spacing: 0 8px;
     table-layout: fixed;
     max-height: 546px;
-
     width: 100%;
+
+    background: black;
+
+    border: 2px solid red;
     thead {
       background: transparent;
 
       tr {
         border-color: transparent;
-
+        background: #fff;
         .header-cell {
           background: transparent;
           border: none;
@@ -23,6 +26,7 @@
           letter-spacing: 0.15em;
           text-transform: uppercase;
           color: #60788b;
+          padding-bottom: 0;
 
           &-sorted {
             cursor: pointer;
@@ -39,7 +43,9 @@
     }
     tbody {
       position: relative;
+
       tr {
+        background: #fff;
         position: relative;
         transition: all 0.5s ease;
         max-height: 48px;
@@ -81,6 +87,9 @@
             }
           }
         }
+      }
+      .body-isOver {
+        background: #0a5dc2;
       }
       .parent-row-striped {
         .content {

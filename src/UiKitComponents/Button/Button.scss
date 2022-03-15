@@ -1,0 +1,184 @@
+@import '../../styles/variables';
+
+.button {
+  position: relative;
+  height: 40px;
+  width: 151px;
+  font-size: var(--fz-button);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+  transition: var(--transition-default);
+  .icon {
+    display: inline-block;
+    margin-right: 5px;
+    svg {
+      path {
+        fill: var(--color-button-icon-default);
+        stroke: var(--color-button-icon-default);
+        transition: var(--transition-default);
+      }
+    }
+  }
+  &:disabled {
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-icon-disabled);
+          stroke: var(--color-button-icon-disabled);
+        }
+      }
+    }
+  }
+}
+.button-primary {
+  color: var(--color-button-primary-text);
+  background: var(--color-button-primary-default);
+  .icon {
+    svg {
+      path {
+        fill: var(--color-button-icon-primary);
+        stroke: var(--color-button-icon-primary);
+      }
+    }
+  }
+  &:hover {
+    background: var(--color-button-primary-hover);
+  }
+  &:focus {
+    background: var(--color-button-primary-active);
+  }
+  &:active {
+    background: var(--color-button-primary-pressed);
+  }
+  &:disabled {
+    background: var(--color-button-primary-disabled) !important;
+  }
+}
+.button-secondary {
+  color: var(--color-button-secondary-text);
+  background: var(--color-button-secondary-default);
+  &:hover {
+    background: var(--color-button-secondary-hover);
+  }
+  &:focus {
+    background: var(--color-button-secondary-active);
+    color: var(--color-button-secondary-text-focus);
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-secondary-icon-focus);
+          stroke: var(--color-button-secondary-icon-focus);
+        }
+      }
+    }
+  }
+  &:active {
+    background: var(--color-button-secondary-pressed);
+    color: var(--color-button-secondary-text);
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-icon-default);
+          stroke: var(--color-button-icon-default);
+        }
+      }
+    }
+  }
+  &:disabled {
+    background: var(--color-button-secondary-disabled) !important;
+    color: var(--color-button-secondary-text-disabled) !important;
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-secondary-icon-disabled);
+          stroke: var(--color-button-secondary-icon-disabled);
+        }
+      }
+    }
+  }
+}
+.button-outline {
+  color: var(--color-button-outline-text);
+  border: 1px solid var(--color-button-outline-default);
+  background: var(--color-button-outline-fill);
+  &:hover {
+    border-color: var(--color-button-outline-hover);
+  }
+  &:focus {
+    border-color: var(--color-button-outline-active);
+    color: var(--color-button-outline-active);
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-outline-active);
+          stroke: var(--color-button-outline-active);
+        }
+      }
+    }
+  }
+  &:active {
+    border-color: var(--color-button-outline-pressed);
+    color: var(--color-button-outline-pressed);
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-outline-pressed);
+          stroke: var(--color-button-outline-pressed);
+        }
+      }
+    }
+  }
+  &:disabled {
+    border-color: var(--color-button-outline-disabled) !important;
+    color: var(--color-button-outline-disabled) !important;
+    .icon {
+      svg {
+        path {
+          fill: var(--color-button-outline-disabled) !important;
+          stroke: var(--color-button-outline-disabled) !important;
+        }
+      }
+    }
+  }
+}
+.button-iconButton {
+  background: var(--color-button-iconButton-default);
+  width: 50px;
+  svg {
+    width: 25px;
+    height: 25px;
+    path {
+      fill: var(--color-button-iconButton-icon);
+    }
+  }
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+    border-radius: 50%;
+    transition: box-shadow 0.5s ease;
+  }
+  &:hover {
+    &:before {
+      box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+    }
+  }
+  &:active {
+    &:before {
+      box-shadow: rgba(0, 0, 0, 0.2) 0 2px 4px 0 inset;
+    }
+  }
+  &:disabled {
+    svg {
+      path {
+        fill: #949494;
+      }
+    }
+  }
+}

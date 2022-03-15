@@ -11,7 +11,6 @@ const Toaster = () => {
     autoClose: 3000,
     transition: Zoom,
   };
-  console.log('TOASTER SHOW');
   return <ToastContainer {...options} />;
 };
 

@@ -2,29 +2,31 @@
 @import 'nullStyles';
 @import 'variables';
 @import 'helperStyleComponents';
+@import 'root';
 
 body,
 html {
-  font-family: $font-family;
-  font-size: $defaultPC-font-size;
-  font-weight: $default-font-weight;
-  color: $default-font-color;
-  background: $main-gray-background;
+  font-family: var(--ff-default);
+  font-size: var(--fz-default);
+  font-weight: var(--fw-default);
+  color: var(--fw-default);
+  background: var(--color-main-grey-bg);
 }
 
 .container {
-  max-width: $maxWidth + 48px;
+  max-width: var(--max-width);
+  height: 100%;
   width: 100%;
-  padding-right: 48px;
   margin: 0 auto;
   .app_wrapper {
     position: relative;
     display: flex;
+    padding-right: 48px;
     .content_wrapper {
       flex-basis: 100%;
       .contents {
         position: relative;
-        background: $main-white;
+        background: var(--color-main-white);
         border-radius: 4px;
         min-height: 800px;
         margin: 30px 0 0 23px;
@@ -32,51 +34,53 @@ html {
     }
   }
 }
+
 h1,
 h2,
 h3,
 h4,
 h5 {
-  color: $typography-headlines-color;
-}
-h1 {
-  font-size: $h1-fz;
+  color: var(--color-title);
   font-weight: 700;
+}
+
+h1 {
+  font-size: var(--fz-h1);
 }
 h2 {
-  font-size: $h2-fz;
-  font-weight: 700;
+  font-size: var(--fz-h2);
 }
 h3 {
-  font-size: $h3-fz;
-  font-weight: 700;
+  font-size: var(--fz-h3);
 }
 h4 {
-  font-size: $h4-fz;
-  font-weight: 600;
+  font-size: var(--fz-h4);
 }
 h5 {
-  font-size: $h5-fz;
-  font-weight: 700;
+  font-size: var(--fz-h5);
 }
 h6 {
-  font-size: $subtitle-fz-2;
-  font-weight: 700;
+  font-size: var(--fz-subtitle-1);
 }
-p {
-  font-size: $body-fz-1;
+
+p,
+span {
   font-weight: 400;
+}
+
+p {
+  font-size: var(--fz-body-1);
 }
 span {
-  font-size: $body-fz-2;
-  font-weight: 400;
+  font-size: var(--fz-body-2);
 }
+
 label {
-  font-size: $label-fz;
+  font-size: var(--fz-label);
   font-weight: 500;
 }
 button {
-  font-size: $button-fz;
+  font-size: var(--fz-button);
   font-weight: 500;
 }
 ul {
@@ -84,17 +88,19 @@ ul {
     font-size: $menu-title-default-fz;
     font-weight: 500;
     a {
-      font-size: $menu-title-default-fz;
       font-weight: 500;
+      font-size: $menu-title-default-fz;
       color: $typography-default-color;
     }
   }
 }
-input {
+
+input,
+textarea {
   line-height: 150%;
-  font-size: $form-placeholder-fz;
-  input::placeholder {
-    font-size: $form-placeholder-fz;
+  font-size: var(--fz-field-description);
+  &::placeholder {
+    font-size: var(--fz-field-placeholder);
     font-weight: 400;
   }
 }

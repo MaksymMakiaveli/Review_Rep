@@ -1,29 +1,45 @@
-import React from 'react';
-
+import React, { memo } from 'react';
 import cl from 'classnames';
+import './Button.scss';
 
-import classes from './Button.module.scss';
-import { ButtonProps } from './ButtonType';
+type Variant = 'primary' | 'secondary' | 'outline' | 'unbordered' | 'iconButton';
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { children, variant, iconElement, type = 'button', ...rest } = props;
-  const styleButton =
-    variant === 'primary'
-      ? classes.button_primary
-      : variant === 'secondary'
-      ? classes.button_secondary
-      : variant === 'outline'
-      ? classes.button_outline
-      : variant === 'icon'
-      ? classes.button_icon
-      : '';
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: Variant;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}
+
+const Button = (props: ButtonProps) => {
+  const { children, variant, icon, type = 'button', ...rest } = props;
+
+  let classVariant: string;
+  switch (variant) {
+    case 'primary':
+      classVariant = 'button-primary';
+      break;
+    case 'secondary':
+      classVariant = 'button-secondary';
+      break;
+    case 'outline':
+      classVariant = 'button-outline';
+      break;
+    case 'unbordered':
+      classVariant = 'button-unbordered';
+      break;
+    case 'iconButton':
+      classVariant = 'button-iconButton';
+      break;
+    default:
+      classVariant = '';
+  }
 
   return (
-    <button className={cl(classes.button, styleButton)} type={type} {...rest}>
-      {iconElement ? <span className={classes.icon}>{iconElement}</span> : null}
+    <button className={cl('button', classVariant)} type={type} {...rest}>
+      {icon ? <span className="icon">{icon}</span> : null}
       {children}
     </button>
   );
 };
 
-export default Button;
+export default memo(Button);

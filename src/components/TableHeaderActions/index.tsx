@@ -36,18 +36,10 @@ const TableHeaderActions: React.FC<TableHeaderActionsProps> = (props) => {
       <div className={classes.button_wrapper}>
         {checkedItemsList && !checkedItemsList.length ? (
           <>
-            <Button
-              variant="secondary"
-              onClick={actionButtonExport}
-              iconElement={<Export />}
-            >
+            <Button variant="secondary" onClick={actionButtonExport} icon={<Export />}>
               Export
             </Button>
-            <Button
-              variant="secondary"
-              onClick={actionButtonImport}
-              iconElement={<Import />}
-            >
+            <Button variant="secondary" onClick={actionButtonImport} icon={<Import />}>
               Import
             </Button>
             <Button variant="primary" onClick={redirectToPageCreating}>
