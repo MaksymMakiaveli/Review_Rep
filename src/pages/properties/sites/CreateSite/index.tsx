@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 
-import { postNewSite, GetSiteList } from '@Actions/site.action';
+import { postNewSite } from '@Actions/site.action';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,14 +16,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateSiteProps {}
 
-const getLoadingDefinition = (state: RootState) => state.DefinitionReducer.loadingDefinition;
 const getSiteState = (state: RootState) => state.SiteReducer;
 
 const CreateSite: React.FC<CreateSiteProps> = () => {
   const dispatch = useDispatch();
   const backHistory = useBackHistory();
-  const loadingDefinition = useSelector(getLoadingDefinition);
-  const { citiesList, countriesList } = useGetCityAndCountry();
+  const { citiesList, countriesList, loadingDefinition } = useGetCityAndCountry();
   const { siteList, loadingSite } = useSelector(getSiteState);
   const [countryValue, setCountryValue] = useState<TSelectValue<number>>();
 
@@ -39,7 +37,6 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
   const memoizedControl = useMemo(() => control, []);
 
   const onSubmit = (site: TFormCreateSite) => {
-    console.log(site);
     const newSite = {
       ...site,
       cityId: site.cityId.value,
@@ -57,13 +54,7 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
     return citiesList.filter((city) => city.countryId === countryValue?.value);
   };
 
-  useEffect(() => {
-    if (!siteList.length) {
-      dispatch(GetSiteList());
-    }
-  }, [siteList]);
-
-  if (loadingSite) {
+  if (loadingSite || loadingDefinition) {
     return <Loader />;
   }
 
@@ -124,8 +115,6 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
                   options={countriesList}
                   optionValue="countryId"
                   optionLabel="name"
-                  isLoading={loadingDefinition}
-                  isDisabled={loadingDefinition}
                   getSelectValue={getCountryValue}
                   required
                 />
@@ -139,8 +128,7 @@ const CreateSite: React.FC<CreateSiteProps> = () => {
                   options={filterCity()}
                   optionValue="cityId"
                   optionLabel="name"
-                  isDisabled={loadingDefinition || !filterCity().length}
-                  isLoading={loadingDefinition}
+                  isDisabled={!filterCity().length}
                   required
                 />
 

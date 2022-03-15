@@ -42,7 +42,7 @@ export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
     },
   },
   showToaster: {
-    description: `${newCompany.name} is created`,
+    description: `Company: ${newCompany.name} created`,
     type: 'success',
   },
   redirect: {
@@ -66,7 +66,7 @@ export const updateCompany =
         const response: ResponseAsetlyApi<Company> = updatedCompany.data;
         dispatch({ type: concatActions(UPDATE_COMPANY, SUCCESS), response });
         backToPreview();
-        toast.success(`${response.resultObject.name} is updated`);
+        toast.success(`Company: ${response.resultObject.name} updated`);
       }
     } catch (error: any) {
       handleErrorAndShowToast(error);
@@ -86,6 +86,6 @@ export const deleteCompaniesById = (companyIds: number[], name?: string): Compan
   data: { companyIds },
   showToaster: {
     type: 'success',
-    description: `${name} is deleted`,
+    description: `Company: ${name} deleted`,
   },
 });

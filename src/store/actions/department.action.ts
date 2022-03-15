@@ -39,13 +39,19 @@ export const GetOneDepartment = (id: string | number): DepartmentActions => ({
 
 export const postNewDepartment = (newDepartment: NewDepartment): DepartmentActions => ({
   type: POST_NEW_DEPARTMENT,
-
   api: {
     url: '/Department/AddDepartment',
     method: 'POST',
     data: {
       ...newDepartment,
     },
+  },
+  redirect: {
+    path: '/Departments',
+  },
+  showToaster: {
+    type: 'success',
+    description: ` Department:${newDepartment.name} created`,
   },
 });
 

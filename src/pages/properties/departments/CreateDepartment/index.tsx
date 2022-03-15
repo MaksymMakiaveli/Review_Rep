@@ -39,10 +39,12 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
   const onSubmit = (department: TFormCreateDepartment) => {
     const newDepartment = {
       ...department,
-      parentDepartmentId: department.parentDepartmentId ? department.parentDepartmentId.value : undefined,
+      parentDepartmentId: department.parentDepartmentId
+        ? department.parentDepartmentId.value
+        : undefined,
       siteId: department.siteId.value,
     };
-    
+
     dispatch(postNewDepartment(newDepartment));
   };
 
@@ -52,7 +54,7 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
     }
   }, []);
 
-  if (loadingDepartment) {
+  if (loadingDepartment || loadingSite) {
     return <Loader />;
   }
 
@@ -60,59 +62,51 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
     <div>
       <div className="padding_wrapper_page">
         <form onSubmit={handleSubmit(onSubmit)}>
-            <>
-              <HeaderSaveAction
-                title="New Department"
-                errors={errors}
-                onCancelButton={backHistory}
-              />
-              <div className="form_box">
-                <InputContainer columns={2}>
-                  <TextField
-                    errorText={errors.name?.message}
-                    id="DepartmentName"
-                    placeholder="Department name"
-                    label="Department Name"
-                    required
-                    {...register('name')}
-                  />
-                  <Select
-                    label="Parent Department"
-                    id="ParentDepartment"
-                    name="parentDepartmentId"
-                    control={memoizedControl}
-                    placeholder="Choose department"
-                    options={departmentList}
-                    optionValue="departmentId"
-                    optionLabel="name"
-                    isDisabled={loadingDepartment}
-                    isLoading={loadingDepartment}
-                  />
-                  <TextField
-                    errorText={errors.departmentCode?.message}
-                    id="DepartmentCode"
-                    placeholder="Department code"
-                    label="Department Code"
-                    required
-                    {...register('departmentCode')}
-                  />
-                  <Select
-                    errorText={errors.siteId?.value?.message}
-                    label="Location"
-                    id="Location"
-                    name="siteId"
-                    control={memoizedControl}
-                    placeholder="Choose location"
-                    options={siteList}
-                    optionValue="siteId"
-                    optionLabel="name"
-                    isDisabled={loadingSite}
-                    isLoading={loadingSite}
-                    required
-                  />
-                  </InputContainer>
-                </div>
-            </>
+          <>
+            <HeaderSaveAction title="New Department" errors={errors} onCancelButton={backHistory} />
+            <div className="form_box">
+              <InputContainer columns={2}>
+                <TextField
+                  errorText={errors.name?.message}
+                  id="DepartmentName"
+                  placeholder="Department name"
+                  label="Department Name"
+                  required
+                  {...register('name')}
+                />
+                <Select
+                  label="Parent Department"
+                  id="ParentDepartment"
+                  name="parentDepartmentId"
+                  control={memoizedControl}
+                  placeholder="Choose department"
+                  options={departmentList}
+                  optionValue="departmentId"
+                  optionLabel="name"
+                />
+                <TextField
+                  errorText={errors.departmentCode?.message}
+                  id="DepartmentCode"
+                  placeholder="Department code"
+                  label="Department Code"
+                  required
+                  {...register('departmentCode')}
+                />
+                <Select
+                  errorText={errors.siteId?.value?.message}
+                  label="Location"
+                  id="Location"
+                  name="siteId"
+                  control={memoizedControl}
+                  placeholder="Choose location"
+                  options={siteList}
+                  optionValue="siteId"
+                  optionLabel="name"
+                  required
+                />
+              </InputContainer>
+            </div>
+          </>
         </form>
       </div>
     </div>

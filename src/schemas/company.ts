@@ -22,5 +22,5 @@ export const schemaCompany = yup.object({
   }),
   address: yup.string().required('This field is required'),
   contactName: yup.string().email('Email is not valid'),
-  phone: yup.string().required('This field is required'),
+  phone: yup.string().max(11, 'Phone must be max 11 characters').required('This field is required'),
 });

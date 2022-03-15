@@ -1,4 +1,4 @@
-import { concatActions } from '@helpers/functions';
+import { concatActions, mappedAfterUpdate } from '@helpers/functions';
 
 import {
   DELETE_SITE,
@@ -9,7 +9,7 @@ import {
   SUCCESS,
   FAIL,
 } from '../actionTypes';
-import { SiteActions, SiteState } from '../types/site.types';
+import { SiteActions, SiteState } from '@Types/site.types';
 
 const initialState: SiteState = {
   siteList: [],
@@ -66,6 +66,8 @@ export const SiteReducer = (state = initialState, action: SiteActions): SiteStat
       return {
         ...state,
         loadingSite: false,
+        currentSite: action.response.resultObject,
+        siteList: mappedAfterUpdate(state.siteList, action.response.resultObject, 'siteId'),
       };
     case DELETE_SITE:
       return {

@@ -29,6 +29,7 @@ export interface BaseAction<Type> {
   redirect?: Redirect;
   showToaster?: ShowToaster;
   data?: any;
+  functions?: Array<() => void>;
 }
 
 export interface ResponseAsetlyApi<TypeResultObject> {

@@ -10,7 +10,7 @@ import {
   SUCCESS,
   FAIL,
 } from '../actionTypes';
-import { BaseAction, Concat } from './index';
+import { BaseAction, Concat, ResponseAsetlyApi } from './index';
 
 export type Site = {
   address: string;
@@ -77,7 +77,7 @@ export type TFormCreateSite = Omit<TCreateSite, 'countryId' | 'cityId' | 'parent
 export type TUpdateSite = TCreateSite & Pick<Site, 'siteId'>;
 
 export interface SiteState {
-  siteList: Site[] | [];
+  siteList: Site[];
   currentSite: Site | null;
   loadingSite: boolean;
 }
@@ -85,10 +85,7 @@ export interface SiteState {
 export interface GetSiteList extends BaseAction<typeof GET_SITE_LIST> {}
 export interface GetSiteListSuccess
   extends BaseAction<Concat<typeof GET_SITE_LIST, typeof SUCCESS>> {
-  response: {
-    resultStatus: boolean;
-    resultObject: Site[];
-  };
+  response: ResponseAsetlyApi<Site[]>;
 }
 
 export interface GetOneSite extends BaseAction<typeof GET_ONE_SITE> {}
@@ -102,26 +99,18 @@ export interface GetOneSiteSuccess extends BaseAction<Concat<typeof GET_ONE_SITE
 export interface PostNewSite extends BaseAction<typeof POST_NEW_SITE> {}
 export interface PostNewSiteSuccess
   extends BaseAction<Concat<typeof POST_NEW_SITE, typeof SUCCESS>> {
-  response: {
-    resultObject: Site;
-  };
+  response: ResponseAsetlyApi<Site>;
 }
 export interface PostNewSiteFail extends BaseAction<Concat<typeof POST_NEW_SITE, typeof FAIL>> {}
 
 export interface UpdateSite extends BaseAction<typeof UPDATE_SITE> {}
 export interface UpdateSiteSuccess extends BaseAction<Concat<typeof UPDATE_SITE, typeof SUCCESS>> {
-  response: {
-    resultObject: Site;
-  };
+  response: ResponseAsetlyApi<Site>;
 }
 
 export interface DeleteSite extends BaseAction<typeof DELETE_SITE> {}
 export interface DeleteSiteSuccess extends BaseAction<Concat<typeof DELETE_SITE, typeof SUCCESS>> {
-  response: {
-    resultStatus: boolean;
-    languageKeyword: string;
-    resultObject: [];
-  };
+  response: ResponseAsetlyApi<null>;
 }
 
 export type SiteActions =

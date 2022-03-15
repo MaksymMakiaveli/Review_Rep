@@ -34,9 +34,16 @@ export const postNewSite = (newSite: TCreateSite): SiteActions => ({
       ...newSite,
     },
   },
+  redirect: {
+    path: `/Sites`,
+  },
+  showToaster: {
+    type: 'success',
+    description: `${newSite.name} is created`,
+  },
 });
 
-export const updateSite = (site: TUpdateSite): SiteActions => ({
+export const updateSite = (site: TUpdateSite, backToPreview: () => void): SiteActions => ({
   type: UPDATE_SITE,
   api: {
     url: '/Sites/UpdateSite',
@@ -44,6 +51,11 @@ export const updateSite = (site: TUpdateSite): SiteActions => ({
     data: {
       ...site,
     },
+  },
+  functions: [backToPreview],
+  showToaster: {
+    type: 'success',
+    description: `${site.name} is updated`,
   },
 });
 

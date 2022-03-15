@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Zoom } from 'react-toastify';
 import { ToastContainerProps } from 'react-toastify/dist/types';
 
 const Toaster = () => {
@@ -7,7 +7,11 @@ const Toaster = () => {
     position: 'top-right',
     hideProgressBar: true,
     theme: 'colored',
+    pauseOnFocusLoss: false,
+    autoClose: 3000,
+    transition: Zoom,
   };
+  console.log('TOASTER SHOW');
   return <ToastContainer {...options} />;
 };
 

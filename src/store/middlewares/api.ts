@@ -49,6 +49,9 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
             return toast.info(description);
         }
       }
+      if (action.functions) {
+        action.functions.forEach((func) => func());
+      }
     })
     .catch((error: AxiosError | Error) => {
       if (axios.isAxiosError(error)) {

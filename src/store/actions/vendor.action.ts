@@ -47,7 +47,7 @@ export const postNewVendor = (newVendor: TCreateVendor): VendorActions => ({
   },
   showToaster: {
     type: 'success',
-    description: `${newVendor.name} is created`,
+    description: `Vendor: ${newVendor.name} created`,
   },
 });
 
@@ -67,7 +67,7 @@ export const updateVendor =
         const response: ResponseAsetlyApi<Vendor> = updatedVendor.data;
         dispatch({ type: concatActions(UPDATE_VENDOR, SUCCESS), response });
         backToPreview();
-        toast.success(`${vendor.name} is updated`);
+        toast.success(`Vendor: ${vendor.name} updated`);
       }
     } catch (error: any) {
       handleErrorAndShowToast(error);
@@ -89,6 +89,6 @@ export const deleteVendor = (partnerIds: number[], name?: string): VendorActions
   },
   showToaster: {
     type: 'success',
-    description: `${name} is deleted`,
+    description: `Vendor: ${name} deleted`,
   },
 });

@@ -16,16 +16,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateCompanyProps {}
 
-const getLoadingCompany = (state: RootState) => state.CompanyReducer.loadingCompany;
-
-const getLoadingDefinition = (state: RootState) => state.DefinitionReducer.loadingDefinition;
+const getCompanyState = (state: RootState) => state.CompanyReducer;
 
 const CreateCompany: React.FC<CreateCompanyProps> = () => {
   const dispatch = useDispatch();
   const backHistory = useBackHistory();
-  const loadingCompany = useSelector(getLoadingCompany);
-  const loadingDefinition = useSelector(getLoadingDefinition);
-  const { citiesList, countriesList } = useGetCityAndCountry();
+  const { loadingCompany } = useSelector(getCompanyState);
+  const { citiesList, countriesList, loadingDefinition } = useGetCityAndCountry();
   const [countryValue, setCountryValue] = useState<TSelectValue<number>>();
   const {
     register,
@@ -51,7 +48,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
     return citiesList.filter((city) => city.countryId === countryValue?.value);
   };
 
-  if (loadingCompany) {
+  if (loadingCompany || loadingDefinition) {
     return <Loader />;
   }
 
@@ -108,8 +105,6 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                   options={countriesList}
                   optionValue="countryId"
                   optionLabel="name"
-                  isLoading={loadingDefinition}
-                  isDisabled={loadingDefinition}
                   getSelectValue={getCountryValue}
                   required
                 />
@@ -123,8 +118,7 @@ const CreateCompany: React.FC<CreateCompanyProps> = () => {
                   options={filterCity()}
                   optionValue="cityId"
                   optionLabel="name"
-                  isDisabled={loadingDefinition || !filterCity().length}
-                  isLoading={loadingDefinition}
+                  isDisabled={!filterCity().length}
                   required
                 />
 
