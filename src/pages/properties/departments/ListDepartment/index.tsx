@@ -3,34 +3,62 @@ import React, { useMemo } from 'react';
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { RootState } from '@RootStateType';
-import { ColumnsTable } from '@Types/application.types';
+import { ColumnsTableRS } from '@Types/application.types';
 import { Department, TDepartmentTable } from '@Types/department.types';
-import { Table } from '@UiKitComponents';
-import { useDispatch, useSelector } from 'react-redux';
-import { ResultDrop } from '../../../../UiKitComponents/Table/TableTypes.type';
-import { changeParentForDepartments } from '@Actions/department.action';
+// import { Table } from '@UiKitComponents';
+import { useSelector } from 'react-redux';
+// import { ResultDrop } from '../../../../UiKitComponents/Table/TableTypes.type';
+// import { changeParentForDepartments } from '@Actions/department.action';
+import TableRS from '../../../../UiKitComponents/TableRS';
 
 interface ListDepartmentProps {}
 
-const columnsDepartmentTable: ColumnsTable<TDepartmentTable>[] = [
+// const columnsDepartmentTable: ColumnsTable<TDepartmentTable>[] = [
+//   {
+//     dataKey: 'departmentCode',
+//     title: 'DEPARTMENT CODE',
+//     isSorted: true,
+//   },
+//   {
+//     dataKey: 'name',
+//     title: 'DEPARTMENT NAME',
+//     isSorted: true,
+//   },
+//   {
+//     dataKey: 'parentName',
+//     title: 'PARENT DEPARTMENT',
+//   },
+//   {
+//     dataKey: 'siteName',
+//     title: 'LOCATION',
+//     isSorted: true,
+//   },
+// ];
+
+const columnsDepartmentTableRS: ColumnsTableRS<TDepartmentTable>[] = [
   {
     dataKey: 'departmentCode',
-    title: 'DEPARTMENT CODE',
-    isSorted: true,
+    headerTitle: 'DEPARTMENT CODE',
+    flexGrow: 1,
+    sortable: true,
   },
   {
     dataKey: 'name',
-    title: 'DEPARTMENT NAME',
-    isSorted: true,
+    headerTitle: 'DEPARTMENT NAME',
+    flexGrow: 1,
+    sortable: true,
   },
   {
     dataKey: 'parentName',
-    title: 'PARENT DEPARTMENT',
+    headerTitle: 'PARENT DEPARTMENT',
+
+    flexGrow: 1,
   },
   {
     dataKey: 'siteName',
-    title: 'LOCATION',
-    isSorted: true,
+    headerTitle: 'LOCATION',
+    flexGrow: 1,
+    sortable: true,
   },
 ];
 
@@ -38,7 +66,7 @@ const getDepartmentState = (state: RootState) => state.DepartmentReducer;
 
 const ListDepartment: React.FC<ListDepartmentProps> = () => {
   const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleData = (dep: Department[]) => {
     return dep.map((department): TDepartmentTable => {
@@ -56,7 +84,7 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
     });
   };
   const memoizedData = useMemo(() => handleData(departmentList), [departmentList]);
-  const memoizedColumns = useMemo(() => columnsDepartmentTable, []);
+  // const memoizedColumns = useMemo(() => columnsDepartmentTable, []);
 
   if (loadingDepartment) {
     return <Loader />;
@@ -71,10 +99,10 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
     );
   }
 
-  const changeParentIds = (result: ResultDrop<TDepartmentTable>) => {
-    const { draggingItem, focusItem } = result;
-    dispatch(changeParentForDepartments(draggingItem, focusItem));
-  };
+  // const changeParentIds = (result: ResultDrop<TDepartmentTable>) => {
+  //   const { draggingItem, focusItem } = result;
+  //   dispatch(changeParentForDepartments(draggingItem, focusItem));
+  // };
 
   return (
     <div>
@@ -83,12 +111,21 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
           pageCreatingUrl="/Departments/newDepartment"
           textRedirectButton="New Department"
         />
-        <Table
+        {/*<Table*/}
+        {/*  data={memoizedData}*/}
+        {/*  columnsConfig={memoizedColumns}*/}
+        {/*  keyTable="departmentId"*/}
+        {/*  actionForDrag={changeParentIds}*/}
+        {/*  isDraggable*/}
+        {/*/>*/}
+        <TableRS
+          type={'complex'}
           data={memoizedData}
-          columnsConfig={memoizedColumns}
-          keyTable="departmentId"
-          actionForDrag={changeParentIds}
+          columnsConfig={columnsDepartmentTableRS}
+          rowKey={'departmentId'}
+          isTree
           isDraggable
+          keyForParentId={'parentId'}
         />
       </div>
     </div>

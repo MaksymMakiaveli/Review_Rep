@@ -7,7 +7,7 @@
   --fw-default: 400;
   --transition-default: all 0.5s ease;
 
-  /* Font-size */
+  /* Font */
   // Typography
   --fz-h1: 96px;
   --fz-h2: 60px;
@@ -33,6 +33,11 @@
   --fz-field-placeholder: 16px;
   --fz-field-title: 12px;
   --fz-field-description: 12px;
+  //Table
+  --fz-table-header: var(--fz-overline-2);
+  --fz-table-body: var(--fz-body-1);
+  --fw-table-body: 500;
+  --fw-table-header: 500;
 
   /* Colors */
   // Main
@@ -45,6 +50,7 @@
   --color-menuItem-default: #032f5c;
   --color-menuItem-active: #fff;
   --color-text-primary: #374957;
+  --color-text-default: #60788b;
   --color-title: #032f5c;
   --color-disable: #60788b;
   //Button
@@ -107,4 +113,15 @@
 
   //List
   --color-list-hover-background: #ddeeff;
+
+  // Table
+  --color-table-header: #fff;
+  --color-table-header-cell: transparent;
+  --color-table-header-cell-text: var(--color-text-default);
+  --color-table-body-row-1: #fff;
+  --color-table-body-row-2: #edf6ff;
+  --color-table-body-row-text: var(--color-text-primary);
+  --color-table-icon-expand: #60788b;
+  --color-table-pagination-active: #edf6ff;
+  --color-table-pagination-disable: #d2d2d2;
 }

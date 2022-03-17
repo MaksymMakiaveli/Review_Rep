@@ -1,45 +1,28 @@
-import React, { useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import { PaginationProps } from 'semantic-ui-react/dist/commonjs/addons/Pagination/Pagination';
-
-type HookReturn<T extends object> = {
+type HookReturn<T = any> = {
   filteredData: T[];
   totalPages: number;
-  changePage: (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    paginationProps: PaginationProps
-  ) => void;
+  activePage: number;
+  changePage: (page: number) => void;
 };
 
-function usePagination<T extends object>(data: T[], limitPage = 10): HookReturn<T> {
-  const [limit] = useState(limitPage);
+function usePagination<T>(data: T[], limitPage = 10): HookReturn<T> {
   const [activePage, setActivePage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / limit);
+  const totalPages = data.length;
 
-  const filteredData = useMemo(
-    () =>
-      data.filter((item, index) => {
-        const start = limit * (activePage - 1);
-        const end = start + limitPage;
-        return index >= start && index < end;
-      }),
-    [activePage, data]
-  );
-
-  const changePage = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    paginationProps: PaginationProps
-  ) => {
-    if (paginationProps.activePage && typeof paginationProps.activePage === 'number') {
-      setActivePage(paginationProps.activePage);
-    }
-  };
+  const filteredData = data.filter((item, index) => {
+    const start = limitPage * (activePage - 1);
+    const end = start + limitPage;
+    return index >= start && index < end;
+  });
 
   return {
     filteredData,
     totalPages,
-    changePage,
+    changePage: setActivePage,
+    activePage,
   };
 }
 

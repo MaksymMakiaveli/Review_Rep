@@ -25,7 +25,7 @@ function Table<T extends object>(props: TableProps<T>) {
     direction: undefined,
   });
 
-  const { filteredData, totalPages, changePage } = usePagination(state.data);
+  const { filteredData, totalPages } = usePagination(state.data);
 
   const sortedColumn = (columnName: typeof state.column) => {
     return () => {
@@ -62,7 +62,6 @@ function Table<T extends object>(props: TableProps<T>) {
             siblingRange={1}
             boundaryRange={0}
             ellipsisItem={null}
-            onPageChange={changePage}
           />
         </div>
       </TableContext.Provider>

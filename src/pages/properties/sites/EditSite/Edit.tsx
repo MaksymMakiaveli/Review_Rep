@@ -36,27 +36,20 @@ const Edit: React.FC<EditProps> = (props) => {
   });
   const memoizedControl = useMemo(() => control, []);
 
-  const countryDefaultValue = useMemo(
-    () => ({
-      value: currentSite.countryId,
-      label: currentSite.city.country.name,
-    }),
-    []
-  );
-  const cityDefaultValue = useMemo(
-    () => ({
-      value: currentSite.cityId,
-      label: currentSite.city.name,
-    }),
-    []
-  );
-  const parentDefaultValue = useMemo(
-    () => ({
-      value: currentSite.parentSiteId,
-      label: currentSite.parentSite ? currentSite.parentSite.name : '',
-    }),
-    []
-  );
+  const countryDefaultValue = {
+    value: currentSite.countryId,
+    label: currentSite.city ? currentSite.city.country.name : '',
+  };
+
+  const cityDefaultValue = {
+    value: currentSite.cityId,
+    label: currentSite.city ? currentSite.city.name : '',
+  };
+
+  const parentDefaultValue = {
+    value: currentSite.parentSiteId,
+    label: currentSite.parentSite ? currentSite.parentSite.name : '',
+  };
 
   const [countryValue, setCountryValue] = useState<TSelectValue<number>>(countryDefaultValue);
 

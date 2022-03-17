@@ -23,6 +23,14 @@ export interface ColumnsTable<T extends ObjectKeysString> {
   isSorted?: boolean;
 }
 
+export interface ColumnsTableRS<T = any, K = keyof T> {
+  dataKey: K extends string ? K : never;
+  headerTitle: string;
+  width?: number;
+  flexGrow?: number;
+  sortable?: boolean;
+}
+
 export type TSelectValue<ValueType extends number | string> = {
   label: string;
   value: ValueType;

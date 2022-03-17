@@ -10,8 +10,9 @@ import InputHelperBox from './InputHelperBox';
 import ModalDelete from './Modals/ModalDelete';
 import PreviewFile from './PreviewFile';
 import SearchInput from './SearchInput';
-import Table from './Table';
 import Toaster from './Toaster';
+import Table from './Table';
+import TableRS from './TableRS';
 
 export {
   AccordionForSidebar,
@@ -28,4 +29,5 @@ export {
   TextArea,
   TextField,
   Toaster,
+  TableRS,
 };
