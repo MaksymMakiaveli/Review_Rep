@@ -15,9 +15,8 @@ function CustomCell(props: CustomCellProps) {
   };
   return (
     <Cell {...rest}>
-      <span onClick={redirect} className="cell-value">
-        {rest.rowData && rest.rowData[dataKey]}
-      </span>
+      <span className="cell-value">{rest.rowData && rest.rowData[dataKey]}</span>
+      <div onClick={redirect} role="click-area" className="click-area" />
     </Cell>
   );
 }

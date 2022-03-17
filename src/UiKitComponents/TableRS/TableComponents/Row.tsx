@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { TableOptions } from '../TableOptions';
+import { DnDOptions } from '../DnDOptions';
 import { RowProps } from '../Table.type';
 import cl from 'classnames';
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -19,11 +19,12 @@ function Row(props: RowProps) {
   const rowRef = useRef(null);
 
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: TableOptions.ROW,
-    drop: (draggingItem) => {
+    accept: DnDOptions.ROW,
+    drop: (draggingItems) => {
       const dropObject = {
-        draggingItem: draggingItem,
-        focusItem: rowData,
+        area: DnDOptions.area.row,
+        drag: draggingItems,
+        drop: rowData,
       };
       onDropRow && onDropRow(dropObject);
       clearSelectedRows && clearSelectedRows();
@@ -39,7 +40,7 @@ function Row(props: RowProps) {
   });
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: TableOptions.ROW,
+    type: DnDOptions.ROW,
     item: () => {
       const isRow = selectedRows && selectedRows.some((row) => row[dataKey] === rowData[dataKey]);
       if (isRow) {

@@ -2,11 +2,17 @@ import React from 'react';
 import { Complex, Draggable, Simple, Tree } from './TableVariants';
 import { TableProps } from './Table.type';
 import './Table.scss';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function TableRS<T>(props: TableProps<T>) {
   switch (props.type) {
     case 'complex': {
-      return <Complex {...props} />;
+      return (
+        <DndProvider backend={HTML5Backend}>
+          <Complex {...props} />
+        </DndProvider>
+      );
     }
     case 'draggable': {
       return <Draggable {...props} />;

@@ -1,73 +1,74 @@
-import React, { useCallback, useReducer, useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React, { useRef } from 'react';
+import { useDrop } from 'react-dnd';
 import { Pagination, Table } from 'rsuite';
 import { CheckCell, DragLayerRow, Row } from '../TableComponents';
 import { IComplex } from '../Table.type';
-import { tableReducer } from '../Table.reducer';
 import CustomCell from '../TableComponents/CustomCell';
-import { usePagination } from '@hooks';
+import { usePagination, useSortedTable } from '@hooks';
+import { DnDOptions } from '../DnDOptions';
+import cl from 'classnames';
+import useSelectRow from '../../../hooks/useSelectRow';
 
 const { Column, HeaderCell } = Table;
 
 function Complex<T>(props: IComplex<T>) {
   const { data, rowKey, columnsConfig, isTree, isDraggable } = props;
 
-  const [selectedRows, setSelectedRows] = useState<T[]>([]);
-
-  const [state, dispatch] = useReducer(tableReducer, {
-    data,
-    column: '',
-    direction: undefined,
-  });
-
-  const { activePage, filteredData, totalPages, changePage } = usePagination(state.data);
-
-  const handlingSelectedRows = (item: T, checked: boolean) => {
-    console.log(checked);
-    const items = checked
-      ? [...selectedRows, item]
-      : selectedRows.filter((selectedItem) => selectedItem[rowKey] !== item[rowKey]);
-    setSelectedRows(items);
-  };
-
-  const sortedColumn = (dataKey: string, sortType: 'desc' | 'asc' | undefined) => {
-    const payload = {
-      direction: sortType,
-      column: dataKey,
-    };
-    dispatch({ type: 'CHANGE_SORT', payload });
-  };
-
-  const clearSelectedRows = useCallback(() => {
-    setSelectedRows([]);
-  }, []);
-
-  // console.log(selectedRows);
+  const tableRef = useRef(null);
+  const state = useSortedTable(data);
+  const { activePage, filteredData, totalPages, changePage } = usePagination(state.sortedData);
+  const { handlingSelectRow, clearSelectedRows, selectedRows } = useSelectRow({ rowKey });
 
   const onDropRow = (value: any) => {
     console.log(value);
   };
 
+  const [{ isOver, canDrop }, drop] = useDrop({
+    accept: DnDOptions.ROW,
+    drop: (draggingItems) => {
+      const dropObject = {
+        area: DnDOptions.area.body,
+        drag: draggingItems,
+        drop: null,
+      };
+      onDropRow(dropObject);
+      clearSelectedRows();
+    },
+    canDrop: (item, monitor) => {
+      return monitor.isOver({ shallow: true });
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
+  const isActiveArea = canDrop && isOver;
+
+  drop(tableRef);
   return (
-    <div className="table-wrapper" role="table-wrapper">
-      <DndProvider backend={HTML5Backend}>
+    <div ref={tableRef} className="table" role="table">
+      <div className={cl('table-wrapper', { ['table-wrapper-active']: isActiveArea })}>
         <DragLayerRow />
         <Table
-          height={650}
+          height={600}
           data={filteredData}
           rowKey={rowKey}
           isTree={isTree}
           hover={false}
           sortColumn={state.column}
           sortType={state.direction}
-          onSortColumn={sortedColumn}
-          rowClassName={`row`}
+          onSortColumn={state.sortColumn}
+          rowClassName="row"
           renderTreeToggle={(icon, rowData) => {
             if (rowData?.children && rowData.children.length === 0) {
               return null;
             }
             return icon;
+          }}
+          renderRowExpanded={(rowData) => {
+            console.log(rowData);
+            return null as React.ReactNode;
           }}
           renderRow={(children, rowData) => {
             return rowData ? (
@@ -76,7 +77,7 @@ function Complex<T>(props: IComplex<T>) {
                 onDropRow={onDropRow}
                 dataKey={rowKey}
                 selectedRows={selectedRows}
-                handlingSelectedRows={handlingSelectedRows}
+                handlingSelectedRows={handlingSelectRow}
                 clearSelectedRows={clearSelectedRows}
                 isDraggable={isDraggable}
               >
@@ -100,14 +101,10 @@ function Complex<T>(props: IComplex<T>) {
             <HeaderCell>
               <div> </div>
             </HeaderCell>
-            <CheckCell
-              selectedRows={selectedRows}
-              dataKey={rowKey}
-              onChange={handlingSelectedRows}
-            />
+            <CheckCell selectedRows={selectedRows} dataKey={rowKey} onChange={handlingSelectRow} />
           </Column>
         </Table>
-      </DndProvider>
+      </div>
       <div className="pagination-wrapper">
         <Pagination
           prev

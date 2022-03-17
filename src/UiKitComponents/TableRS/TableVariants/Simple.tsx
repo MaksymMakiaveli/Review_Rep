@@ -7,7 +7,7 @@ function Simple<T>(props: ISimple<T>) {
 
   return (
     <div className="table-wrapper" role="table-wrapper">
-      <Table hover={false} height={650} data={data} rowKey={rowKey} rowClassName={`row`}>
+      <Table hover={false} height={600} data={data} rowKey={rowKey} rowClassName={`row`}>
         {columnsConfig.map((column) => {
           const { headerTitle, dataKey, ...rest } = column;
           return (
