@@ -80,16 +80,16 @@ export const deleteDepartment = (departmentIds: number[]): DepartmentActions => 
 export const changeParentForDepartments =
   (
     children: TDepartmentTable[],
-    parent: TDepartmentTable
+    parent: TDepartmentTable | 0
   ): ThunkAction<any, RootState, any, DepartmentActions> =>
   async (dispatch) => {
     try {
+      dispatch({ type: CHANGE_PARENT_FOR_DEPARTMENTS });
       const idsChildren = children.map((child) => child.departmentId);
       const parameters = {
         fromDepartmentIds: idsChildren,
-        toDepartmentId: parent.departmentId,
+        toDepartmentId: parent === 0 ? 0 : parent.departmentId,
       };
-      dispatch({ type: CHANGE_PARENT_FOR_DEPARTMENTS });
       const updateDepartmentList: AxiosResponse<ResponseAsetlyApi<null>> = await axios.post(
         '/Department/ChangeDepartmentParentReleations',
         parameters

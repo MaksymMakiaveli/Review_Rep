@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useDragLayer, XYCoord } from 'react-dnd';
 
@@ -42,4 +42,4 @@ const DragLayerRow = () => {
   );
 };
 
-export default DragLayerRow;
+export default memo(DragLayerRow);

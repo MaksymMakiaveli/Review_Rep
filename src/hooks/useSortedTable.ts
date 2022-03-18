@@ -1,6 +1,6 @@
 import { ReducerAction, ReducerState } from '../UiKitComponents/TableRS/Table.type';
 import { sortBy } from 'lodash';
-import { useCallback, useReducer } from 'react';
+import { useReducer } from 'react';
 
 interface HookReturn<T = any> {
   sortedData: T[];
@@ -36,16 +36,13 @@ function useSortedTable<T>(data: T[]): HookReturn<T> {
     direction: undefined,
   });
 
-  const sortColumn = useCallback(
-    (dataKey: string, sortType: 'desc' | 'asc' | undefined) => {
-      const payload = {
-        direction: sortType,
-        column: dataKey,
-      };
-      dispatch({ type: 'CHANGE_SORT', payload });
-    },
-    [state]
-  );
+  const sortColumn = (dataKey: string, sortType: 'desc' | 'asc' | undefined) => {
+    const payload = {
+      direction: sortType,
+      column: dataKey,
+    };
+    dispatch({ type: 'CHANGE_SORT', payload });
+  };
 
   return {
     sortColumn,

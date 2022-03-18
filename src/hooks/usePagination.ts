@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 type HookReturn<T = any> = {
   filteredData: T[];
   totalPages: number;
   activePage: number;
+  limit: number;
   changePage: (page: number) => void;
 };
 
-function usePagination<T>(data: T[], limitPage = 10): HookReturn<T> {
+function usePagination<T>(data: T[], limitPage: number = 10): HookReturn<T> {
   const [activePage, setActivePage] = useState(1);
 
   const totalPages = data.length;
@@ -18,11 +19,14 @@ function usePagination<T>(data: T[], limitPage = 10): HookReturn<T> {
     return index >= start && index < end;
   });
 
+  const memoizedData = useMemo(() => filteredData, [activePage, data]);
+
   return {
-    filteredData,
+    filteredData: memoizedData,
     totalPages,
     changePage: setActivePage,
     activePage,
+    limit: limitPage,
   };
 }
 

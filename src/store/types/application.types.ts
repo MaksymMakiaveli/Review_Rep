@@ -23,8 +23,8 @@ export interface ColumnsTable<T extends ObjectKeysString> {
   isSorted?: boolean;
 }
 
-export interface ColumnsTableRS<T = any, K = keyof T> {
-  dataKey: K extends string ? K : never;
+export interface ColumnsTableRS<T = any, K = keyof T extends string ? keyof T : string> {
+  dataKey: K;
   headerTitle: string;
   width?: number;
   flexGrow?: number;

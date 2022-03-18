@@ -1,53 +1,60 @@
 import React from 'react';
 import { ITree } from '../Table.type';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Table } from 'rsuite';
-import { Row } from '../TableComponents';
+import { Pagination, Table } from 'rsuite';
+import { usePagination, useSortedTable } from '@hooks';
+import CustomCell from '../TableComponents/CustomCell';
+
+const { Column, HeaderCell } = Table;
 
 function Tree<T>(props: ITree<T>) {
   const { data, rowKey, columnsConfig, isTree } = props;
-  const onDropRow = (value: any) => {
-    console.log(value);
-  };
+
+  const state = useSortedTable<T>(data);
+  const { activePage, filteredData, totalPages, changePage } = usePagination<T>(state.sortedData);
 
   return (
-    <div className="table-wrapper" role="table-wrapper">
-      <DndProvider backend={HTML5Backend}>
+    <div className="table" role="table">
+      <div className={'table-wrapper'}>
         <Table
-          height={650}
-          data={data}
+          height={600}
+          data={filteredData}
           rowKey={rowKey}
           isTree={isTree}
           hover={false}
-          rowClassName={`row`}
+          sortColumn={state.column}
+          sortType={state.direction}
+          onSortColumn={state.sortColumn}
+          rowClassName="row"
           renderTreeToggle={(icon, rowData) => {
             if (rowData?.children && rowData.children.length === 0) {
               return null;
             }
             return icon;
           }}
-          renderRow={(children, rowData) => {
-            return rowData ? (
-              <Row rowData={rowData} onDropRow={onDropRow} dataKey={rowKey}>
-                {children}
-              </Row>
-            ) : (
-              children
-            );
-          }}
         >
           {columnsConfig.map((column) => {
             const { headerTitle, dataKey, ...rest } = column;
             return (
-              <Table.Column {...rest} key={dataKey}>
-                <Table.HeaderCell>{headerTitle}</Table.HeaderCell>
-                <Table.Cell dataKey={dataKey} />
-              </Table.Column>
+              <Column {...rest} key={dataKey} align={'left'} verticalAlign={'middle'}>
+                <HeaderCell>{headerTitle}</HeaderCell>
+                <CustomCell dataKey={dataKey} />
+              </Column>
             );
           })}
         </Table>
-      </DndProvider>
+      </div>
+      <div className="pagination-wrapper">
+        <Pagination
+          prev
+          next
+          size={'sm'}
+          layout={['pager']}
+          total={totalPages}
+          maxButtons={5}
+          activePage={activePage}
+          onChangePage={changePage}
+        />
+      </div>
     </div>
   );
 }

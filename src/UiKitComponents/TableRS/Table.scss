@@ -4,7 +4,6 @@
     position: relative;
     transition: var(--transition-default);
     &-active {
-      box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px 0 inset;
     }
   }
   .rs-table {
@@ -33,84 +32,82 @@
     /* Style Body */
     .rs-table-body-row-wrapper {
       padding: 0 0 0 25px;
-      .rs-table-body-wheel-area {
-        // Row
-        .row.rs-table-row {
-          overflow: visible;
-          border-bottom: none;
-          background: var(--color-table-body-row-1);
-          &:nth-child(odd) {
-            background: var(--color-table-body-row-2);
-          }
-          // Cell
-          .cell-wrapper {
-            .rs-table-cell-group {
-              .rs-table-cell {
-                transition: var(--transition-default);
-                background: transparent;
-                &.rs-table-cell-first {
-                  .rs-table-cell-content {
-                    .cell-value {
-                      margin-left: 15px;
-                    }
-                    .click-area[role='click-area'] {
-                      transform: translate(10%, -64%);
-                    }
-                  }
-                }
-                .rs-table-cell-content {
-                  position: relative;
-                  .rs-table-cell-expand-wrapper {
-                    svg {
-                      fill: var(--color-table-icon-expand);
-                    }
-                  }
-                  .cell-value {
-                    position: absolute;
-                    display: inline-block;
-                    color: var(--color-table-body-row-text);
-                    font-size: var(--fz-table-body);
-                    font-weight: var(--fw-table-body);
-                  }
-                  .click-area[role='click-area'] {
-                    cursor: pointer;
-                    position: sticky;
-                    width: 110%;
-                    height: 46px;
-                    top: 0;
-                    bottom: 0;
-                    transform: translate(-5%, -25%);
-                  }
-                  .wrapper-checkbox {
-                    position: fixed;
-                    z-index: 10;
-                    left: 0;
-                    top: 5px;
-                    bottom: 0;
-                    transform: translate(-90%, 0);
-                  }
+      // Row
+      .row.rs-table-row {
+        overflow: visible;
+        border-bottom: none;
+        background: var(--color-table-body-row-1);
+        &:nth-child(odd) {
+          background: var(--color-table-body-row-2);
+        }
+        // Cell
+
+        .rs-table-cell-group {
+          .rs-table-cell {
+            transition: var(--transition-default);
+            background: transparent;
+            &.rs-table-cell-first {
+              .rs-table-cell-content {
+                .cell-value {
+                  margin-left: 25px;
                 }
               }
             }
-          }
-          // isDragging
-          .row-isDragging {
-            .rs-table-cell-group {
-              .rs-table-cell {
-                opacity: 0.4;
+            .rs-table-cell-content {
+              position: relative;
+              padding: 0;
+              display: flex !important;
+              align-items: center;
+              .rs-table-cell-expand-wrapper {
+                svg {
+                  fill: var(--color-table-icon-expand);
+                }
               }
-            }
-          }
-          // isActive
-          .row-isActive {
-            .rs-table-cell-group {
-              .rs-table-cell {
-                background: #cceffd;
+              .cell-value {
+                position: absolute;
+                display: inline-block;
+                color: var(--color-table-body-row-text);
+                font-size: var(--fz-table-body);
+                font-weight: var(--fw-table-body);
+              }
+              .click-area[role='click-area'] {
+                cursor: pointer;
+                position: sticky;
+                flex: 0 0 100%;
+                height: 50px;
+                top: 0;
+                bottom: 0;
+              }
+              .wrapper-checkbox {
+                position: fixed;
+                z-index: 10;
+                left: 0;
+                top: 5px;
+                bottom: 0;
+                transform: translate(-90%, 0);
               }
             }
           }
         }
+
+        // isDragging
+        .row-isDragging {
+          .rs-table-cell-group {
+            .rs-table-cell {
+              opacity: 0.4;
+            }
+          }
+        }
+        // isActive
+        .row-isActive {
+          .rs-table-cell-group {
+            .rs-table-cell {
+              background: #cceffd;
+            }
+          }
+        }
       }
+
       // Scrollbar
       .rs-table-scrollbar-vertical[role='scrollbar'] {
         opacity: 1;
@@ -126,7 +123,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 40px;
+    padding-top: 20px;
     .rs-pagination {
       .rs-pagination-btn {
         border: none;
@@ -137,7 +134,6 @@
         }
         &:first-child,
         &:last-child {
-          width: 85px;
           background: transparent;
           &.rs-pagination-btn-disabled {
             color: var(--color-table-pagination-disable);
@@ -148,36 +144,10 @@
             }
           }
           span {
-            display: inline-block;
-            position: relative;
-            &:before,
-            &:after {
-              position: absolute;
-              top: 0;
-              bottom: 0;
-            }
             svg {
-              position: relative;
-              top: -1px;
               width: 18px;
               height: 18px;
             }
-          }
-        }
-        &:first-child {
-          justify-content: flex-start;
-          margin-right: 25px;
-          &:after {
-            content: 'Previous';
-            right: 0;
-          }
-        }
-        &:last-child {
-          justify-content: flex-end;
-          margin-left: 3px;
-          &:before {
-            content: 'Next';
-            left: 0;
           }
         }
       }

@@ -1,9 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface HookReturn<T = any> {
   selectedRows: T[];
   handlingSelectRow: (item: T, checked: boolean) => void;
-  clearSelectedRows: () => void;
 }
 
 interface HookProps<T = any, K = keyof T> {
@@ -24,14 +23,19 @@ function useSelectRow<T>(props: HookProps<T>): HookReturn<T> {
     [selectedRows]
   );
 
-  const clearSelectedRows = useCallback(() => {
-    setSelectedRows([]);
+  useEffect(() => {
+    return () => {
+      setSelectedRows([]);
+    };
   }, []);
+
+  // const clearSelectedRows = () => {
+  //   setSelectedRows([]);
+  // };
 
   return {
     selectedRows,
     handlingSelectRow,
-    clearSelectedRows,
   };
 }
 export default useSelectRow;
