@@ -1,47 +1,53 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
+import { IDraggable } from '../Table.type';
 import { useDrop } from 'react-dnd';
 import { Pagination, Table } from 'rsuite';
 import { CheckCell, DragLayerRow, Row } from '../TableComponents';
-import { IComplex } from '../Table.type';
-import CustomCell from '../TableComponents/CustomCell';
 import { usePagination, useSelectRow, useSortedTable } from '@hooks';
-import { DnDOptions } from '../DnDOptions';
-import { genericMemo } from '@helpers/functions';
+import { DndOptions, TableOptions } from '../options';
+import cl from 'classnames';
+import CustomCell from '../TableComponents/CustomCell';
 
-const { Column, HeaderCell } = Table;
+const MemoizedTable = memo(Table);
+const MemoizedColumn = memo(Table.Column);
+const MemoizedHeaderCell = memo(Table.HeaderCell);
 
-function Complex<T>(props: IComplex<T>) {
-  const { data, rowKey, columnsConfig, isTree, isDraggable, dropAction } = props;
+function Draggable<T>(props: IDraggable<T>) {
+  const { data, rowKey, columnsConfig, dropAction } = props;
 
   const tableRef = useRef(null);
-  const { sortedData, sortColumn, column, direction } = useSortedTable(data);
-  const { activePage, filteredData, changePage, totalPages, limit } = usePagination(sortedData);
+  const state = useSortedTable(data);
+  const { activePage, filteredData, totalPages, limit, changePage } = usePagination(
+    state.sortedData
+  );
   const { handlingSelectRow, selectedRows } = useSelectRow({ rowKey });
 
-  const [, drop] = useDrop({
-    accept: DnDOptions.ROW,
-    drop: (draggingItems) => ({ area: DnDOptions.area.body, drag: draggingItems, drop: 0 }),
+  const [{ isOver, canDrop }, drop] = useDrop({
+    accept: DndOptions.ROW,
+    drop: (draggingItems) => ({ area: DndOptions.area.body, drag: draggingItems, drop: 0 }),
     canDrop: (item, monitor) => {
       return monitor.isOver({ shallow: true });
     },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   });
+
+  const isActiveArea = canDrop && isOver;
 
   drop(tableRef);
   return (
     <div ref={tableRef} className="table" role="table">
-      <div className={'table-wrapper'}>
+      <div className={cl('table-wrapper', { ['table-wrapper-active']: isActiveArea })}>
         <DragLayerRow />
-        <Table
-          height={600}
-          rowHeight={50}
+        <MemoizedTable
+          {...TableOptions}
           data={filteredData}
           rowKey={rowKey}
-          isTree={isTree}
-          hover={false}
-          sortColumn={column}
-          sortType={direction}
-          onSortColumn={sortColumn}
-          rowClassName="row"
+          sortColumn={state.column}
+          sortType={state.direction}
+          onSortColumn={state.sortColumn}
           renderTreeToggle={(icon, rowData) => {
             if (rowData?.children && rowData.children.length === 0) {
               return null;
@@ -55,7 +61,6 @@ function Complex<T>(props: IComplex<T>) {
                 dataKey={rowKey}
                 selectedRows={selectedRows}
                 handlingSelectedRows={handlingSelectRow}
-                isDraggable={isDraggable}
                 dropAction={dropAction}
               >
                 {children}
@@ -66,21 +71,28 @@ function Complex<T>(props: IComplex<T>) {
           }}
         >
           {columnsConfig.map((column) => {
-            const { headerTitle, dataKey, ...rest } = column;
+            const { headerTitle, dataKey, flexGrow, ...rest } = column;
+            const size = flexGrow ? flexGrow : 1;
             return (
-              <Column {...rest} key={dataKey} align={'left'} verticalAlign={'middle'}>
-                <HeaderCell>{headerTitle}</HeaderCell>
+              <MemoizedColumn
+                {...rest}
+                key={dataKey}
+                flexGrow={size}
+                align={'left'}
+                verticalAlign={'middle'}
+              >
+                <MemoizedHeaderCell>{headerTitle}</MemoizedHeaderCell>
                 <CustomCell dataKey={dataKey} />
-              </Column>
+              </MemoizedColumn>
             );
           })}
-          <Column width={10}>
-            <HeaderCell>
+          <MemoizedColumn width={10}>
+            <MemoizedHeaderCell>
               <div> </div>
-            </HeaderCell>
+            </MemoizedHeaderCell>
             <CheckCell selectedRows={selectedRows} dataKey={rowKey} onChange={handlingSelectRow} />
-          </Column>
-        </Table>
+          </MemoizedColumn>
+        </MemoizedTable>
       </div>
       <div className="pagination-wrapper">
         <Pagination
@@ -101,4 +113,4 @@ function Complex<T>(props: IComplex<T>) {
   );
 }
 
-export default genericMemo(Complex);
+export default Draggable;

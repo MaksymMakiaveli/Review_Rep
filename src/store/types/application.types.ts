@@ -17,16 +17,9 @@ export interface ObjectKeysString {
   [key: string]: any;
 }
 
-export interface ColumnsTable<T extends ObjectKeysString> {
-  title: string;
-  dataKey: keyof T;
-  isSorted?: boolean;
-}
-
-export interface ColumnsTableRS<T = any, K = keyof T extends string ? keyof T : string> {
+export interface ColumnsTable<T = any, K = keyof T extends string ? keyof T : string> {
   dataKey: K;
   headerTitle: string;
-  width?: number;
   flexGrow?: number;
   sortable?: boolean;
 }

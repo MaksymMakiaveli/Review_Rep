@@ -69,6 +69,11 @@ export const SiteReducer = (state = initialState, action: SiteActions): SiteStat
         currentSite: action.response.resultObject,
         siteList: mappedAfterUpdate(state.siteList, action.response.resultObject, 'siteId'),
       };
+    case concatActions(UPDATE_SITE, FAIL):
+      return {
+        ...state,
+        loadingSite: false,
+      };
     case DELETE_SITE:
       return {
         ...state,

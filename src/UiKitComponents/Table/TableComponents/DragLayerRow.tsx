@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { memo } from 'react';
 import { useDragLayer, XYCoord } from 'react-dnd';
 
 function getTransform(currentOffset: XYCoord | null) {
@@ -32,7 +31,7 @@ const DragLayerRow = () => {
 
   return (
     <div
-      className="drag-layer"
+      className="drag-layer-row"
       style={{
         ...getTransform(currentOffset),
       }}
@@ -42,4 +41,4 @@ const DragLayerRow = () => {
   );
 };
 
-export default DragLayerRow;
+export default memo(DragLayerRow);

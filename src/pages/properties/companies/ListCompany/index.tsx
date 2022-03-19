@@ -9,10 +9,10 @@ import { Table } from '@UiKitComponents';
 import { useSelector } from 'react-redux';
 
 const columnsCompany: ColumnsTable<TCompanyTable>[] = [
-  { dataKey: 'companyId', title: 'Company Id', isSorted: true },
-  { dataKey: 'name', title: 'Company Name', isSorted: true },
-  { dataKey: 'companyCode', title: 'Company Code' },
-  { dataKey: 'address', title: 'Address', isSorted: true },
+  { dataKey: 'companyId', headerTitle: 'Company Id', sortable: true },
+  { dataKey: 'name', headerTitle: 'Company Name', sortable: true },
+  { dataKey: 'companyCode', headerTitle: 'Company Code' },
+  { dataKey: 'address', headerTitle: 'Address', sortable: true },
 ];
 
 const getCompanyState = (state: RootState) => state.CompanyReducer;
@@ -54,7 +54,12 @@ const ListCompany = () => {
           pageCreatingUrl="/Companies/newCompany"
           textRedirectButton="New Company"
         />
-        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="companyId" />
+        <Table
+          type={'simple'}
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          rowKey={'companyId'}
+        />
       </div>
     </div>
   );

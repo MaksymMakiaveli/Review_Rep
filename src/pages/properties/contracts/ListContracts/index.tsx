@@ -11,28 +11,28 @@ import { useSelector } from 'react-redux';
 const columnsContract: ColumnsTable<TContractTable>[] = [
   {
     dataKey: 'name',
-    title: 'Contract name',
-    isSorted: true,
+    headerTitle: 'Contract name',
+    sortable: true,
   },
   {
     dataKey: 'partnerId',
-    title: 'Vendor',
-    isSorted: true,
+    headerTitle: 'Vendor',
+    sortable: true,
   },
 
   {
     dataKey: 'price',
-    title: 'Amount',
-    isSorted: true,
+    headerTitle: 'Amount',
+    sortable: true,
   },
   {
     dataKey: 'currencyName',
-    title: 'Currency',
+    headerTitle: 'Currency',
   },
   {
     dataKey: 'endDate',
-    title: 'End date',
-    isSorted: true,
+    headerTitle: 'End date',
+    sortable: true,
   },
 ];
 
@@ -73,7 +73,12 @@ const ListContracts = () => {
     <div>
       <div className="padding_wrapper_table-page">
         <TableHeaderActions pageCreatingUrl="newContract" textRedirectButton="New Contract" />
-        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="contractId" />
+        <Table
+          type={'simple'}
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          rowKey={'contractId'}
+        />
       </div>
     </div>
   );

@@ -1,29 +1,33 @@
-import React from 'react';
-import { ISimple } from '../Table.type';
+import React, { memo } from 'react';
+import { ITree } from '../Table.type';
 import { Pagination, Table } from 'rsuite';
 import { usePagination, useSortedTable } from '@hooks';
 import CustomCell from '../TableComponents/CustomCell';
+import { TableOptions } from '../options';
 
-const { Column, HeaderCell } = Table;
+const MemoizedTable = memo(Table);
+const MemoizedColumn = memo(Table.Column);
+const MemoizedHeaderCell = memo(Table.HeaderCell);
 
-function Simple<T>(props: ISimple<T>) {
+function Tree<T>(props: ITree<T>) {
   const { data, rowKey, columnsConfig } = props;
 
   const state = useSortedTable<T>(data);
-  const { activePage, filteredData, totalPages, changePage } = usePagination<T>(state.sortedData);
+  const { activePage, filteredData, totalPages, limit, changePage } = usePagination<T>(
+    state.sortedData
+  );
 
   return (
     <div className="table" role="table">
       <div className={'table-wrapper'}>
-        <Table
-          height={600}
+        <MemoizedTable
+          {...TableOptions}
           data={filteredData}
           rowKey={rowKey}
-          hover={false}
+          isTree={true}
           sortColumn={state.column}
           sortType={state.direction}
           onSortColumn={state.sortColumn}
-          rowClassName="row"
           renderTreeToggle={(icon, rowData) => {
             if (rowData?.children && rowData.children.length === 0) {
               return null;
@@ -32,24 +36,34 @@ function Simple<T>(props: ISimple<T>) {
           }}
         >
           {columnsConfig.map((column) => {
-            const { headerTitle, dataKey, ...rest } = column;
+            const { headerTitle, dataKey, flexGrow, ...rest } = column;
+            const size = flexGrow ? flexGrow : 1;
             return (
-              <Column {...rest} key={dataKey} align={'left'} verticalAlign={'middle'}>
-                <HeaderCell>{headerTitle}</HeaderCell>
+              <MemoizedColumn
+                {...rest}
+                key={dataKey}
+                flexGrow={size}
+                align={'left'}
+                verticalAlign={'middle'}
+              >
+                <MemoizedHeaderCell>{headerTitle}</MemoizedHeaderCell>
                 <CustomCell dataKey={dataKey} />
-              </Column>
+              </MemoizedColumn>
             );
           })}
-        </Table>
+        </MemoizedTable>
       </div>
       <div className="pagination-wrapper">
         <Pagination
           prev
           next
-          size={'sm'}
+          ellipsis
+          boundaryLinks
           layout={['pager']}
           total={totalPages}
+          limit={limit}
           maxButtons={5}
+          size="sm"
           activePage={activePage}
           onChangePage={changePage}
         />
@@ -58,4 +72,4 @@ function Simple<T>(props: ISimple<T>) {
   );
 }
 
-export default Simple;
+export default Tree;

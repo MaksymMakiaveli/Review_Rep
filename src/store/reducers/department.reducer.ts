@@ -10,7 +10,7 @@ import {
   UPDATE_DEPARTMENT,
   CHANGE_PARENT_FOR_DEPARTMENTS,
 } from '../actionTypes';
-import { DepartmentActions, DepartmentState } from '../types/department.types';
+import { DepartmentActions, DepartmentState } from '@Types/department.types';
 
 const initialState: DepartmentState = {
   departmentList: [],
@@ -70,14 +70,24 @@ export const DepartmentReducer = (
       return {
         ...state,
         loadingDepartment: false,
+        currentDepartment: action.response.updateDepartment,
+        departmentList: action.response.departments,
       };
     case DELETE_DEPARTMENT:
       return {
         ...state,
+        loadingDepartment: true,
       };
     case concatActions(DELETE_DEPARTMENT, SUCCESS):
       return {
         ...state,
+        loadingDepartment: false,
+        departmentList: action.response.resultObject,
+      };
+    case concatActions(DELETE_DEPARTMENT, FAIL):
+      return {
+        ...state,
+        loadingDepartment: false,
       };
     case CHANGE_PARENT_FOR_DEPARTMENTS:
       return {

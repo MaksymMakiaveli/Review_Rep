@@ -22,12 +22,14 @@ const Preview: React.FC<PreviewProps> = (props) => {
 
   const deleteDepartments = () => {
     if (currentDepartment) {
-      dispatch(deleteDepartment([currentDepartment.departmentId]));
+      dispatch(deleteDepartment([currentDepartment.departmentId], currentDepartment.name));
     }
-    setOpenModal(!open);
+    setOpenModal();
     navigate('/Departments');
   };
-  
+
+  console.log(currentDepartment);
+
   return (
     <>
       <HeaderEditAction
@@ -35,28 +37,22 @@ const Preview: React.FC<PreviewProps> = (props) => {
         openEditPage={openEditPage}
         openDeleteModal={setOpenModal}
       />
-    <div className="form_box">
-      <InputContainer columns={2}>
-        <PreviewField label="Department name" description={currentDepartment.name} />
-        <PreviewField
-          label="Parent Department"
-          description={''}
-        />
-        <PreviewField
-          label="Department code"
-          description={currentDepartment.departmentCode}
-        />
-        <PreviewField label="Location" description={siteName} />
-      </InputContainer>
-    </div>
-    <ModalDelete
-      title="department"
-      body="the department"
-      name={currentDepartment.name}
-      open={openModal}
-      setOpen={setOpenModal}
-      onDelete={deleteDepartments}
-    />
+      <div className="form_box">
+        <InputContainer columns={2}>
+          <PreviewField label="Department name" description={currentDepartment.name} />
+          <PreviewField label="Parent Department" description={''} />
+          <PreviewField label="Department code" description={currentDepartment.departmentCode} />
+          <PreviewField label="Location" description={siteName} />
+        </InputContainer>
+      </div>
+      <ModalDelete
+        title="department"
+        body="the department"
+        name={currentDepartment.name}
+        open={openModal}
+        setOpen={setOpenModal}
+        onDelete={deleteDepartments}
+      />
     </>
   );
 };

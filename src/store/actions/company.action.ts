@@ -15,6 +15,7 @@ import axios from '../../config/axios';
 import { ResponseAsetlyApi } from '@Types/index';
 import { concatActions, handleErrorAndShowToast } from '@helpers/functions';
 import { toast } from 'react-toastify';
+import { AxiosResponse } from 'axios';
 
 export const GetCompanyList = (): CompanyActions => ({
   type: GET_COMPANY_LIST,
@@ -59,9 +60,11 @@ export const updateCompany =
     try {
       dispatch({ type: UPDATE_COMPANY });
       const id = company.companyId;
-      const updateCompany = await axios.post('/Company/UpdateFirm', company);
-      const responseUpdated: ResponseAsetlyApi<null> = updateCompany.data;
-      if (responseUpdated.resultStatus) {
+      const updateCompany: AxiosResponse<ResponseAsetlyApi<null>> = await axios.post(
+        '/Company/UpdateFirm',
+        company
+      );
+      if (updateCompany.data.resultStatus) {
         const updatedCompany = await axios.get(`/Company/GetCompanyById/${id}`);
         const response: ResponseAsetlyApi<Company> = updatedCompany.data;
         dispatch({ type: concatActions(UPDATE_COMPANY, SUCCESS), response });

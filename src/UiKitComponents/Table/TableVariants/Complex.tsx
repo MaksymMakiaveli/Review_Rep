@@ -1,63 +1,47 @@
-import React, { useRef } from 'react';
-import { IDraggable } from '../Table.type';
+import React, { memo, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { Pagination, Table } from 'rsuite';
 import { CheckCell, DragLayerRow, Row } from '../TableComponents';
-import { usePagination, useSelectRow, useSortedTable } from '@hooks';
-import { DnDOptions } from '../DnDOptions';
-import cl from 'classnames';
+import { IComplex } from '../Table.type';
 import CustomCell from '../TableComponents/CustomCell';
+import { usePagination, useSelectRow, useSortedTable } from '@hooks';
+import { DndOptions, TableOptions } from '../options';
+import { genericMemo } from '@helpers/functions';
 
-const { Column, HeaderCell } = Table;
+const MemoizedTable = memo(Table);
+const MemoizedColumn = memo(Table.Column);
+const MemoizedHeaderCell = memo(Table.HeaderCell);
 
-function Draggable<T>(props: IDraggable<T>) {
-  const { data, rowKey, columnsConfig, isDraggable, dropAction } = props;
+function Complex<T>(props: IComplex<T>) {
+  const { data, rowKey, columnsConfig, dropAction } = props;
 
   const tableRef = useRef(null);
-  const state = useSortedTable(data);
-  const { activePage, filteredData, totalPages, changePage } = usePagination(state.sortedData);
+  const { sortedData, sortColumn, column, direction } = useSortedTable(data);
+  const { activePage, filteredData, changePage, totalPages, limit } = usePagination(sortedData);
   const { handlingSelectRow, selectedRows } = useSelectRow({ rowKey });
 
-  const onDropRow = (value: any) => {
-    console.log(value);
-  };
-
-  const [{ isOver, canDrop }, drop] = useDrop({
-    accept: DnDOptions.ROW,
-    drop: (draggingItems) => {
-      const dropObject = {
-        area: DnDOptions.area.body,
-        drag: draggingItems,
-        drop: null,
-      };
-
-      onDropRow(dropObject);
-    },
+  const [, drop] = useDrop({
+    accept: DndOptions.ROW,
+    drop: (draggingItems) => ({ area: DndOptions.area.body, drag: draggingItems, drop: 0 }),
     canDrop: (item, monitor) => {
       return monitor.isOver({ shallow: true });
     },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
   });
-
-  const isActiveArea = canDrop && isOver;
 
   drop(tableRef);
   return (
     <div ref={tableRef} className="table" role="table">
-      <div className={cl('table-wrapper', { ['table-wrapper-active']: isActiveArea })}>
+      <div className="table-wrapper">
         <DragLayerRow />
-        <Table
-          height={600}
+        <MemoizedTable
+          {...TableOptions}
           data={filteredData}
           rowKey={rowKey}
-          hover={false}
-          sortColumn={state.column}
-          sortType={state.direction}
-          onSortColumn={state.sortColumn}
-          rowClassName="row"
+          isTree={true}
+          sortColumn={column}
+          sortType={direction}
+          onSortColumn={sortColumn}
+          shouldUpdateScroll={false}
           renderTreeToggle={(icon, rowData) => {
             if (rowData?.children && rowData.children.length === 0) {
               return null;
@@ -71,7 +55,6 @@ function Draggable<T>(props: IDraggable<T>) {
                 dataKey={rowKey}
                 selectedRows={selectedRows}
                 handlingSelectedRows={handlingSelectRow}
-                isDraggable={isDraggable}
                 dropAction={dropAction}
               >
                 {children}
@@ -82,30 +65,40 @@ function Draggable<T>(props: IDraggable<T>) {
           }}
         >
           {columnsConfig.map((column) => {
-            const { headerTitle, dataKey, ...rest } = column;
+            const { headerTitle, dataKey, flexGrow, ...rest } = column;
+            const size = flexGrow ? flexGrow : 1;
             return (
-              <Column {...rest} key={dataKey} align={'left'} verticalAlign={'middle'}>
-                <HeaderCell>{headerTitle}</HeaderCell>
+              <MemoizedColumn
+                {...rest}
+                key={dataKey}
+                flexGrow={size}
+                align={'left'}
+                verticalAlign={'middle'}
+              >
+                <MemoizedHeaderCell>{headerTitle}</MemoizedHeaderCell>
                 <CustomCell dataKey={dataKey} />
-              </Column>
+              </MemoizedColumn>
             );
           })}
-          <Column width={10}>
-            <HeaderCell>
+          <MemoizedColumn width={10}>
+            <MemoizedHeaderCell>
               <div> </div>
-            </HeaderCell>
+            </MemoizedHeaderCell>
             <CheckCell selectedRows={selectedRows} dataKey={rowKey} onChange={handlingSelectRow} />
-          </Column>
-        </Table>
+          </MemoizedColumn>
+        </MemoizedTable>
       </div>
       <div className="pagination-wrapper">
         <Pagination
           prev
           next
-          size={'sm'}
+          ellipsis
+          boundaryLinks
           layout={['pager']}
           total={totalPages}
+          limit={limit}
           maxButtons={5}
+          size="sm"
           activePage={activePage}
           onChangePage={changePage}
         />
@@ -114,4 +107,4 @@ function Draggable<T>(props: IDraggable<T>) {
   );
 }
 
-export default Draggable;
+export default genericMemo(Complex);

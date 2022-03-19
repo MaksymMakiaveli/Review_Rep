@@ -1,4 +1,4 @@
-import { ReducerAction, ReducerState } from '../UiKitComponents/TableRS/Table.type';
+import { ReducerAction, ReducerState } from '../UiKitComponents/Table/Table.type';
 import { sortBy } from 'lodash';
 import { useReducer } from 'react';
 

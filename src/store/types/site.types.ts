@@ -107,6 +107,7 @@ export interface UpdateSite extends BaseAction<typeof UPDATE_SITE> {}
 export interface UpdateSiteSuccess extends BaseAction<Concat<typeof UPDATE_SITE, typeof SUCCESS>> {
   response: ResponseAsetlyApi<Site>;
 }
+export interface UpdateSiteFail extends BaseAction<Concat<typeof UPDATE_SITE, typeof FAIL>> {}
 
 export interface DeleteSite extends BaseAction<typeof DELETE_SITE> {}
 export interface DeleteSiteSuccess extends BaseAction<Concat<typeof DELETE_SITE, typeof SUCCESS>> {
@@ -123,5 +124,6 @@ export type SiteActions =
   | PostNewSiteFail
   | UpdateSite
   | UpdateSiteSuccess
+  | UpdateSiteFail
   | DeleteSite
   | DeleteSiteSuccess;

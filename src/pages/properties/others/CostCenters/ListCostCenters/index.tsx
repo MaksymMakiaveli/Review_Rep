@@ -13,12 +13,12 @@ interface ListConstCentersProps {}
 const columnsCostCenter: ColumnsTable<TCostCenterTable>[] = [
   {
     dataKey: 'costCenterCode',
-    title: 'Cost Center Code',
+    headerTitle: 'Cost Center Code',
   },
   {
     dataKey: 'name',
-    title: 'Cost Center Name',
-    isSorted: true,
+    headerTitle: 'Cost Center Name',
+    sortable: true,
   },
 ];
 
@@ -61,7 +61,12 @@ const ListConstCenters: React.FC<ListConstCentersProps> = () => {
           pageCreatingUrl="CreateCostCenter"
           textRedirectButton="New Cost Center"
         />
-        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="costCenterId" />
+        <Table
+          type={'simple'}
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          rowKey={'costCenterId'}
+        />
       </div>
     </div>
   );

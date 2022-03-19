@@ -15,6 +15,7 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
   if (!action.api) {
     return next(action);
   }
+
   next(action);
   return axiosConfig
     .request({
@@ -53,8 +54,13 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
         action.functions.forEach((func) => func());
       }
     })
-    .catch((error: AxiosError | Error) => {
+    .catch((error: AxiosError<ResponseAsetlyApi<any>> | Error) => {
       if (axios.isAxiosError(error)) {
+        const err = error.response?.data.languageKeyword;
+        if (err) {
+          const keyword = returnLanguageKeyword(err);
+          toast.error(keyword);
+        }
         next({ ...action, type: concatActions(type, FAIL), response: error.response?.data });
       } else {
         toast.error(error.message);

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Table } from 'rsuite';
 import { CustomCheckbox } from '@UiKitComponents';
 import { CheckCellProps } from '../Table.type';
@@ -22,4 +22,4 @@ function CheckCell(props: CheckCellProps) {
   );
 }
 
-export default CheckCell;
+export default memo(CheckCell);

@@ -63,7 +63,7 @@ export type TFormCreateDepartment = Omit<NewDepartment, 'parentDepartmentId' | '
   siteId: TSelectValue<number>;
 };
 
-export type PutDepartment = NewDepartment & Pick<Department, 'departmentId'>;
+export type IUpdateDepartment = NewDepartment;
 
 export interface DepartmentState {
   departmentList: Department[] | [];
@@ -103,19 +103,20 @@ export interface UpdateDepartment extends BaseAction<typeof UPDATE_DEPARTMENT> {
 export interface UpdateDepartmentSuccess
   extends BaseAction<Concat<typeof UPDATE_DEPARTMENT, typeof SUCCESS>> {
   response: {
-    resultObject: Department;
+    departments: Department[];
+    updateDepartment: Department;
   };
 }
+export interface UpdateDepartmentFail
+  extends BaseAction<Concat<typeof UPDATE_DEPARTMENT, typeof FAIL>> {}
 
 export interface DeleteDepartment extends BaseAction<typeof DELETE_DEPARTMENT> {}
 export interface DeleteDepartmentSuccess
   extends BaseAction<Concat<typeof DELETE_DEPARTMENT, typeof SUCCESS>> {
-  response: {
-    resultStatus: boolean;
-    languageKeyword: string;
-    resultObject: [];
-  };
+  response: ResponseAsetlyApi<Department[]>;
 }
+export interface DeleteDepartmentFail
+  extends BaseAction<Concat<typeof DELETE_DEPARTMENT, typeof FAIL>> {}
 
 export interface ChangeParentForDepartments
   extends BaseAction<typeof CHANGE_PARENT_FOR_DEPARTMENTS> {}
@@ -123,6 +124,8 @@ export interface ChangeParentForDepartmentsSuccess
   extends BaseAction<Concat<typeof CHANGE_PARENT_FOR_DEPARTMENTS, typeof SUCCESS>> {
   response: ResponseAsetlyApi<Department[]>;
 }
+export interface ChangeParentForDepartmentsFail
+  extends BaseAction<Concat<typeof CHANGE_PARENT_FOR_DEPARTMENTS, typeof FAIL>> {}
 
 export type DepartmentActions =
   | GetDepartmentList
@@ -134,7 +137,10 @@ export type DepartmentActions =
   | PostNewDepartmentFail
   | UpdateDepartment
   | UpdateDepartmentSuccess
+  | UpdateDepartmentFail
   | DeleteDepartment
   | DeleteDepartmentSuccess
+  | DeleteDepartmentFail
   | ChangeParentForDepartments
-  | ChangeParentForDepartmentsSuccess;
+  | ChangeParentForDepartmentsSuccess
+  | ChangeParentForDepartmentsFail;

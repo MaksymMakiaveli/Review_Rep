@@ -13,27 +13,27 @@ interface SiteListProps {}
 const columnsSiteTable: ColumnsTable<TSiteTable>[] = [
   {
     dataKey: 'name',
-    title: 'SITE NAME',
-    isSorted: true,
+    headerTitle: 'SITE NAME',
+    sortable: true,
   },
   {
     dataKey: 'siteCode',
-    title: 'SITE CODE',
-    isSorted: true,
+    headerTitle: 'SITE CODE',
+    sortable: true,
   },
   {
     dataKey: 'barcode',
-    title: 'SITE BARCODE',
+    headerTitle: 'SITE BARCODE',
   },
   {
     dataKey: 'countryName',
-    title: 'COUNTRY',
-    isSorted: true,
+    headerTitle: 'COUNTRY',
+    sortable: true,
   },
   {
     dataKey: 'cityName',
-    title: 'CITY',
-    isSorted: true,
+    headerTitle: 'CITY',
+    sortable: true,
   },
 ];
 
@@ -76,11 +76,13 @@ const SiteList: React.FC<SiteListProps> = () => {
   return (
     <div>
       <div className="padding_wrapper_table-page">
-        <TableHeaderActions
-          pageCreatingUrl="/Sites/newSite"
-          textRedirectButton="New Site"
+        <TableHeaderActions pageCreatingUrl="/Sites/newSite" textRedirectButton="New Site" />
+        <Table
+          type={'simple'}
+          data={memoizedData}
+          columnsConfig={memoizedColumns}
+          rowKey={'siteId'}
         />
-        <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="siteId" isDraggable />
       </div>
     </div>
   );

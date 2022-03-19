@@ -1,40 +1,38 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { Loader } from '@common';
 import { EmptyPage, TableHeaderActions } from '@components';
 import { RootState } from '@RootStateType';
-import { ColumnsTableRS } from '@Types/application.types';
+import { ColumnsTable } from '@Types/application.types';
 import { Department, TDepartmentTable } from '@Types/department.types';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeParentForDepartments } from '@Actions/department.action';
-import TableRS from '../../../../UiKitComponents/TableRS';
-import { ResultDrop } from '../../../../UiKitComponents/TableRS/Table.type';
+import { ResultDrop } from '../../../../UiKitComponents/Table/Table.type';
+import { Table } from '@UiKitComponents';
 
 interface ListDepartmentProps {}
 
-const columnsDepartmentTable: ColumnsTableRS<TDepartmentTable>[] = [
+const columnsDepartmentTable: ColumnsTable<TDepartmentTable>[] = [
   {
     dataKey: 'departmentCode',
     headerTitle: 'DEPARTMENT CODE',
-    flexGrow: 1,
+
     sortable: true,
   },
   {
     dataKey: 'name',
     headerTitle: 'DEPARTMENT NAME',
-    flexGrow: 1,
+
     sortable: true,
   },
   {
     dataKey: 'parentName',
     headerTitle: 'PARENT DEPARTMENT',
-
-    flexGrow: 1,
   },
   {
     dataKey: 'siteName',
     headerTitle: 'LOCATION',
-    flexGrow: 1,
+
     sortable: true,
   },
 ];
@@ -63,6 +61,11 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
   const memoizedData = useMemo(() => handleData(departmentList), [departmentList]);
   const memoizedColumns = useMemo(() => columnsDepartmentTable, []);
 
+  const changeParentIds = useCallback((result: ResultDrop<TDepartmentTable>) => {
+    const { drag, drop } = result;
+    dispatch(changeParentForDepartments(drag, drop));
+  }, []);
+
   if (loadingDepartment) {
     return <Loader />;
   }
@@ -76,11 +79,6 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
     );
   }
 
-  const changeParentIds = (result: ResultDrop<TDepartmentTable>) => {
-    const { drag, drop } = result;
-    dispatch(changeParentForDepartments(drag, drop));
-  };
-
   return (
     <div>
       <div className="padding_wrapper_table-page">
@@ -88,13 +86,11 @@ const ListDepartment: React.FC<ListDepartmentProps> = () => {
           pageCreatingUrl="/Departments/newDepartment"
           textRedirectButton="New Department"
         />
-        <TableRS
+        <Table
           type={'complex'}
           data={memoizedData}
           rowKey={'departmentId'}
           columnsConfig={memoizedColumns}
-          isTree
-          isDraggable
           dropAction={changeParentIds}
         />
       </div>

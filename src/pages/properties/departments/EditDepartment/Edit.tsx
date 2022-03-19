@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface EditProps {
   currentDepartment: Department;
-  backToPreview: (modeEdit: boolean) => void;
+  backToPreview: () => void;
 }
 
 const getDepartmentState = (state: RootState) => state.DepartmentReducer;
@@ -66,7 +66,7 @@ const Edit: React.FC<EditProps> = (props) => {
       departmentId: currentDepartment.departmentId,
       siteId: department.siteId.value,
     };
-    dispatch(updateDepartment(newDepartment));
+    dispatch(updateDepartment(newDepartment, backToPreview));
   };
 
   return (

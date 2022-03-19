@@ -12,13 +12,13 @@ interface ListTitleProps {}
 const columnsTitleTable: ColumnsTable<TTitleTable>[] = [
   {
     dataKey: 'userTitleCode',
-    title: 'TITLE CODE',
-    isSorted: true,
+    headerTitle: 'TITLE CODE',
+    sortable: true,
   },
   {
     dataKey: 'title',
-    title: 'TITLE',
-    isSorted: true,
+    headerTitle: 'TITLE',
+    sortable: true,
   },
 ];
 
@@ -28,7 +28,7 @@ const ListTitle: React.FC<ListTitleProps> = () => {
   const { titleList, loadingTitle } = useSelector(getTitleState);
 
   const memoizedData = useMemo(
-    () => 
+    () =>
       titleList.map((title): TTitleTable => {
         return {
           title: title.title,
@@ -37,14 +37,14 @@ const ListTitle: React.FC<ListTitleProps> = () => {
         };
       }),
     [titleList]
-  )
+  );
 
   const memoizedColumns = useMemo(() => columnsTitleTable, []);
 
   if (loadingTitle) {
     return <Loader />;
   }
-  
+
   if (!titleList.length) {
     return (
       <EmptyPage textButton="Title" redirectPath="newTitle">
@@ -57,14 +57,12 @@ const ListTitle: React.FC<ListTitleProps> = () => {
   return (
     <div>
       <div className="padding_wrapper_table-page">
-        <TableHeaderActions
-          pageCreatingUrl="/Titles/newTitle"
-          textRedirectButton="New Title"
-        />
+        <TableHeaderActions pageCreatingUrl="/Titles/newTitle" textRedirectButton="New Title" />
         <Table
+          type={'simple'}
           data={memoizedData}
           columnsConfig={memoizedColumns}
-          keyTable="userTitleId"
+          rowKey={'userTitleId'}
         />
       </div>
     </div>

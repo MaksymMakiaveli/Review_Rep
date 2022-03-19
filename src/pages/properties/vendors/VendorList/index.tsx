@@ -13,21 +13,21 @@ interface VendorListProps {}
 const columnsVendorTable: ColumnsTable<TVendorTable>[] = [
   {
     dataKey: 'name',
-    title: 'Vendor Name',
-    isSorted: true,
+    headerTitle: 'Vendor Name',
+    sortable: true,
   },
   {
     dataKey: 'taxNumber',
-    title: 'TXN',
+    headerTitle: 'TXN',
   },
   {
     dataKey: 'phone',
-    title: 'Phone',
+    headerTitle: 'Phone',
   },
   {
     dataKey: 'cityName',
-    title: 'CITY',
-    isSorted: true,
+    headerTitle: 'CITY',
+    sortable: true,
   },
 ];
 
@@ -67,7 +67,12 @@ const VendorList: React.FC<VendorListProps> = () => {
   return (
     <div className="padding_wrapper_table-page">
       <TableHeaderActions pageCreatingUrl="/Vendors/newVendor" textRedirectButton="New Vendor" />
-      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="partnerId" />
+      <Table
+        type={'simple'}
+        data={memoizedData}
+        rowKey={'partnerId'}
+        columnsConfig={memoizedColumns}
+      />
     </div>
   );
 };

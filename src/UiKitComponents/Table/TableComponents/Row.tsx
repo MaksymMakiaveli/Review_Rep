@@ -1,25 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { DnDOptions } from '../DnDOptions';
+import { DndOptions } from '../options';
 import { ResultDrop, RowProps } from '../Table.type';
 import cl from 'classnames';
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { genericMemo } from '@helpers/functions';
 
 function Row<T>(props: RowProps<T>) {
-  const {
-    children,
-    rowData,
-    dataKey,
-    selectedRows,
-    handlingSelectedRows,
-    dropAction,
-    isDraggable,
-  } = props;
+  const { children, rowData, dataKey, selectedRows, handlingSelectedRows, dropAction } = props;
   const rowRef = useRef(null);
 
   const [{ canDrop, isOver }, drop] = useDrop({
-    accept: DnDOptions.ROW,
-    drop: (draggingItems) => ({ area: DnDOptions.area.row, drag: draggingItems, drop: rowData }),
+    accept: DndOptions.ROW,
+    drop: (draggingItems) => ({ area: DndOptions.area.row, drag: draggingItems, drop: rowData }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -31,7 +24,7 @@ function Row<T>(props: RowProps<T>) {
   });
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: DnDOptions.ROW,
+    type: DndOptions.ROW,
     item: () => {
       const isRow = selectedRows.some((row) => row[dataKey] === rowData[dataKey]);
       if (isRow) {
@@ -49,9 +42,6 @@ function Row<T>(props: RowProps<T>) {
           selectedRows.some((item) => item[dataKey] === rowData[dataKey]) || monitor.isDragging(),
       };
     },
-    canDrag: () => {
-      return isDraggable;
-    },
     end: (result, monitor) => {
       const resultDrop: ResultDrop<T> | null = monitor.getDropResult();
       if (resultDrop) {
@@ -62,7 +52,9 @@ function Row<T>(props: RowProps<T>) {
   });
 
   useEffect(() => {
-    preview(getEmptyImage());
+    preview(getEmptyImage(), {
+      captureDraggingState: true,
+    });
   }, []);
 
   const isActive = isOver && canDrop;
@@ -79,4 +71,4 @@ function Row<T>(props: RowProps<T>) {
   );
 }
 
-export default Row;
+export default genericMemo(Row);

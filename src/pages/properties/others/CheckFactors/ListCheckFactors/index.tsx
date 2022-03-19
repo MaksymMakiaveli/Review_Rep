@@ -11,13 +11,13 @@ import { useSelector } from 'react-redux';
 const columns: ColumnsTable<TCheckFactorTable>[] = [
   {
     dataKey: 'checkFactorId',
-    title: 'Check Factor ID',
-    isSorted: true,
+    headerTitle: 'Check Factor ID',
+    sortable: true,
   },
   {
     dataKey: 'name',
-    title: 'Check Factor Name',
-    isSorted: true,
+    headerTitle: 'Check Factor Name',
+    sortable: true,
   },
 ];
 
@@ -60,7 +60,12 @@ const ListCheckFactors = () => {
         textRedirectButton="New Check Factor"
       />
 
-      <Table data={memoizedData} columnsConfig={memoizedColumns} keyTable="checkFactorId" />
+      <Table
+        type={'simple'}
+        data={memoizedData}
+        columnsConfig={memoizedColumns}
+        rowKey={'checkFactorId'}
+      />
     </div>
   );
 };

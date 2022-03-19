@@ -37,7 +37,7 @@ export const handleErrorAndShowToast = (error: AxiosError | Error) => {
 export const filteringByRemovedId = <T = any>(
   processedArray: T[],
   idsArray: number[],
-  keyForId: string
+  keyForId: keyof T
 ) => {
   return processedArray.filter((item) => !idsArray.includes((item as any)[keyForId]));
 };

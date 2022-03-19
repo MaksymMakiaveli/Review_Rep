@@ -30,6 +30,13 @@ export const postNewContract = (newContract: TCreateContract): ContractActions =
     method: 'POST',
     data: { ...newContract },
   },
+  redirect: {
+    path: '/Departments',
+  },
+  showToaster: {
+    type: 'success',
+    description: `Contract:${newContract.name} created`,
+  },
 });
 
 export const deleteContractById = (contractIds: { contractIds: number[] }): ContractActions => ({

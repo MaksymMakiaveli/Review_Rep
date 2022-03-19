@@ -1,4 +1,4 @@
-import { ColumnsTableRS } from '@Types/application.types';
+import { ColumnsTable } from '@Types/application.types';
 import { RowDataType } from 'rsuite-table/src/@types/common';
 import { ReactNode } from 'react';
 
@@ -10,21 +10,16 @@ export type ResultDrop<T = any> = {
 
 export interface BasicTableProps<T = any, K = keyof T> {
   data: T[];
-  columnsConfig: ColumnsTableRS<T>[];
+  columnsConfig: ColumnsTable<T>[];
   rowKey: K extends string ? K : never;
 }
 
 export interface ISimple<T> extends BasicTableProps<T> {}
 export interface IDraggable<T> extends BasicTableProps<T> {
-  isDraggable: boolean;
   dropAction: (result: ResultDrop) => void;
 }
-export interface ITree<T> extends BasicTableProps<T> {
-  isTree: boolean;
-}
+export interface ITree<T> extends BasicTableProps<T> {}
 export interface IComplex<T> extends BasicTableProps<T> {
-  isDraggable: boolean;
-  isTree: boolean;
   dropAction: (result: ResultDrop) => void;
 }
 
@@ -51,7 +46,6 @@ export interface DefaultProps {
 export interface RowProps<T = any> extends Required<DefaultProps> {
   children: ReactNode;
   selectedRows: BasicTableProps['data'];
-  isDraggable: boolean;
   handlingSelectedRows: (item: T, checked: boolean) => void;
   dropAction: (result: ResultDrop) => void;
 }

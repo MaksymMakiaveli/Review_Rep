@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { CustomCellProps } from '../Table.type';
 import { Table } from 'rsuite';
 import { useNavigate } from 'react-router-dom';
@@ -21,4 +21,4 @@ function CustomCell(props: CustomCellProps) {
   );
 }
 
-export default CustomCell;
+export default memo(CustomCell);

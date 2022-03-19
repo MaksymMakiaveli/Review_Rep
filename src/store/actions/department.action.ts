@@ -6,20 +6,23 @@ import {
   POST_NEW_DEPARTMENT,
   UPDATE_DEPARTMENT,
   SUCCESS,
+  FAIL,
 } from '../actionTypes';
 import {
   Department,
   DepartmentActions,
   NewDepartment,
-  PutDepartment,
+  IUpdateDepartment,
   TDepartmentTable,
 } from '@Types/department.types';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '@RootStateType';
-import axios from '../../config/axios';
 import { AxiosResponse } from 'axios';
 import { ResponseAsetlyApi } from '@Types/index';
-import { concatActions } from '@helpers/functions';
+import { concatActions, handleErrorAndShowToast, returnLanguageKeyword } from '@helpers/functions';
+import { toast } from 'react-toastify';
+import axios from '../../config/axios';
+import customHistory from '../../config/history';
 
 export const GetDepartmentList = (): DepartmentActions => ({
   type: GET_DEPARTMENT_LIST,
@@ -55,27 +58,67 @@ export const postNewDepartment = (newDepartment: NewDepartment): DepartmentActio
   },
 });
 
-export const updateDepartment = (department: PutDepartment): DepartmentActions => ({
-  type: UPDATE_DEPARTMENT,
-  api: {
-    url: '/Department/UpdateDepartment',
-    method: 'POST',
-    data: {
-      ...department,
-    },
-  },
-});
+export const updateDepartment =
+  (
+    department: IUpdateDepartment,
+    backToPreview: () => void
+  ): ThunkAction<any, RootState, any, DepartmentActions> =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_DEPARTMENT });
+      const updatedDepartment: AxiosResponse<ResponseAsetlyApi<Department[]>> = await axios.post(
+        '/Department/UpdateDepartment',
+        department
+      );
+      if (updatedDepartment.data.resultStatus) {
+        const updatedList: AxiosResponse<ResponseAsetlyApi<Department[]>> = await axios.get(
+          '/Department/GetDepartmentsList'
+        );
+        const responseDepartments = updatedList.data.resultObject;
+        const response = {
+          departments: responseDepartments,
+          updateDepartment: updatedDepartment.data.resultObject[0],
+        };
+        dispatch({
+          type: concatActions(UPDATE_DEPARTMENT, SUCCESS),
+          response,
+        });
+        backToPreview();
+        toast.success(`Department: ${department.name} updated`);
+      }
+    } catch (error: any) {
+      handleErrorAndShowToast(error);
+      dispatch({ type: concatActions(UPDATE_DEPARTMENT, FAIL) });
+    }
+  };
 
-export const deleteDepartment = (departmentIds: number[]): DepartmentActions => ({
-  type: DELETE_DEPARTMENT,
-  api: {
-    url: `/Department/RemoveByIdList`,
-    method: 'POST',
-    data: {
-      DepartmentIds: departmentIds,
-    },
-  },
-});
+export const deleteDepartment =
+  (departmentIds: number[], name: string): ThunkAction<any, RootState, any, DepartmentActions> =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_DEPARTMENT });
+      const deleteCompany: AxiosResponse<ResponseAsetlyApi<null>> = await axios.post(
+        '/Department/RemoveByIdList',
+        { departmentIds }
+      );
+      if (deleteCompany.data.resultStatus) {
+        const updatedDepartmentList: AxiosResponse<ResponseAsetlyApi<Department[]>> =
+          await axios.get('/Department/GetDepartmentsList');
+        const response = updatedDepartmentList.data;
+
+        dispatch({ type: concatActions(DELETE_DEPARTMENT, SUCCESS), response });
+        customHistory.replace('/Departments');
+        toast.success(`Department: ${name} deleted`);
+      } else {
+        const keyword = returnLanguageKeyword(deleteCompany.data.languageKeyword);
+        toast.error(`Department: ${keyword}`);
+        dispatch({ type: concatActions(DELETE_DEPARTMENT, FAIL) });
+      }
+    } catch (error: any) {
+      handleErrorAndShowToast(error);
+      dispatch({ type: concatActions(DELETE_DEPARTMENT, FAIL) });
+    }
+  };
 
 export const changeParentForDepartments =
   (
@@ -100,5 +143,8 @@ export const changeParentForDepartments =
         const response = updatedDepartmentList.data;
         dispatch({ type: concatActions(CHANGE_PARENT_FOR_DEPARTMENTS, SUCCESS), response });
       }
-    } catch (error: any) {}
+    } catch (error: any) {
+      handleErrorAndShowToast(error);
+      dispatch({ type: concatActions(CHANGE_PARENT_FOR_DEPARTMENTS, FAIL) });
+    }
   };
