@@ -7,6 +7,7 @@ import { CurrencyActions } from '@Types/currency.type';
 import { DefinitionActions } from '@Types/definition.types';
 import { VendorActions } from '@Types/vendor.types';
 import { TitleActions } from '@Types/title.types';
+import { ExitTypesActions } from '@Types/exitTypes.type';
 
 export type ActionsTypes =
   | ApplicationActions
@@ -17,4 +18,5 @@ export type ActionsTypes =
   | CurrencyActions
   | TitleActions
   | CostCenterActions
-  | CheckFactorActions;
+  | CheckFactorActions
+  | ExitTypesActions;

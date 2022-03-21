@@ -74,6 +74,8 @@ export interface GetCompanyListSuccess
     resultObject: Company[];
   };
 }
+export interface GetCompanyListFail
+  extends BaseAction<Concat<typeof GET_COMPANY_LIST, typeof FAIL>> {}
 
 export interface GetOneCompany extends BaseAction<typeof GET_ONE_COMPANY> {}
 export interface GetOneCompanySuccess
@@ -117,6 +119,7 @@ export interface DeleteCompanySuccess
 export type CompanyActions =
   | GetCompanyList
   | GetCompanyListSuccess
+  | GetCompanyListFail
   | GetOneCompany
   | GetOneCompanySuccess
   | PostNewCompany

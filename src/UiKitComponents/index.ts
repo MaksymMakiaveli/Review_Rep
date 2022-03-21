@@ -12,6 +12,7 @@ import PreviewFile from './PreviewFile';
 import SearchInput from './SearchInput';
 import Toaster from './Toaster';
 import Table from './Table';
+import Modals from './Modals';
 
 export {
   AccordionForSidebar,
@@ -28,4 +29,5 @@ export {
   TextArea,
   TextField,
   Toaster,
+  Modals,
 };

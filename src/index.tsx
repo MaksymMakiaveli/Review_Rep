@@ -8,7 +8,6 @@ import store from './store';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'rsuite/dist/rsuite.min.css';
-import 'semantic-ui-css/semantic.min.css';
 import './styles/global.scss';
 
 import { CustomRouter } from '@components';

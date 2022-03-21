@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import CheckFactors from './CheckFactors';
 import CostCenters from './CostCenters';
+import ExitTypes from './ExitTypes';
 
 const Others = () => {
   return (
@@ -11,7 +12,7 @@ const Others = () => {
       <Routes>
         <Route path="CheckFactors/*" element={<CheckFactors />} />
         <Route path="CostCenters/*" element={<CostCenters />} />
-        <Route path="ExitTypes/*" />
+        <Route path="ExitTypes/*" element={<ExitTypes />} />
       </Routes>
     </>
   );

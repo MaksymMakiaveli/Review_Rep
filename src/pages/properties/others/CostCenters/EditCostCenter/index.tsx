@@ -14,11 +14,9 @@ type CostCenterParams = {
   costCenterId: string;
 };
 
-interface EditCostCenterProps {}
-
 const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 
-const EditCostCenter: React.FC<EditCostCenterProps> = () => {
+const EditCostCenter = () => {
   const back = useBackHistory();
   const params = useParams<CostCenterParams>();
   const dispatch = useDispatch();

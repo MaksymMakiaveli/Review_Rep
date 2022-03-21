@@ -31,7 +31,7 @@ export const postNewContract = (newContract: TCreateContract): ContractActions =
     data: { ...newContract },
   },
   redirect: {
-    path: '/Departments',
+    path: '/Contracts',
   },
   showToaster: {
     type: 'success',

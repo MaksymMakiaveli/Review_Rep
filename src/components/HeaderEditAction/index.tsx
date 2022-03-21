@@ -5,9 +5,15 @@ import { Button } from '@UiKitComponents';
 
 import classes from './HeaderEditAction.module.scss';
 import HeaderEditActionProps from './HeaderEditAction.type';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderEditAction: React.FC<HeaderEditActionProps> = (props) => {
   const { title, openEditPage, openDeleteModal } = props;
+  const navigate = useNavigate();
+
+  const redirectToEdit = () => {
+    navigate('Edit');
+  };
 
   return (
     <div className={classes.header_box}>
@@ -16,7 +22,7 @@ const HeaderEditAction: React.FC<HeaderEditActionProps> = (props) => {
         <Button variant="secondary" icon={<TrashBasket />} onClick={openDeleteModal}>
           Delete
         </Button>
-        <Button variant="primary" type="button" onClick={openEditPage}>
+        <Button variant="primary" type="button" onClick={openEditPage || redirectToEdit}>
           Edit
         </Button>
       </div>

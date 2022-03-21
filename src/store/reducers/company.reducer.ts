@@ -30,6 +30,11 @@ export const CompanyReducer = (state = initialState, action: CompanyActions): Co
         companyList: [...state.companyList, ...action.response.resultObject],
         loadingCompany: false,
       };
+    case concatActions(GET_COMPANY_LIST, FAIL):
+      return {
+        ...state,
+        loadingCompany: false,
+      };
     case GET_ONE_COMPANY:
       return {
         ...state,

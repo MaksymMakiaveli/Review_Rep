@@ -45,7 +45,7 @@ export const filteringByRemovedId = <T = any>(
 export function mappedAfterUpdate<T = any>(
   processedArray: T[],
   updatedObject: T,
-  keyForId: string
+  keyForId: keyof T
 ) {
   return processedArray.map((item) =>
     (item as any)[keyForId] === (updatedObject as any)[keyForId] ? updatedObject : item

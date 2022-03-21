@@ -32,7 +32,7 @@
   // Fields
   --fz-field-placeholder: 16px;
   --fz-field-title: 12px;
-  --fz-field-description: 12px;
+  --fz-field-description: 14px;
   //Table
   --fz-table-header: var(--fz-overline-2);
   --fz-table-body: var(--fz-body-1);
@@ -101,6 +101,8 @@
   --color-form-disabled: #bdbdbd;
   --color-form-background-1: #edf6ff;
   --color-form-background-2: #fff;
+  --color-form-placeholder: #374957;
+  --color-form-text: #374957;
 
   // Modal
   --color-modal-background: #032f5c;
@@ -111,7 +113,7 @@
   --color-notification-warning: #d9aa00;
   --color-notification-error: #d10000;
 
-  //List
+  //ListExitType
   --color-list-hover-background: #ddeeff;
 
   // Table

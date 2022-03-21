@@ -8,8 +8,6 @@ import { TCostCenterTable } from '@Types/costCenters.type';
 import { Table } from '@UiKitComponents';
 import { useSelector } from 'react-redux';
 
-interface ListConstCentersProps {}
-
 const columnsCostCenter: ColumnsTable<TCostCenterTable>[] = [
   {
     dataKey: 'costCenterCode',
@@ -24,7 +22,7 @@ const columnsCostCenter: ColumnsTable<TCostCenterTable>[] = [
 
 const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 
-const ListConstCenters: React.FC<ListConstCentersProps> = () => {
+const ListConstCenters = () => {
   const { costCentersList, loadingCostCenter } = useSelector(getCostCenterState);
 
   const memoizedData = useMemo(

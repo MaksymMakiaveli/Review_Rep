@@ -7,6 +7,7 @@ import InputContainer from './InputContainer';
 import PreviewField from './PreviewField';
 import Sidebar from './Sidebar';
 import TableHeaderActions from './TableHeaderActions';
+import PageHeaderActions from './PageHeaderActions';
 
 export {
   EmptyPage,
@@ -18,4 +19,5 @@ export {
   PreviewField,
   Sidebar,
   CustomRouter,
+  PageHeaderActions,
 };

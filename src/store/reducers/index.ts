@@ -11,6 +11,7 @@ import { DepartmentReducer } from './department.reducer';
 import { SiteReducer } from './site.reducer';
 import { VendorReducer } from './vendor.reducer';
 import { TitleReducer } from './title.reducer';
+import { ExitTypesReducer } from './exitTypes.reducer';
 
 const reducer = combineReducers({
   ApplicationReducer,
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   DepartmentReducer,
   SiteReducer,
   CheckFactorReducer,
+  ExitTypesReducer,
 });
 
 export default reducer;

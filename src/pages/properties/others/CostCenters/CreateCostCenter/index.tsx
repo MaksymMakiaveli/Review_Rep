@@ -12,11 +12,9 @@ import { TextField } from '@UiKitComponents';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-interface CreateCostCenterProps {}
-
 const getCostCenterState = (state: RootState) => state.CostCenterReducer;
 
-const CreateCostCenter: React.FC<CreateCostCenterProps> = () => {
+const CreateCostCenter = () => {
   const { loadingCostCenter } = useSelector(getCostCenterState);
   const backHistory = useBackHistory();
   const dispatch = useDispatch();
