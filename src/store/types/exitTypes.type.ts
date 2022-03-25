@@ -46,7 +46,7 @@ export interface GetExitTypesListSuccess
 export interface GetExitTypesListFail
   extends BaseAction<Concat<typeof GET_EXIT_TYPES_LIST, typeof FAIL>> {}
 
-export interface PostNewExitType extends BaseAction<typeof POST_NEW_EXIT_TYPE> {}
+export interface PostNewExitType extends BaseAction<typeof POST_NEW_EXIT_TYPE, ICreateExitType> {}
 export interface PostNewExitTypeSuccess
   extends BaseAction<Concat<typeof POST_NEW_EXIT_TYPE, typeof SUCCESS>> {
   response: ResponseAsetlyApi<IExitTypes>;

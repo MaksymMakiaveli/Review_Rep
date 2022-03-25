@@ -5,7 +5,7 @@ import { RootState } from '@RootStateType';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExitTypeById } from '@Actions/exitTypes.action';
 import { Loader } from '@common';
-import EditExitType from '@pages/properties/others/ExitTypes/ExitType/Edit';
+import EditExitType from '@pages/properties/others/ExitTypes/OneExitType/Edit';
 import { useBackHistory } from '@hooks';
 
 type ExitTypeParams = {
@@ -14,7 +14,7 @@ type ExitTypeParams = {
 
 const getExitTypesState = (state: RootState) => state.ExitTypesReducer;
 
-const ExitType = () => {
+const OneExitType = () => {
   const { exitType, exitTypeError } = useSelector(getExitTypesState);
   const params = useParams<ExitTypeParams>();
   const dispatch = useDispatch();
@@ -22,14 +22,13 @@ const ExitType = () => {
   const id = params.id ? params.id : '';
 
   useEffect(() => {
-    if (exitType && exitType.checkFactorId === +id) {
-      return;
-    }
     if (exitTypeError) {
       backHistory();
       return;
     }
-    dispatch(getExitTypeById(id));
+    if (!exitType || exitType.checkFactorId !== +id) {
+      dispatch(getExitTypeById(id));
+    }
   }, []);
 
   if (!exitType) {
@@ -46,4 +45,4 @@ const ExitType = () => {
   );
 };
 
-export default ExitType;
+export default OneExitType;

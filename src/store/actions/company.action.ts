@@ -1,4 +1,4 @@
-import { CompanyActions, TUpdateCompany, TCreateCompany, Company } from '@Types/company.types';
+import { CompanyActions, IUpdateCompany, ICreateCompany, Company } from '@Types/company.types';
 
 import {
   DELETE_COMPANY,
@@ -16,6 +16,7 @@ import { ResponseAsetlyApi } from '@Types/index';
 import { concatActions, handleErrorAndShowToast } from '@helpers/functions';
 import { toast } from 'react-toastify';
 import { AxiosResponse } from 'axios';
+import customHistory from '../../config/history';
 
 export const GetCompanyList = (): CompanyActions => ({
   type: GET_COMPANY_LIST,
@@ -33,7 +34,7 @@ export const GetOneCompany = (id: string | number): CompanyActions => ({
   },
 });
 
-export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
+export const postNewCompany = (newCompany: ICreateCompany): CompanyActions => ({
   type: POST_NEW_COMPANY,
   api: {
     url: '/Company/AddCompany',
@@ -52,10 +53,7 @@ export const postNewCompany = (newCompany: TCreateCompany): CompanyActions => ({
 });
 
 export const updateCompany =
-  (
-    company: TUpdateCompany,
-    backToPreview: () => void
-  ): ThunkAction<any, RootState, any, CompanyActions> =>
+  (company: IUpdateCompany): ThunkAction<any, RootState, any, CompanyActions> =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_COMPANY });
@@ -68,7 +66,7 @@ export const updateCompany =
         const updatedCompany = await axios.get(`/Company/GetCompanyById/${id}`);
         const response: ResponseAsetlyApi<Company> = updatedCompany.data;
         dispatch({ type: concatActions(UPDATE_COMPANY, SUCCESS), response });
-        backToPreview();
+        customHistory.replace(`/Companies/${id}`);
         toast.success(`Company: ${response.resultObject.name} updated`);
       }
     } catch (error: any) {

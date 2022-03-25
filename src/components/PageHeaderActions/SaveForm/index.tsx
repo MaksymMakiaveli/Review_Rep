@@ -8,11 +8,9 @@ interface EditActionProps {
   errors?: any;
 }
 
-const EditAction = (props: EditActionProps) => {
+const SaveForm = (props: EditActionProps) => {
   const { title, errors } = props;
   const backHistory = useBackHistory();
-
-  console.log('edit', errors);
 
   const disabledButton = errors && !!Object.keys(errors).length;
 
@@ -31,4 +29,4 @@ const EditAction = (props: EditActionProps) => {
   );
 };
 
-export default EditAction;
+export default SaveForm;

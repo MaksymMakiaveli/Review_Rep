@@ -20,9 +20,7 @@ export const createNewExitType = (exitType: ICreateExitType): ExitTypesActions =
   api: {
     url: '/ExitTypes/AddExitTypes',
     method: 'POST',
-    data: {
-      ...exitType,
-    },
+    data: exitType,
   },
   redirect: {
     path: '/Others/ExitTypes',

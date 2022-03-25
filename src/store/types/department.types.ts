@@ -1,5 +1,3 @@
-import { TSelectValue } from '@Types/application.types';
-
 import {
   FAIL,
   SUCCESS,
@@ -14,13 +12,12 @@ import { BaseAction, Concat, ResponseAsetlyApi } from './index';
 import { Site } from './site.types';
 
 export type Department = {
-  childDepartment: Department[];
   companyId: number;
   departmentId: number;
   siteId: number;
   departmentCode: string;
   name: string;
-  // createdDate: string,
+  createdDate: string;
   creatorId: number;
   description: string;
   site: Site;
@@ -29,6 +26,7 @@ export type Department = {
   modifiedId: number;
   parentDepartment: Department;
   parentDepartmentId: number;
+  childDepartment: Department[];
   //TODO: как узнаем тип массива изменить any
   inverseParentDepartment: any[];
   nonCurrAssets: any[];
@@ -36,34 +34,22 @@ export type Department = {
   users: any[];
 };
 
-export interface TDepartmentTable
+export interface IDepartmentTable
   extends Required<Pick<Department, 'name' | 'departmentCode' | 'departmentId'>> {
   parentName: Department['name'];
   siteName: Site['name'];
-  children: TDepartmentTable[];
-  parentId: Department['parentDepartmentId'];
+  children: IDepartmentTable[];
 }
 
-export type NewDepartment = {
-  departmentId: number;
-  parentDepartmentId: number | undefined;
-  siteId: number;
-  departmentCode: string;
-  name: string;
-  description: string;
-  createdDate: string;
-  creatorId: number;
-  modifiedDate: string;
-  modifiedId: number;
-  isActive: boolean;
-};
+export interface IDepartmentTable
+  extends Pick<Department, 'name' | 'departmentCode' | 'departmentId'> {}
 
-export type TFormCreateDepartment = Omit<NewDepartment, 'parentDepartmentId' | 'siteId'> & {
-  parentDepartmentId: TSelectValue<number>;
-  siteId: TSelectValue<number>;
-};
+export interface IFormDepartment
+  extends Pick<Department, 'parentDepartmentId' | 'siteId' | 'departmentCode' | 'name'> {}
 
-export type IUpdateDepartment = NewDepartment;
+export interface ICreateDepartment extends IFormDepartment {}
+
+export interface IUpdateDepartment extends IFormDepartment, Pick<Department, 'departmentId'> {}
 
 export interface DepartmentState {
   departmentList: Department[] | [];
@@ -93,7 +79,7 @@ export interface PostNewDepartment extends BaseAction<typeof POST_NEW_DEPARTMENT
 export interface PostNewDepartmentSuccess
   extends BaseAction<Concat<typeof POST_NEW_DEPARTMENT, typeof SUCCESS>> {
   response: {
-    resultObject: Department;
+    resultObject: Department[];
   };
 }
 export interface PostNewDepartmentFail

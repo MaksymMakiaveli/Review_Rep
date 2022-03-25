@@ -1,14 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 
 import { updateVendor } from '@Actions/vendor.action';
 import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schemaVendor } from '@schema/vendor';
-import { TSelectValue } from '@Types/application.types';
-import { City } from '@Types/definition.types';
-import { Vendor, TFormCreateVendor, TUpdateVendor } from '@Types/vendor.types';
-import { Divider, TextField, Select } from '@UiKitComponents';
-import { useForm } from 'react-hook-form';
+import { Vendor, IFormVendor } from '@Types/vendor.types';
+import { Divider, TextField, SelectNew } from '@UiKitComponents';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useGetCityAndCountry } from '@hooks';
 import { Loader } from '@common';
@@ -20,51 +18,20 @@ interface EditProps {
 
 const Edit: React.FC<EditProps> = (props) => {
   const { currentVendor, backToPreview } = props;
-  const { loadingDefinition, countriesList, citiesList } = useGetCityAndCountry();
+  const { countriesList, loadingDefinition, filteredCityList, getCountryId } =
+    useGetCityAndCountry();
   const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
     control,
     handleSubmit,
-  } = useForm<TFormCreateVendor>({
+  } = useForm<IFormVendor>({
     resolver: yupResolver(schemaVendor),
   });
-  const memoizedControl = useMemo(() => control, []);
 
-  const countryDefaultValue = useMemo(
-    () => ({
-      value: currentVendor.city.countryId,
-      label: currentVendor.city.country.name,
-    }),
-    []
-  );
-  const cityDefaultValue = useMemo(
-    () => ({
-      value: currentVendor.city.cityId,
-      label: currentVendor.city.name,
-    }),
-    []
-  );
-
-  const [countryValue, setCountryValue] = useState<TSelectValue<number>>(countryDefaultValue);
-
-  const getCountryValue = (country: TSelectValue<number>) => {
-    setCountryValue(country);
-  };
-
-  const filterCitiesList = (): City[] => {
-    return citiesList.filter((city) => city.countryId === countryValue.value);
-  };
-
-  const onSubmit = (vendor: TFormCreateVendor) => {
-    const NewVendor: TUpdateVendor = {
-      ...vendor,
-      countryId: vendor.countryId.value,
-      cityId: vendor.cityId.value,
-      partnerId: currentVendor.partnerId,
-    };
-    dispatch(updateVendor(NewVendor, backToPreview));
+  const onSubmit: SubmitHandler<IFormVendor> = (vendor) => {
+    dispatch(updateVendor({ ...vendor, partnerId: currentVendor.partnerId }, backToPreview));
   };
 
   if (loadingDefinition) {
@@ -124,36 +91,28 @@ const Edit: React.FC<EditProps> = (props) => {
           <Divider margin="40px 0 20px 0" />
           <div className="markup_helper-box">
             <InputContainer title="Location">
-              <Select
-                errorText={errors.countryId?.value?.message}
-                options={countriesList}
-                defaultValue={countryDefaultValue}
+              <SelectNew
+                errors={errors.countryId?.message}
                 label="Country"
-                id="Country"
+                control={control}
                 name="countryId"
-                control={memoizedControl}
-                placeholder="Choose country"
-                optionValue="countryId"
-                optionLabel="name"
-                getSelectValue={getCountryValue}
-                isActive
-                required
+                options={countriesList}
+                optionValue={'countryId'}
+                optionLabel={'name'}
+                getValue={getCountryId}
+                defaultValue={currentVendor.city.countryId}
+                isRequired
               />
-
-              <Select
-                errorText={errors.cityId?.value?.message}
-                options={filterCitiesList()}
-                defaultValue={cityDefaultValue}
-                name="cityId"
-                control={memoizedControl}
+              <SelectNew
+                errors={errors.cityId?.message}
+                options={filteredCityList}
                 label="City"
-                id="City"
-                placeholder="Choose city"
-                optionValue="cityId"
-                optionLabel="name"
-                isDisabled={!filterCitiesList().length}
-                isActive
-                required
+                control={control}
+                name="cityId"
+                optionValue={'cityId'}
+                optionLabel={'name'}
+                defaultValue={currentVendor.city.cityId}
+                isRequired
               />
 
               <TextField

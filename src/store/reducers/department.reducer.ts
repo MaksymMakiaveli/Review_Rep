@@ -51,9 +51,10 @@ export const DepartmentReducer = (
         loadingDepartment: true,
       };
     case concatActions(POST_NEW_DEPARTMENT, SUCCESS):
+      console.log(action.response);
       return {
         ...state,
-        departmentList: [...state.departmentList, action.response.resultObject],
+        departmentList: [...state.departmentList, action.response.resultObject[0]],
         loadingDepartment: false,
       };
     case concatActions(POST_NEW_DEPARTMENT, FAIL):

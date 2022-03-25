@@ -18,7 +18,7 @@ const PreviewExitType = (props: PreviewExitTypeProps) => {
 
   return (
     <>
-      <PageHeaderActions.PreviewAction title={exitType.name} deleteAction={deleteAction} />
+      <PageHeaderActions.Preview title={exitType.name} deleteAction={deleteAction} />
       <div className="form_box">
         <InputContainer>
           <PreviewField label="Exit Type code" description={exitType.code} />

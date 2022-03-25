@@ -13,8 +13,8 @@ import {
 
 const initialState: CompanyState = {
   companyList: [],
-  currentCompany: null,
-  loadingCompany: false,
+  company: null,
+  companyLoading: false,
 };
 
 export const CompanyReducer = (state = initialState, action: CompanyActions): CompanyState => {
@@ -22,56 +22,56 @@ export const CompanyReducer = (state = initialState, action: CompanyActions): Co
     case GET_COMPANY_LIST:
       return {
         ...state,
-        loadingCompany: true,
+        companyLoading: true,
       };
     case concatActions(GET_COMPANY_LIST, SUCCESS):
       return {
         ...state,
         companyList: [...state.companyList, ...action.response.resultObject],
-        loadingCompany: false,
+        companyLoading: false,
       };
     case concatActions(GET_COMPANY_LIST, FAIL):
       return {
         ...state,
-        loadingCompany: false,
+        companyLoading: false,
       };
     case GET_ONE_COMPANY:
       return {
         ...state,
-        loadingCompany: true,
+        companyLoading: true,
       };
     case concatActions(GET_ONE_COMPANY, SUCCESS):
       return {
         ...state,
-        currentCompany: action.response.resultObject,
-        loadingCompany: false,
+        company: action.response.resultObject,
+        companyLoading: false,
       };
     case POST_NEW_COMPANY:
       return {
         ...state,
-        loadingCompany: true,
+        companyLoading: true,
       };
     case concatActions(POST_NEW_COMPANY, SUCCESS):
       return {
         ...state,
         companyList: [...state.companyList, action.response.resultObject],
-        loadingCompany: false,
+        companyLoading: false,
       };
     case concatActions(POST_NEW_COMPANY, FAIL):
       return {
         ...state,
-        loadingCompany: false,
+        companyLoading: false,
       };
     case UPDATE_COMPANY:
       return {
         ...state,
-        loadingCompany: true,
+        companyLoading: true,
       };
     case concatActions(UPDATE_COMPANY, SUCCESS):
       return {
         ...state,
-        loadingCompany: false,
-        currentCompany: action.response.resultObject,
+        companyLoading: false,
+        company: action.response.resultObject,
         companyList: mappedAfterUpdate(
           state.companyList,
           action.response.resultObject,
@@ -81,19 +81,19 @@ export const CompanyReducer = (state = initialState, action: CompanyActions): Co
     case concatActions(UPDATE_COMPANY, FAIL):
       return {
         ...state,
-        loadingCompany: false,
+        companyLoading: false,
       };
     case DELETE_COMPANY:
       return {
         ...state,
-        loadingCompany: true,
+        companyLoading: true,
       };
     case concatActions(DELETE_COMPANY, SUCCESS):
       const list = state.companyList;
       const ids = action.data.companyIds;
       return {
         ...state,
-        loadingCompany: false,
+        companyLoading: false,
         companyList: filteringByRemovedId(list, ids, 'companyId'),
       };
     default:

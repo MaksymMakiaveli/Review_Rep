@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { useBackHistory, useToggle } from '@hooks';
 import { Back } from '@common';
 
-interface PreviewActionProps {
+interface PreviewProps {
   title: string;
   deleteAction: () => void;
 }
 
-const PreviewAction = (props: PreviewActionProps) => {
+const Preview = (props: PreviewProps) => {
   const { title, deleteAction } = props;
   const navigate = useNavigate();
   const onBackHistory = useBackHistory();
@@ -46,4 +46,4 @@ const PreviewAction = (props: PreviewActionProps) => {
   );
 };
 
-export default PreviewAction;
+export default Preview;

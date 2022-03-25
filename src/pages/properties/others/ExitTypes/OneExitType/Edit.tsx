@@ -37,7 +37,7 @@ const EditExitType = (props: EditExitTypeProps) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <PageHeaderActions.EditAction title={exitType.name} errors={errors} />
+        <PageHeaderActions.SaveForm title={exitType.name} errors={errors} />
         <div className="form_box">
           <InputContainer>
             <TextField

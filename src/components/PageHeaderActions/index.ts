@@ -1,7 +1,7 @@
-import EditAction from './EditAction';
-import PreviewAction from './PreviewAction';
+import SaveForm from './SaveForm';
+import Preview from './Preview';
 
 export default {
-  PreviewAction,
-  EditAction,
+  Preview,
+  SaveForm,
 };

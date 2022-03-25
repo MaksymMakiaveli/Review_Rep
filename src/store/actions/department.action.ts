@@ -11,9 +11,9 @@ import {
 import {
   Department,
   DepartmentActions,
-  NewDepartment,
   IUpdateDepartment,
-  TDepartmentTable,
+  IDepartmentTable,
+  ICreateDepartment,
 } from '@Types/department.types';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '@RootStateType';
@@ -40,21 +40,19 @@ export const GetOneDepartment = (id: string | number): DepartmentActions => ({
   },
 });
 
-export const postNewDepartment = (newDepartment: NewDepartment): DepartmentActions => ({
+export const postNewDepartment = (department: ICreateDepartment): DepartmentActions => ({
   type: POST_NEW_DEPARTMENT,
   api: {
     url: '/Department/AddDepartment',
     method: 'POST',
-    data: {
-      ...newDepartment,
-    },
+    data: department,
   },
   redirect: {
     path: '/Departments',
   },
   showToaster: {
     type: 'success',
-    description: ` Department:${newDepartment.name} created`,
+    description: ` Department:${department.name} created`,
   },
 });
 
@@ -122,8 +120,8 @@ export const deleteDepartment =
 
 export const changeParentForDepartments =
   (
-    children: TDepartmentTable[],
-    parent: TDepartmentTable | 0
+    children: IDepartmentTable[],
+    parent: IDepartmentTable | 0
   ): ThunkAction<any, RootState, any, DepartmentActions> =>
   async (dispatch) => {
     try {

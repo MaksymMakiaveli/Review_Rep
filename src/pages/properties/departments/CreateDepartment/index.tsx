@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useMemo } from 'react';
 
-import { postNewDepartment } from '@Actions/department.action';
 import { GetSiteList } from '@Actions/site.action';
 import { Loader } from '@common';
 import { HeaderSaveAction, InputContainer } from '@components';
@@ -8,10 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useBackHistory } from '@hooks';
 import { RootState } from '@RootStateType';
 import { schemaDepartment } from '@schema/department';
-import { TFormCreateDepartment } from '@Types/department.types';
-import { TextField, Select } from '@UiKitComponents';
-import { useForm } from 'react-hook-form';
+import { IFormDepartment } from '@Types/department.types';
+import { TextField, SelectNew } from '@UiKitComponents';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { postNewDepartment } from '@Actions/department.action';
 
 interface CreateDepartmentProps {}
 
@@ -30,22 +30,14 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
     formState: { errors },
     control,
     handleSubmit,
-  } = useForm<TFormCreateDepartment>({
+  } = useForm<IFormDepartment>({
     resolver: yupResolver(schemaDepartment),
   });
 
   const memoizedControl = useMemo(() => control, []);
 
-  const onSubmit = (department: TFormCreateDepartment) => {
-    const newDepartment = {
-      ...department,
-      parentDepartmentId: department.parentDepartmentId
-        ? department.parentDepartmentId.value
-        : undefined,
-      siteId: department.siteId.value,
-    };
-
-    dispatch(postNewDepartment(newDepartment));
+  const onSubmit: SubmitHandler<IFormDepartment> = (department) => {
+    dispatch(postNewDepartment(department));
   };
 
   useEffect(() => {
@@ -74,12 +66,10 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
                   required
                   {...register('name')}
                 />
-                <Select
+                <SelectNew
                   label="Parent Department"
-                  id="ParentDepartment"
                   name="parentDepartmentId"
                   control={memoizedControl}
-                  placeholder="Choose department"
                   options={departmentList}
                   optionValue="departmentId"
                   optionLabel="name"
@@ -92,17 +82,15 @@ const CreateDepartment: React.FC<CreateDepartmentProps> = () => {
                   required
                   {...register('departmentCode')}
                 />
-                <Select
-                  errorText={errors.siteId?.value?.message}
-                  label="Location"
-                  id="Location"
-                  name="siteId"
-                  control={memoizedControl}
-                  placeholder="Choose location"
+                <SelectNew
+                  errors={errors.siteId?.message}
+                  label={'Site'}
                   options={siteList}
-                  optionValue="siteId"
-                  optionLabel="name"
-                  required
+                  control={memoizedControl}
+                  name={'siteId'}
+                  optionValue={'siteId'}
+                  optionLabel={'name'}
+                  isRequired
                 />
               </InputContainer>
             </div>

@@ -6,10 +6,11 @@ import { Routes, Route } from 'react-router-dom';
 import { Loader } from '@common';
 import ListExitTypes from './ListExitType';
 import CreateExitType from './CreateExitType';
-import ExitType from './ExitType';
+import OneExitType from './OneExitType';
+import { EmptyPage } from '@TypeComponents/index';
 
 const getExitTypesState = (state: RootState) => state.ExitTypesReducer;
-const CostCenters = () => {
+const ExitType = () => {
   const dispatch = useDispatch();
   const { exitTypesList, exitTypesLoading } = useSelector(getExitTypesState);
 
@@ -23,15 +24,24 @@ const CostCenters = () => {
     return <Loader />;
   }
 
+  if (!exitTypesList.length) {
+    return (
+      <EmptyPage textButton="New Exit Type" redirectPath="CreateExitType">
+        <h5>You don`t have any exit type yet.</h5>
+        <h5>Click the button and add a new exit type</h5>
+      </EmptyPage>
+    );
+  }
+
   return (
     <>
       <Routes>
         <Route index element={<ListExitTypes />} />
         <Route path="CreateExitType" element={<CreateExitType />} />
-        <Route path=":id/*" element={<ExitType />} />
+        <Route path=":id/*" element={<OneExitType />} />
       </Routes>
     </>
   );
 };
 
-export default CostCenters;
+export default ExitType;

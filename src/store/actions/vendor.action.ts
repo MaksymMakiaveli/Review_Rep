@@ -1,4 +1,4 @@
-import { VendorActions, TCreateVendor, TUpdateVendor, Vendor } from '@Types/vendor.types';
+import { VendorActions, Vendor, ICreateVendor, IUpdateVendor } from '@Types/vendor.types';
 
 import {
   DELETE_VENDOR,
@@ -32,28 +32,26 @@ export const GetOneVendor = (id: string | number): VendorActions => ({
   },
 });
 
-export const postNewVendor = (newVendor: TCreateVendor): VendorActions => ({
+export const postNewVendor = (vendor: ICreateVendor): VendorActions => ({
   type: POST_NEW_VENDOR,
 
   api: {
     url: '/Vendor/AddVendor',
     method: 'POST',
-    data: {
-      ...newVendor,
-    },
+    data: vendor,
   },
   redirect: {
     path: '/Vendors',
   },
   showToaster: {
     type: 'success',
-    description: `Vendor: ${newVendor.name} created`,
+    description: `Vendor: ${vendor.name} created`,
   },
 });
 
 export const updateVendor =
   (
-    vendor: TUpdateVendor,
+    vendor: IUpdateVendor,
     backToPreview: () => void
   ): ThunkAction<any, RootState, any, VendorActions> =>
   async (dispatch) => {

@@ -12,6 +12,9 @@ export const returnLanguageKeyword = (keyword: string): string => {
 
 export const handleErrorFromApi = (error: AxiosError | Error): ErrorFromApi | string => {
   if (axios.isAxiosError(error)) {
+    if (error.response?.data.languageKeyword) {
+      return returnLanguageKeyword(error.response?.data.languageKeyword);
+    }
     return error.response?.data;
   } else {
     return error.message;
@@ -24,7 +27,7 @@ export const handleErrorAndShowToast = (error: AxiosError | Error) => {
     toast.error(err);
   } else {
     if (err.errors) {
-      const errors = err.errors;
+      const { errors } = err;
       for (const item in errors) {
         toast.error(`${item}: ${errors[item][0]}`);
       }

@@ -23,9 +23,9 @@ export type ResponseApi<T> = {
   resultStatus: boolean;
 };
 
-export interface BaseAction<Type> {
+export interface BaseAction<Type, Data = any> {
   type: Type;
-  api?: AxiosRequestConfig;
+  api?: AxiosRequestConfig<Data>;
   redirect?: Redirect;
   showToaster?: ShowToaster;
   data?: any;

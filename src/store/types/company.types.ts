@@ -1,4 +1,3 @@
-import { TSelectValue } from '@Types/application.types';
 import { City, Country } from '@Types/definition.types';
 
 import {
@@ -41,29 +40,22 @@ export type Company = {
 export interface TCompanyTable
   extends Required<Pick<Company, 'companyId' | 'name' | 'companyCode' | 'address'>> {}
 
-export type TCreateCompany = {
-  companyCode: string;
-  name: string;
-  address: string;
-  phone: string;
-  cityId: number;
-  countryId: number;
-  contactName: string;
-  taxNumber: string;
-  taxOffice?: string;
-};
+export interface IFormCompany
+  extends Pick<
+      Company,
+      'companyCode' | 'name' | 'address' | 'phone' | 'contactName' | 'taxNumber' | 'taxOffice'
+    >,
+    Pick<City, 'cityId'>,
+    Pick<Country, 'countryId'> {}
 
-export type TFormCreateCompany = Omit<TCreateCompany, 'countryId' | 'cityId'> & {
-  countryId: TSelectValue<number>;
-  cityId: TSelectValue<number>;
-};
+export interface ICreateCompany extends IFormCompany {}
 
-export type TUpdateCompany = TCreateCompany & Pick<Company, 'companyId'>;
+export interface IUpdateCompany extends IFormCompany, Pick<Company, 'companyId'> {}
 
 export interface CompanyState {
   companyList: Company[] | [];
-  currentCompany: Company | null;
-  loadingCompany: boolean;
+  company: Company | null;
+  companyLoading: boolean;
 }
 
 export interface GetCompanyList extends BaseAction<typeof GET_COMPANY_LIST> {}

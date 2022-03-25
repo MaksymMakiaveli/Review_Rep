@@ -5,6 +5,7 @@ import useToggle from './useToggle';
 import useDragTable from './useDragTable';
 import useSortedTable from './useSortedTable';
 import useSelectRow from './useSelectRow';
+import useModalState from './useModalState';
 
 export {
   useDragTable,
@@ -14,4 +15,5 @@ export {
   usePagination,
   useSortedTable,
   useSelectRow,
+  useModalState,
 };

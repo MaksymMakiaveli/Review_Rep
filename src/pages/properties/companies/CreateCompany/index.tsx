@@ -1,158 +1,142 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 
-import { postNewCompany } from '@Actions/company.action';
 import { Loader } from '@common';
-import { HeaderSaveAction, InputContainer } from '@components';
+import { InputContainer, PageHeaderActions } from '@components';
+
+import { useGetCityAndCountry } from '@hooks';
+
+import { IFormCompany } from '@Types/company.types';
+import { Divider, SelectNew, TextField } from '@UiKitComponents';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { postNewCompany } from '@Actions/company.action';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useBackHistory, useGetCityAndCountry } from '@hooks';
-import { RootState } from '@RootStateType';
 import { schemaCompany } from '@schema/company';
-import { TSelectValue } from '@Types/application.types';
-import { TFormCreateCompany } from '@Types/company.types';
-import { City } from '@Types/definition.types';
-import { Divider, TextField, Select } from '@UiKitComponents';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 
 interface CreateCompanyProps {}
 
-const getCompanyState = (state: RootState) => state.CompanyReducer;
-
 const CreateCompany: React.FC<CreateCompanyProps> = () => {
   const dispatch = useDispatch();
-  const backHistory = useBackHistory();
-  const { loadingCompany } = useSelector(getCompanyState);
-  const { citiesList, countriesList, loadingDefinition } = useGetCityAndCountry();
-  const [countryValue, setCountryValue] = useState<TSelectValue<number>>();
+  const { countriesList, loadingDefinition, filteredCityList, getCountryId } =
+    useGetCityAndCountry();
+
   const {
     register,
     formState: { errors },
     control,
     handleSubmit,
-  } = useForm<TFormCreateCompany>({ resolver: yupResolver(schemaCompany) });
+    setValue,
+  } = useForm<IFormCompany>({
+    resolver: yupResolver(schemaCompany),
+  });
 
-  const onSubmit = (company: TFormCreateCompany) => {
-    const newCompany = {
-      ...company,
-      cityId: company.cityId.value,
-      countryId: company.countryId.value,
-    };
-    dispatch(postNewCompany(newCompany));
+  useEffect(() => {
+    if (filteredCityList.length) {
+      setValue('cityId', filteredCityList[0].cityId);
+    }
+  }, [filteredCityList]);
+
+  const onSubmit: SubmitHandler<IFormCompany> = (company) => {
+    dispatch(postNewCompany(company));
   };
 
-  const getCountryValue = (countryId: TSelectValue<number>) => {
-    setCountryValue(countryId);
-  };
-
-  const filterCity = (): City[] => {
-    return citiesList.filter((city) => city.countryId === countryValue?.value);
-  };
-
-  if (loadingCompany || loadingDefinition) {
+  if (loadingDefinition) {
     return <Loader />;
   }
 
   return (
-    <div>
-      <div className="padding_wrapper_page">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <HeaderSaveAction title="New Company" errors={errors} onCancelButton={backHistory} />
-          <div className="form_box">
-            <InputContainer columns={2} title="Summary">
-              <TextField
-                errorText={errors.name?.message}
-                id="CompanyName"
-                placeholder="Company name"
-                label="Company name"
-                required
-                {...register('name')}
-              />
-              <TextField
-                errorText={errors.taxOffice?.message}
-                id="TaxOffice"
-                placeholder="Tax Office"
-                label="Tax Office"
-                {...register('taxOffice')}
-              />
-              <TextField
-                errorText={errors.companyCode?.message}
-                id="CompanyCode"
-                placeholder="Company code"
-                label="Company code"
-                required
-                {...register('companyCode')}
-              />
+    <div className="padding_wrapper_page">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <PageHeaderActions.SaveForm errors={errors} title="New Company" />
+        <div className="form_box">
+          <InputContainer columns={2} title="Summary">
+            <TextField
+              errorText={errors.name?.message}
+              id="CompanyName"
+              placeholder="Company name"
+              label="Company name"
+              required
+              {...register('name')}
+            />
+            <TextField
+              errorText={errors.taxOffice?.message}
+              id="TaxOffice"
+              placeholder="Tax Office"
+              label="Tax Office"
+              {...register('taxOffice')}
+            />
+            <TextField
+              errorText={errors.companyCode?.message}
+              id="CompanyCode"
+              placeholder="Company code"
+              label="Company code"
+              required
+              {...register('companyCode')}
+            />
 
+            <TextField
+              errorText={errors.taxNumber?.message}
+              id="TXN"
+              placeholder="TXN"
+              label="TXN"
+              required
+              {...register('taxNumber')}
+            />
+          </InputContainer>
+          <Divider margin="50px 0 30px 0" />
+          <div className="markup_helper-box">
+            <InputContainer title="Location">
+              <SelectNew
+                errors={errors.countryId?.message}
+                label="Country"
+                control={control}
+                name="countryId"
+                options={countriesList}
+                optionValue={'countryId'}
+                optionLabel={'name'}
+                getValue={getCountryId}
+                isRequired
+              />
+              <SelectNew
+                errors={errors.cityId?.message}
+                options={filteredCityList}
+                label="City"
+                control={control}
+                name="cityId"
+                optionValue={'cityId'}
+                optionLabel={'name'}
+                isRequired
+              />
               <TextField
-                errorText={errors.taxNumber?.message}
-                id="TXN"
-                placeholder="TXN"
-                label="TXN"
+                errorText={errors.address?.message}
+                id="Address"
+                placeholder="Add address"
+                label="Address"
                 required
-                {...register('taxNumber')}
+                {...register('address')}
               />
             </InputContainer>
-            <Divider margin="50px 0 30px 0" />
-            <div className="markup_helper-box">
-              <InputContainer title="Location">
-                <Select
-                  errorText={errors.countryId?.value?.message}
-                  label="Country"
-                  id="Country"
-                  name="countryId"
-                  control={control}
-                  placeholder="Choose country"
-                  options={countriesList}
-                  optionValue="countryId"
-                  optionLabel="name"
-                  getSelectValue={getCountryValue}
-                  required
-                />
-                <Select
-                  errorText={errors.cityId?.value?.message}
-                  label="City"
-                  id="City"
-                  name="cityId"
-                  control={control}
-                  placeholder="Choose city"
-                  options={filterCity()}
-                  optionValue="cityId"
-                  optionLabel="name"
-                  isDisabled={!filterCity().length}
-                  required
-                />
-
-                <TextField
-                  errorText={errors.address?.message}
-                  id="Address"
-                  placeholder="Add address"
-                  label="Address"
-                  required
-                  {...register('address')}
-                />
-              </InputContainer>
-              <InputContainer title="Contacts">
-                <TextField
-                  errorText={errors.contactName?.message}
-                  id="Email"
-                  placeholder="Email"
-                  label="Email"
-                  required
-                  {...register('contactName')}
-                />
-                <TextField
-                  errorText={errors.phone?.message}
-                  id="PhoneNumber"
-                  placeholder="Phone number"
-                  label="Phone number"
-                  required
-                  {...register('phone')}
-                />
-              </InputContainer>
-            </div>
+            <InputContainer title="Contacts">
+              <TextField
+                errorText={errors.contactName?.message}
+                id="Email"
+                placeholder="Email"
+                label="Email"
+                required
+                {...register('contactName')}
+              />
+              <TextField
+                errorText={errors.phone?.message}
+                id="PhoneNumber"
+                placeholder="Phone number"
+                label="Phone number"
+                required
+                {...register('phone')}
+              />
+            </InputContainer>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

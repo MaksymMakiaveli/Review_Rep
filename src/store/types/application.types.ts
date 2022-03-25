@@ -1,9 +1,10 @@
 import { FAIL, GET_TOKEN, SUCCESS } from '../actionTypes';
-import { BaseAction, Concat } from './index';
+import { BaseAction, Concat, ResponseAsetlyApi } from './index';
 
 export type PageMode = 'EDIT' | 'REVIEW' | null;
 
 export interface ErrorFromApi {
+  response: ResponseAsetlyApi<null>;
   errors: {
     [key: string]: any;
   };

@@ -1,4 +1,4 @@
-import { concatActions, returnLanguageKeyword } from '@helpers/functions';
+import { concatActions, handleErrorAndShowToast, returnLanguageKeyword } from '@helpers/functions';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Dispatch, Middleware } from 'redux';
 
@@ -56,14 +56,10 @@ const api: Middleware = () => (next: Dispatch) => (action: ActionsTypes) => {
     })
     .catch((error: AxiosError<ResponseAsetlyApi<any>> | Error) => {
       if (axios.isAxiosError(error)) {
-        const err = error.response?.data.languageKeyword;
-        if (err) {
-          const keyword = returnLanguageKeyword(err);
-          toast.error(keyword);
-        }
+        handleErrorAndShowToast(error);
         next({ ...action, type: concatActions(type, FAIL), response: error.response?.data });
       } else {
-        toast.error(error.message);
+        handleErrorAndShowToast(error);
         next({ ...action, type: concatActions(type, FAIL), response: error.message });
       }
     });

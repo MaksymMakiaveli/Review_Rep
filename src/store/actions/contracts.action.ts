@@ -6,6 +6,8 @@ import {
   GET_ONE_CONTRACT,
   POST_NEW_CONTRACT,
 } from '../actionTypes';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '@RootStateType';
 
 export const getContractList = (): ContractActions => ({
   type: GET_CONTRACTS_LIST,
@@ -38,6 +40,9 @@ export const postNewContract = (newContract: TCreateContract): ContractActions =
     description: `Contract:${newContract.name} created`,
   },
 });
+
+export const createContract =
+  (): ThunkAction<any, RootState, any, ContractActions> => async () => {};
 
 export const deleteContractById = (contractIds: { contractIds: number[] }): ContractActions => ({
   type: DELETE_CONTRACT,

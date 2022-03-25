@@ -6,10 +6,11 @@ import { HeaderSaveAction, InputContainer } from '@components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RootState } from '@RootStateType';
 import { schemaDepartment } from '@schema/department';
-import { Department, TFormCreateDepartment } from '@Types/department.types';
-import { TextField, Select } from '@UiKitComponents';
-import { useForm } from 'react-hook-form';
+import { Department, IFormDepartment } from '@Types/department.types';
+import { TextField, SelectNew } from '@UiKitComponents';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '@common';
 
 interface EditProps {
   currentDepartment: Department;
@@ -24,34 +25,17 @@ const Edit: React.FC<EditProps> = (props) => {
   const { departmentList, loadingDepartment } = useSelector(getDepartmentState);
   const { siteList, loadingSite } = useSelector(getSiteState);
   const dispatch = useDispatch();
-  const parentId = currentDepartment.parentDepartmentId;
-  const siteId = currentDepartment.siteId;
-  const siteName = currentDepartment.site ? currentDepartment.site.name : '';
+
   const {
     register,
     formState: { errors },
     control,
     handleSubmit,
-  } = useForm<TFormCreateDepartment>({
+  } = useForm<IFormDepartment>({
     resolver: yupResolver(schemaDepartment),
   });
 
   const memoizedControl = useMemo(() => control, []);
-  const parentDefaultValue = useMemo(
-    () => ({
-      value: parentId,
-      label: '',
-    }),
-    []
-  );
-
-  const siteDefaultValue = useMemo(
-    () => ({
-      value: siteId,
-      label: siteName,
-    }),
-    []
-  );
 
   useEffect(() => {
     if (!siteList.length) {
@@ -59,15 +43,18 @@ const Edit: React.FC<EditProps> = (props) => {
     }
   }, []);
 
-  const onSubmit = (department: TFormCreateDepartment) => {
-    const newDepartment = {
-      ...department,
-      parentDepartmentId: department.parentDepartmentId.value,
-      departmentId: currentDepartment.departmentId,
-      siteId: department.siteId.value,
-    };
-    dispatch(updateDepartment(newDepartment, backToPreview));
+  const onSubmit: SubmitHandler<IFormDepartment> = (department) => {
+    dispatch(
+      updateDepartment(
+        { ...department, departmentId: currentDepartment.departmentId },
+        backToPreview
+      )
+    );
   };
+
+  if (loadingDepartment || loadingSite) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -90,18 +77,15 @@ const Edit: React.FC<EditProps> = (props) => {
                 required
                 {...register('name')}
               />
-              <Select
+              <SelectNew
                 label="Parent Department"
-                id="ParentDepartment"
                 name="parentDepartmentId"
-                defaultValue={parentDefaultValue}
                 control={memoizedControl}
-                placeholder="Choose department"
                 options={departmentList}
                 optionValue="departmentId"
                 optionLabel="name"
-                isDisabled={loadingDepartment}
-                isLoading={loadingDepartment}
+                defaultValue={currentDepartment.parentDepartmentId}
+                isRequired
                 isActive
               />
               <TextField
@@ -114,20 +98,16 @@ const Edit: React.FC<EditProps> = (props) => {
                 required
                 {...register('departmentCode')}
               />
-              <Select
-                errorText={errors.siteId?.value?.message}
-                label="Location"
-                id="Location"
-                name="siteId"
-                defaultValue={siteDefaultValue}
-                control={memoizedControl}
-                placeholder="Choose location"
+              <SelectNew
+                errors={errors.siteId?.message}
+                label={'Site'}
                 options={siteList}
-                optionValue="siteId"
-                optionLabel="name"
-                isDisabled={loadingSite}
-                isLoading={loadingSite}
-                required
+                control={memoizedControl}
+                name={'siteId'}
+                optionValue={'siteId'}
+                optionLabel={'name'}
+                defaultValue={currentDepartment.siteId}
+                isRequired
                 isActive
               />
             </InputContainer>

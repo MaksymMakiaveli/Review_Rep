@@ -13,6 +13,8 @@ import SearchInput from './SearchInput';
 import Toaster from './Toaster';
 import Table from './Table';
 import Modals from './Modals';
+// TEST
+import SelectNew from './Form/SelectNew';
 
 export {
   AccordionForSidebar,
@@ -30,4 +32,5 @@ export {
   TextField,
   Toaster,
   Modals,
+  SelectNew,
 };

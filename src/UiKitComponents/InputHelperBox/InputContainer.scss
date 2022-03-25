@@ -28,9 +28,10 @@
   }
   .custom-input-container__errorText {
     position: absolute;
-    bottom: -35px;
+    bottom: 0;
     right: 0;
     left: 0;
+    transform: translate(0, 15px);
     font-size: $body-fz-2;
     color: $form-error;
   }

@@ -1,4 +1,3 @@
-import { TSelectValue } from '@Types/application.types';
 import { City, Country } from '@Types/definition.types';
 
 import {
@@ -58,12 +57,25 @@ export type TCreateVendor = {
   description?: string;
   countryId?: number;
 };
-export type TFormCreateVendor = Omit<TCreateVendor, 'countryId' | 'cityId'> & {
-  countryId: TSelectValue<number>;
-  cityId: TSelectValue<number>;
-};
 
-export type TUpdateVendor = TCreateVendor & Pick<Vendor, 'partnerId'>;
+export interface IFormVendor
+  extends Pick<
+    Vendor,
+    | 'partnerCode'
+    | 'name'
+    | 'phone'
+    | 'address'
+    | 'email'
+    | 'cityId'
+    | 'taxNumber'
+    | 'taxOffice'
+    | 'secondPhone'
+    | 'description'
+    | 'countryId'
+  > {}
+
+export interface ICreateVendor extends IFormVendor {}
+export interface IUpdateVendor extends IFormVendor, Pick<Vendor, 'partnerId'> {}
 
 export interface VendorState {
   vendorList: Vendor[] | [];

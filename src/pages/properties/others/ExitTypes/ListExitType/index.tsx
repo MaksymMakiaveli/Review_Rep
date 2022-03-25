@@ -3,7 +3,7 @@ import { ColumnsTable } from '@Types/application.types';
 import { IExitTypesTable } from '@Types/exitTypes.type';
 import { RootState } from '@RootStateType';
 import { useSelector } from 'react-redux';
-import { EmptyPage, TableHeaderActions } from '@components';
+import { TableHeaderActions } from '@components';
 import { Table } from '@UiKitComponents';
 
 const columns: ColumnsTable<IExitTypesTable>[] = [
@@ -37,14 +37,6 @@ const ListExitTypes = () => {
 
   const memoizedColumns = useMemo(() => columns, []);
 
-  if (!exitTypesList.length) {
-    return (
-      <EmptyPage textButton="Exit Type" redirectPath="CreateExitType">
-        <h5>You don`t have any exit type yet.</h5>
-        <h5>Click the button and add a new exit type</h5>
-      </EmptyPage>
-    );
-  }
   return (
     <div>
       <div className="padding_wrapper_table-page">
